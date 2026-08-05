@@ -1,0 +1,16 @@
+{
+  "name": "clashbaze-router",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=esm",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.45.0",
+    "esbuild": "^0.20.0",
+    "@cloudflare/workers-types": "^4.20240815.0",
+    "typescript": "^5.3.0"
+  }
+}
