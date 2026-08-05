@@ -1,0 +1,609 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Clash Market API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: accounts
+    description: Game account listings
+  - name: blog
+    description: Blog posts
+  - name: admin
+    description: Admin operations
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /accounts:
+    get:
+      operationId: listAccounts
+      tags: [accounts]
+      summary: List all accounts
+      parameters:
+        - name: game
+          in: query
+          schema:
+            type: string
+            enum: [clash-of-clans, clash-royale]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [available, reserved, sold]
+        - name: featured
+          in: query
+          schema:
+            type: string
+            enum: ["true", "false"]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+
+    post:
+      operationId: createAccount
+      tags: [admin]
+      summary: Create account (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
+  /accounts/featured:
+    get:
+      operationId: getFeaturedAccounts
+      tags: [accounts]
+      summary: Get featured accounts
+      responses:
+        "200":
+          description: Featured accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+
+  /accounts/stats:
+    get:
+      operationId: getAccountStats
+      tags: [accounts]
+      summary: Get marketplace stats
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketplaceStats"
+
+  /accounts/{slug}:
+    get:
+      operationId: getAccount
+      tags: [accounts]
+      summary: Get account by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "404":
+          description: Not found
+
+    put:
+      operationId: updateAccount
+      tags: [admin]
+      summary: Update account (admin)
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
+    delete:
+      operationId: deleteAccount
+      tags: [admin]
+      summary: Delete account (admin)
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /accounts/{slug}/related:
+    get:
+      operationId: getRelatedAccounts
+      tags: [accounts]
+      summary: Get related accounts
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Related accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+
+  /blog:
+    get:
+      operationId: listBlogPosts
+      tags: [blog]
+      summary: List blog posts
+      parameters:
+        - name: game
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Blog posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+
+    post:
+      operationId: createBlogPost
+      tags: [admin]
+      summary: Create blog post (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPostInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+
+  /blog/{slug}:
+    get:
+      operationId: getBlogPost
+      tags: [blog]
+      summary: Get blog post by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "404":
+          description: Not found
+
+    put:
+      operationId: updateBlogPost
+      tags: [admin]
+      summary: Update blog post (admin)
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPostUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+
+    delete:
+      operationId: deleteBlogPost
+      tags: [admin]
+      summary: Delete blog post (admin)
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /admin/verify:
+    post:
+      operationId: verifyAdmin
+      tags: [admin]
+      summary: Verify admin Firebase token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminVerifyInput"
+      responses:
+        "200":
+          description: Admin verified
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminVerifyResult"
+        "401":
+          description: Unauthorized
+
+  /upload/image:
+    post:
+      operationId: uploadImage
+      tags: [admin]
+      summary: Upload image to Cloudinary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageUploadInput"
+      responses:
+        "200":
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageUploadResult"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+
+    Account:
+      type: object
+      required: [id, title, slug, game, price, status, images, createdAt]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        game:
+          type: string
+          enum: [clash-of-clans, clash-royale]
+        price:
+          type: number
+        oldPrice:
+          type: ["number", "null"]
+        images:
+          type: array
+          items:
+            type: string
+        description:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [available, reserved, sold]
+        townHall:
+          type: ["integer", "null"]
+        arena:
+          type: ["string", "null"]
+        trophies:
+          type: ["integer", "null"]
+        heroes:
+          type: ["string", "null"]
+        gems:
+          type: ["integer", "null"]
+        skins:
+          type: ["string", "null"]
+        league:
+          type: ["string", "null"]
+        evolutions:
+          type: ["string", "null"]
+        emotes:
+          type: ["string", "null"]
+        maxCards:
+          type: ["integer", "null"]
+        whatsappMessage:
+          type: ["string", "null"]
+        featured:
+          type: boolean
+        createdAt:
+          type: string
+
+    AccountInput:
+      type: object
+      required: [title, slug, game, price, status]
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        game:
+          type: string
+          enum: [clash-of-clans, clash-royale]
+        price:
+          type: number
+        oldPrice:
+          type: ["number", "null"]
+        images:
+          type: array
+          items:
+            type: string
+        description:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [available, reserved, sold]
+        townHall:
+          type: ["integer", "null"]
+        arena:
+          type: ["string", "null"]
+        trophies:
+          type: ["integer", "null"]
+        heroes:
+          type: ["string", "null"]
+        gems:
+          type: ["integer", "null"]
+        skins:
+          type: ["string", "null"]
+        league:
+          type: ["string", "null"]
+        evolutions:
+          type: ["string", "null"]
+        emotes:
+          type: ["string", "null"]
+        maxCards:
+          type: ["integer", "null"]
+        whatsappMessage:
+          type: ["string", "null"]
+        featured:
+          type: boolean
+
+    AccountUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        game:
+          type: string
+          enum: [clash-of-clans, clash-royale]
+        price:
+          type: number
+        oldPrice:
+          type: ["number", "null"]
+        images:
+          type: array
+          items:
+            type: string
+        description:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [available, reserved, sold]
+        townHall:
+          type: ["integer", "null"]
+        arena:
+          type: ["string", "null"]
+        trophies:
+          type: ["integer", "null"]
+        heroes:
+          type: ["string", "null"]
+        gems:
+          type: ["integer", "null"]
+        skins:
+          type: ["string", "null"]
+        league:
+          type: ["string", "null"]
+        evolutions:
+          type: ["string", "null"]
+        emotes:
+          type: ["string", "null"]
+        maxCards:
+          type: ["integer", "null"]
+        whatsappMessage:
+          type: ["string", "null"]
+        featured:
+          type: boolean
+
+    MarketplaceStats:
+      type: object
+      required: [totalAccounts, availableAccounts, cocAccounts, crAccounts, featuredCount]
+      properties:
+        totalAccounts:
+          type: integer
+        availableAccounts:
+          type: integer
+        cocAccounts:
+          type: integer
+        crAccounts:
+          type: integer
+        featuredCount:
+          type: integer
+
+    BlogPost:
+      type: object
+      required: [id, title, slug, content, createdAt]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+        coverImage:
+          type: ["string", "null"]
+        seoTitle:
+          type: ["string", "null"]
+        seoDescription:
+          type: ["string", "null"]
+        game:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    BlogPostInput:
+      type: object
+      required: [title, slug, content]
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+        coverImage:
+          type: ["string", "null"]
+        seoTitle:
+          type: ["string", "null"]
+        seoDescription:
+          type: ["string", "null"]
+        game:
+          type: ["string", "null"]
+
+    BlogPostUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+        coverImage:
+          type: ["string", "null"]
+        seoTitle:
+          type: ["string", "null"]
+        seoDescription:
+          type: ["string", "null"]
+        game:
+          type: ["string", "null"]
+
+    AdminVerifyInput:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+
+    AdminVerifyResult:
+      type: object
+      required: [valid, email]
+      properties:
+        valid:
+          type: boolean
+        email:
+          type: string
+
+    ImageUploadInput:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: string
+        folder:
+          type: ["string", "null"]
+
+    ImageUploadResult:
+      type: object
+      required: [url, publicId]
+      properties:
+        url:
+          type: string
+        publicId:
+          type: string

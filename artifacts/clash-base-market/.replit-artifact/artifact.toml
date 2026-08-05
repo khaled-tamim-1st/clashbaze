@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Clash Market"
+version = "1.0.0"
+id = "artifacts/clash-base-market"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24059
+
+[services.development]
+run = "pnpm --filter @workspace/clash-base-market run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clash-base-market", "run", "build" ]
+publicDir = "artifacts/clash-base-market/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24059"
+BASE_PATH = "/"
