@@ -1,5 +1,5 @@
 export const SITE_NAME ="كلاش ماركت";
-export const SITE_URL = process.env["FRONTEND_URL"] || "";
+export const SITE_URL = "https://clashmarket.online";
 
 export function escapeHtml(str: string): string {
   return str
