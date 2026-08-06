@@ -1,12 +1,8 @@
-name = "clashbaze-router"
-main = "src/index.ts"
+name = "clashmarket-router"
+main = "index.ts"
 compatibility_date = "2024-12-16"
 
-[env.production]
 routes = [
-  { pattern = "clashbaze.com/*", zone_name = "clashbaze.com" }
+  { pattern = "clashmarket.online/*", zone_name = "clashmarket.online" },
+  { pattern = "www.clashmarket.online/*", zone_name = "clashmarket.online" }
 ]
-
-[build]
-command = "npm run build"
-cwd = "."

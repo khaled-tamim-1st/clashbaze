@@ -1,9 +1,9 @@
 {
-  "name": "clashbaze-router",
+  "name": "clashmarket-router",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=esm",
+    "build": "esbuild index.ts --bundle --outfile=dist/index.js --platform=browser --format=esm",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },

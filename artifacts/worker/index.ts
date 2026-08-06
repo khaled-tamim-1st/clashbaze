@@ -14,8 +14,9 @@ const BOT_UA_REGEX = /googlebot|bingbot|yandex|duckduckbot|baiduspider|applebot|
 const TARGET_REGIONS = ["SA", "AE", "KW", "QA", "BH", "OM", "EG", "JO", "LB"];
 
 // Origins (استبدل بـ روابطك الحقيقية)
-const VPS_ORIGIN = "https://api.clashbaze.com"; // يفضل يكون في السعودية أو الإمارات
-const FRONTEND_ORIGIN = "https://clashbaze.pages.dev"; // Cloudflare Pages = CDN عالمي ذكي
+// Origins
+const VPS_ORIGIN = "https://api.clashmarket.online"; // الباك إند على الـ VPS (عبر Nginx)
+const FRONTEND_ORIGIN = "https://clashmarket-frontend.pages.dev"; // placeholder — هنحدثه بالرابط الحقيقي بعد رفع Cloudflare Pages
 
 interface RequestContext {
   country: string;
