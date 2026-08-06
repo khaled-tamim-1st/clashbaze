@@ -16,7 +16,7 @@ const TARGET_REGIONS = ["SA", "AE", "KW", "QA", "BH", "OM", "EG", "JO", "LB"];
 // Origins (استبدل بـ روابطك الحقيقية)
 // Origins
 const VPS_ORIGIN = "https://api.clashmarket.online";
-const FRONTEND_ORIGIN = "https://clashmarket.kh603333.workers.dev";
+const FRONTEND_ORIGIN = "https://clashmarket.online";
 
 interface RequestContext {
   country: string;
