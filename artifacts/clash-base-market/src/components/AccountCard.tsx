@@ -100,7 +100,7 @@ export function AccountCard({ account }: { account: Account }) {
         : `
           bg-purple-500/15
           backdrop-blur-md
-          text-black
+          text-gray-800
           border border-purple-400/40
           shadow-[0_0_12px_rgba(168,85,247,0.4)]
           hover:bg-purple-500/25
