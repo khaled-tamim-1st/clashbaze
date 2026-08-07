@@ -77,26 +77,28 @@ export default function Home() {
           </section>
 
           {/* Featured Accounts */}
-          <section className="py-16 container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-foreground">حسابات مميزة</h2>
-              <Link href="/clash-of-clans" className="text-primary hover:underline">عرض المزيد</Link>
-            </div>
-            {loadingFeatured ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map(i => <div key={i} className="h-96 bg-muted animate-pulse rounded-lg"></div>)}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {featuredAccounts?.map(account => (
-                  <AccountCard key={account.id} account={account} />
-                ))}
-                {(!featuredAccounts || featuredAccounts.length === 0) && (
-                  <div className="col-span-full text-center py-12 text-muted-foreground">لا توجد حسابات مميزة حالياً</div>
-                )}
-              </div>
-            )}
-          </section>
+<section className="py-16 overflow-hidden">
+  <div className="container mx-auto px-4 mb-8 text-center">
+    <h2 className="text-3xl font-bold text-foreground">حسابات مميزة</h2>
+  </div>
+  {loadingFeatured ? (
+    <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[1, 2, 3].map(i => <div key={i} className="h-96 bg-muted animate-pulse rounded-lg"></div>)}
+    </div>
+  ) : (!featuredAccounts || featuredAccounts.length === 0) ? (
+    <div className="container mx-auto px-4 text-center py-12 text-muted-foreground">لا توجد حسابات مميزة حالياً</div>
+  ) : (
+    <div className="marquee-container">
+      <div className="marquee-track flex flex-nowrap gap-6">
+        {[...featuredAccounts, ...featuredAccounts].map((account, i) => (
+          <div key={`${account.id}-${i}`} className="w-[300px] shrink-0">
+            <AccountCard account={account} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</section>
 
           <Testimonials />
 
