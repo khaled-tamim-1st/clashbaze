@@ -20,7 +20,7 @@ export default function Home() {
         title="كلاش ماركت | المتجر الأفضل لبيع وشراء حسابات وتصاميم كلاش"
         description="كلاش ماركت هو منصتك الموثوقة لبيع وشراء حسابات كلاش أوف كلانس، وتصاميم القرى المبتكرة وآمنة المعاملات بأفضل الأسعار."
         url="https://clashmarket.online/"
-        image="https://clashmarket.online/opengraph.jpg"
+        image="https://clashmarket.online/opengraph.png"
       />
 
       <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">

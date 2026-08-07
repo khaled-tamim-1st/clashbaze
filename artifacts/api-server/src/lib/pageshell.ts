@@ -56,7 +56,7 @@ export function pageShell(opts: {
     : opts.canonicalPath;
 
   // لو لم يتم تمرير صورة، استخدم صورة الموقع الافتراضية
-  const ogImage = opts.ogImage || `${SITE_URL}/opengraph.jpg`;
+  const ogImage = opts.ogImage || `${SITE_URL}/opengraph.png`;
 
   const jsonLd = opts.jsonLd
     ? `<script type="application/ld+json">${JSON.stringify(opts.jsonLd)}</script>`
