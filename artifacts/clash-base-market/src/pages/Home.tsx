@@ -19,7 +19,8 @@ export default function Home() {
       <SEO 
         title="كلاش ماركت | المتجر الأفضل لبيع وشراء حسابات وتصاميم كلاش"
         description="كلاش ماركت هو منصتك الموثوقة لبيع وشراء حسابات كلاش أوف كلانس، وتصاميم القرى المبتكرة وآمنة المعاملات بأفضل الأسعار."
-        url="https://clashbaze.com/"
+        url="https://clashmarket.online/"
+        image="https://clashmarket.online/opengraph.jpg"
       />
 
       <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
