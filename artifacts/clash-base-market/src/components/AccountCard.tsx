@@ -69,18 +69,50 @@ export function AccountCard({ account }: { account: Account }) {
   )}
 </div>
         {account.oldPrice && (
-          <div className="absolute top-2 left-2">
-            <Badge variant="destructive">
-              خصم {Math.round(((account.oldPrice - account.price) / account.oldPrice) * 100)}%
-            </Badge>
-          </div>
-        )}
+  <div className="absolute top-2 left-2">
+    <Badge
+      className="
+        bg-gradient-to-r from-rose-600 to-pink-500
+        text-white
+        border border-pink-300/30
+        shadow-[0_0_12px_rgba(244,63,94,0.45)]
+        font-semibold
+      "
+    >
+      خصم {Math.round(((account.oldPrice - account.price) / account.oldPrice) * 100)}%
+    </Badge>
+  </div>
+)}
+        
         <div className="absolute bottom-2 right-2">
-          <Badge variant="secondary" className={account.game === "clash-of-clans" ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-red-600 hover:bg-red-700 text-white"}>
-            {account.game === "clash-of-clans" ? "كلاش أوف كلانز" : "كلاش رويال"}
-          </Badge>
-        </div>
-      </div>
+  <Badge
+    className={
+      account.game === "clash-of-clans"
+        ? `
+          bg-blue-500/15
+          backdrop-blur-md
+          text-blue-100
+          border border-blue-400/40
+          shadow-[0_0_12px_rgba(59,130,246,0.35)]
+          hover:bg-blue-500/25
+          transition-all duration-300
+        `
+        : `
+          bg-purple-500/15
+          backdrop-blur-md
+          text-purple-100
+          border border-purple-400/40
+          shadow-[0_0_12px_rgba(168,85,247,0.4)]
+          hover:bg-purple-500/25
+          transition-all duration-300
+        `
+    }
+  >
+    {account.game === "clash-of-clans"
+      ? "كلاش أوف كلانز"
+      : "كلاش رويال"}
+  </Badge>
+</div>
       <CardContent className="p-4">
         <Link href={`/account/${account.slug}`}>
           <h3 className="font-bold text-lg text-foreground hover:text-primary transition-colors line-clamp-1">{account.title}</h3>
