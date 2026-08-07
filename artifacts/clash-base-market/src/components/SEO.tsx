@@ -9,8 +9,8 @@ interface SEOProps {
 export function SEO({
   title = 'كلاش ماركت | بيع وشراء حسابات وتصاميم كلاش أوف كلانس',
   description = 'كلاش ماركت هو منصتك الموثوقة لبيع وشراء حسابات كلاش أوف كلانس، وتصاميم القرى المبتكرة وآمنة المعاملات بأفضل الأسعار.',
-  image = 'https://clashbaze.com/opengraph.jpg',
-  url = 'https://clashbaze.com/',
+  image = 'https://clashmarket.online/opengraph.jpg',
+  url = 'https://clashmarket.online/',
 }: SEOProps) {
   const fullTitle = title.includes('كلاش ماركت') ? title : `${title} | كلاش ماركت`;
 
