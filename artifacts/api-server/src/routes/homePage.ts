@@ -99,7 +99,7 @@ router.get("/", async (req, res) => {
       title: `${SITE_NAME} - بيع وشراء حسابات كلاش أوف كلانز وكلاش رويال`,
       description,
       canonicalPath: "/",
-      ogImage: SITE_URL ? `${SITE_URL}/opengraph.png` : "/opengraph.jpg",
+      ogImage: `${SITE_URL}/opengraph.png`,
       bodyHtml,
       jsonLd,
     });
