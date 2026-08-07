@@ -112,6 +112,7 @@ export function AccountCard({ account }: { account: Account }) {
       ? "كلاش أوف كلانز"
       : "كلاش رويال"}
   </Badge>
+  </div>
 </div>
       <CardContent className="p-4">
         <Link href={`/account/${account.slug}`}>
