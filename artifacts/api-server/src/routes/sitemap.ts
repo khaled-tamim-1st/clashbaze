@@ -25,6 +25,29 @@ function urlEntry(path: string, opts: { lastmod?: Date; priority?: string; chang
   </url>`;
 }
 
+// GET /robots.txt — served dynamically because the Cloudflare Worker in
+// artifacts/worker always proxies "/robots.txt" and "/sitemap.xml" to this
+// VPS (see artifacts/worker/index.ts), so a static file in the frontend's
+// public/ folder is never actually reached in production. Without this
+// route, bots requesting /robots.txt hit the 404 handler in app.ts instead.
+router.get("/robots.txt", (req, res) => {
+  const sitemapUrl = SITE_URL ? `${SITE_URL}/sitemap.xml` : "/sitemap.xml";
+  const body = [
+    "User-agent: *",
+    "Allow: /",
+    "Disallow: /admin",
+    "Disallow: /admin/accounts",
+    "Disallow: /admin/blog",
+    "Disallow: /login",
+    "",
+    `Sitemap: ${sitemapUrl}`,
+    "",
+  ].join("\n");
+
+  res.set("Content-Type", "text/plain; charset=utf-8");
+  res.send(body);
+});
+
 router.get("/sitemap.xml", async (req, res) => {
   try {
     if (!SITE_URL) {

@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import { db, accountsTable } from "@workspace/db";
 import { desc, eq, and } from "drizzle-orm";
-import { SITE_NAME, escapeHtml, pageShell, breadcrumbJsonLd, breadcrumbHtml } from "../lib/pageshell";
+import { SITE_NAME, SITE_URL, escapeHtml, pageShell, breadcrumbJsonLd, breadcrumbHtml } from "../lib/pageshell";
 
 const router = Router();
 
@@ -68,7 +68,7 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
         itemListElement: rows.map((a, i) => ({
           "@type": "ListItem",
           position: i + 1,
-          url: `/account/${a.slug}`,
+          url: SITE_URL ? `${SITE_URL}/account/${a.slug}` : `/account/${a.slug}`,
           name: a.title,
         })),
       };
@@ -110,6 +110,7 @@ router.get("/account/:slug", async (req, res) => {
           description: "لم يتم العثور على هذا الحساب.",
           canonicalPath: `/account/${slug}`,
           bodyHtml: `<h1>لم يتم العثور على الحساب</h1><a class="back-link" href="/">العودة للرئيسية</a>`,
+          noindex: true,
         }),
       );
       return;
@@ -168,7 +169,7 @@ router.get("/account/:slug", async (req, res) => {
           account.status === "available"
             ? "https://schema.org/InStock"
             : "https://schema.org/OutOfStock",
-        url: `/account/${account.slug}`,
+        url: SITE_URL ? `${SITE_URL}/account/${account.slug}` : `/account/${account.slug}`,
       },
     };
 
@@ -209,6 +210,7 @@ router.get("/account/:slug", async (req, res) => {
       description,
       canonicalPath: `/account/${account.slug}`,
       ogImage: account.images?.[0] || null,
+      ogType: "product",
       bodyHtml,
       jsonLd: [jsonLd, breadcrumbJsonLd(breadcrumbItems)],
     });

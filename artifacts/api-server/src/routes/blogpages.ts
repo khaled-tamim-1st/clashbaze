@@ -43,8 +43,19 @@ function breadcrumbHtml(items: { name: string; path: string }[]): string {
     .join(' <span class="sep">/</span> ')}</nav>`;
 }
 
-function pageShell(opts: { title: string; description: string; canonicalPath: string; ogImage?: string | null; bodyHtml: string; jsonLd?: object }) {
+function pageShell(opts: { title: string; description: string; canonicalPath: string; ogImage?: string | null; bodyHtml: string; jsonLd?: object | object[]; noindex?: boolean }) {
   const canonicalUrl = SITE_URL ? `${SITE_URL}${opts.canonicalPath}` : opts.canonicalPath;
+  // لو لم يتم تمرير صورة (أو كانت رابطًا نسبيًا)، استخدم صورة الموقع الافتراضية المطلقة
+  // ملاحظة: WhatsApp/Facebook crawlers لا تنفذ JavaScript ولا تقبل روابط نسبية لـ og:image
+  const ogImage =
+    opts.ogImage && /^https?:\/\//i.test(opts.ogImage)
+      ? opts.ogImage
+      : `${SITE_URL}/opengraph.png`;
+  const robotsContent = opts.noindex ? "noindex, follow" : "index, follow";
+  const jsonLdArray = opts.jsonLd ? (Array.isArray(opts.jsonLd) ? opts.jsonLd : [opts.jsonLd]) : [];
+  const jsonLdHtml = jsonLdArray
+    .map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`)
+    .join("\n  ");
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -52,17 +63,24 @@ function pageShell(opts: { title: string; description: string; canonicalPath: st
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(opts.title)}</title>
   <meta name="description" content="${escapeHtml(opts.description)}" />
+  <meta name="robots" content="${robotsContent}" />
   <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="${escapeHtml(opts.title)}" />
   <meta property="og:description" content="${escapeHtml(opts.description)}" />
   <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
   <meta property="og:site_name" content="${escapeHtml(SITE_NAME)}" />
-  ${opts.ogImage ? `<meta property="og:image" content="${escapeHtml(opts.ogImage)}" />` : ""}
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:image" content="${escapeHtml(ogImage)}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${escapeHtml(opts.title)}" />
+  <meta name="twitter:description" content="${escapeHtml(opts.description)}" />
+  <meta name="twitter:image" content="${escapeHtml(ogImage)}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
-  ${opts.jsonLd ? `<script type="application/ld+json">${JSON.stringify(opts.jsonLd)}</script>` : ""}
+  ${jsonLdHtml}
   <style>
     :root { color-scheme: light; }
     * { box-sizing: border-box; }
@@ -180,6 +198,7 @@ router.get("/blog/:slug", async (req, res) => {
           description: "لم يتم العثور على هذا المقال.",
           canonicalPath: `/blog/${slug}`,
           bodyHtml: `<h1>لم يتم العثور على المقال</h1><a class="back-link" href="/blog">العودة إلى المدونة</a>`,
+          noindex: true,
         }),
       );
       return;
@@ -199,7 +218,12 @@ router.get("/blog/:slug", async (req, res) => {
       "@type": "Article",
       headline: post.title,
       description,
-      image: post.coverImage || undefined,
+      image:
+        post.coverImage && /^https?:\/\//i.test(post.coverImage)
+          ? post.coverImage
+          : SITE_URL
+            ? `${SITE_URL}/opengraph.png`
+            : undefined,
       datePublished: post.createdAt.toISOString(),
       author: { "@type": "Organization", name: SITE_NAME },
       publisher: { "@type": "Organization", name: SITE_NAME },

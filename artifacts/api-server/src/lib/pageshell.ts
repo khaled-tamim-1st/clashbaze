@@ -49,18 +49,33 @@ export function pageShell(opts: {
   canonicalPath: string;
   ogImage?: string | null;
   bodyHtml: string;
-  jsonLd?: object;
+  jsonLd?: object | object[];
+  /** استخدم noindex للصفحات غير المخصصة للفهرسة (مثل صفحات 404) */
+  noindex?: boolean;
+  ogType?: string;
 }) {
   const canonicalUrl = SITE_URL
     ? `${SITE_URL}${opts.canonicalPath}`
     : opts.canonicalPath;
 
-  // لو لم يتم تمرير صورة، استخدم صورة الموقع الافتراضية
-  const ogImage = opts.ogImage || `${SITE_URL}/opengraph.png`;
+  // لو لم يتم تمرير صورة (أو كانت رابطًا نسبيًا)، استخدم صورة الموقع الافتراضية المطلقة
+  // ملاحظة: WhatsApp/Facebook crawlers لا تنفذ JavaScript ولا تقبل روابط نسبية لـ og:image
+  const resolvedOgImage =
+    opts.ogImage && /^https?:\/\//i.test(opts.ogImage)
+      ? opts.ogImage
+      : `${SITE_URL}/opengraph.png`;
+  const ogImage = resolvedOgImage;
 
-  const jsonLd = opts.jsonLd
-    ? `<script type="application/ld+json">${JSON.stringify(opts.jsonLd)}</script>`
-    : "";
+  const jsonLdArray = opts.jsonLd
+    ? Array.isArray(opts.jsonLd)
+      ? opts.jsonLd
+      : [opts.jsonLd]
+    : [];
+  const jsonLd = jsonLdArray
+    .map((obj) => `<script type="application/ld+json">${JSON.stringify(obj)}</script>`)
+    .join("\n  ");
+
+  const robotsContent = opts.noindex ? "noindex, follow" : "index, follow";
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -79,7 +94,7 @@ export function pageShell(opts: {
     content="${escapeHtml(opts.description)}"
   />
 
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="${robotsContent}" />
 
   <!-- Canonical -->
   <link
@@ -100,7 +115,7 @@ export function pageShell(opts: {
 
   <meta
     property="og:type"
-    content="website"
+    content="${escapeHtml(opts.ogType || "website")}"
   />
 
   <meta
@@ -125,7 +140,12 @@ export function pageShell(opts: {
 
   <meta
     property="og:site_name"
-    content="${SITE_NAME}"
+    content="${escapeHtml(SITE_NAME)}"
+  />
+
+  <meta
+    property="og:locale"
+    content="ar_AR"
   />
 
   <!-- Twitter -->
