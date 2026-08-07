@@ -72,7 +72,7 @@ export function AccountCard({ account }: { account: Account }) {
   <div className="absolute top-2 left-2">
     <Badge
       className="
-        bg-gradient-to-r from-rose-600 to-pink-500
+        bg-gradient-to-r from-violet-600 to-purple-500
         text-white
         border border-pink-300/30
         shadow-[0_0_12px_rgba(244,63,94,0.45)]
