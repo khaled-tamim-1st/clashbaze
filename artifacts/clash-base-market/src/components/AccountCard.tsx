@@ -23,10 +23,51 @@ export function AccountCard({ account }: { account: Account }) {
           <div className="w-full h-full bg-muted flex items-center justify-center">لا توجد صورة</div>
         )}
         <div className="absolute top-2 right-2 flex gap-2">
-          {account.status === "available" && <Badge className="bg-green-500 hover:bg-green-600 text-white">متاح</Badge>}
-          {account.status === "reserved" && <Badge className="bg-yellow-500 hover:bg-yellow-600 text-white">محجوز</Badge>}
-          {account.status === "sold" && <Badge className="bg-red-500 hover:bg-red-600 text-white">مباع</Badge>}
-        </div>
+  {account.status === "available" && (
+    <Badge
+      className="
+        bg-gradient-to-r from-violet-600 to-purple-500
+        text-white
+        border border-violet-300/30
+        shadow-[0_0_15px_rgba(139,92,246,0.55)]
+        hover:shadow-[0_0_22px_rgba(139,92,246,0.75)]
+        transition-all duration-300
+      "
+    >
+      متاح
+    </Badge>
+  )}
+
+  {account.status === "reserved" && (
+    <Badge
+      className="
+        bg-gradient-to-r from-fuchsia-600 to-purple-600
+        text-white
+        border border-fuchsia-300/30
+        shadow-[0_0_15px_rgba(217,70,239,0.5)]
+        hover:shadow-[0_0_22px_rgba(217,70,239,0.7)]
+        transition-all duration-300
+      "
+    >
+      محجوز
+    </Badge>
+  )}
+
+  {account.status === "sold" && (
+    <Badge
+      className="
+        bg-gradient-to-r from-purple-950 to-violet-900
+        text-white
+        border border-violet-400/30
+        shadow-[0_0_12px_rgba(109,40,217,0.45)]
+        hover:shadow-[0_0_18px_rgba(109,40,217,0.65)]
+        transition-all duration-300
+      "
+    >
+      مباع
+    </Badge>
+  )}
+</div>
         {account.oldPrice && (
           <div className="absolute top-2 left-2">
             <Badge variant="destructive">
