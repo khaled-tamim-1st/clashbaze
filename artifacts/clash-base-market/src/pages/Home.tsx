@@ -75,8 +75,8 @@ export default function Home() {
               loading="lazy"
             />
           </section>
-
-         {/* Featured Accounts */}
+```jsx
+{/* Featured Accounts */}
 <section className="py-16 overflow-hidden">
   <div className="container mx-auto px-4 mb-8 text-center">
     <h2 className="text-3xl font-bold text-foreground">
@@ -98,22 +98,56 @@ export default function Home() {
       لا توجد حسابات مميزة حالياً
     </div>
   ) : (
-    <div className="marquee-container w-full overflow-hidden">
-      <div className="marquee-track flex w-max flex-nowrap gap-6">
-        {[...featuredAccounts, ...featuredAccounts, ...featuredAccounts].map(
-          (account, i) => (
+    <div className="marquee-container">
+      <div className="marquee-track flex flex-nowrap">
+
+        {/* المجموعة الأولى */}
+        <div className="flex flex-nowrap gap-6 shrink-0">
+          {featuredAccounts.map((account, i) => (
             <div
-              key={`${account.id}-${i}`}
+              key={`first-${account.id}-${i}`}
               className="w-[300px] shrink-0"
             >
               <AccountCard account={account} />
             </div>
-          )
-        )}
+          ))}
+        </div>
+
+        {/* المجموعة الثانية */}
+        <div
+          className="flex flex-nowrap gap-6 shrink-0"
+          aria-hidden="true"
+        >
+          {featuredAccounts.map((account, i) => (
+            <div
+              key={`second-${account.id}-${i}`}
+              className="w-[300px] shrink-0"
+            >
+              <AccountCard account={account} />
+            </div>
+          ))}
+        </div>
+
+        {/* المجموعة الثالثة */}
+        <div
+          className="flex flex-nowrap gap-6 shrink-0"
+          aria-hidden="true"
+        >
+          {featuredAccounts.map((account, i) => (
+            <div
+              key={`third-${account.id}-${i}`}
+              className="w-[300px] shrink-0"
+            >
+              <AccountCard account={account} />
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   )}
 </section>
+```
 
           <Testimonials />
 
