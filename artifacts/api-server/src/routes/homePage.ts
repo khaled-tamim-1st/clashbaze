@@ -72,12 +72,13 @@ router.get("/", async (req, res) => {
         description,
       },
       {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: SITE_NAME,
-        url: SITE_URL || undefined,
-        inLanguage: "ar",
-      },
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  alternateName: "Clash Market",
+  url: SITE_URL,
+  inLanguage: "ar",
+},
     ];
 
     const bodyHtml = `
