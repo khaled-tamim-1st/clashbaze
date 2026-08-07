@@ -52,7 +52,7 @@ export default function AccountDetail() {
       <SEO
         title={`حساب ${account.title}`}
         description={seoDescription}
-        url={`https://clashbaze.com/account/${account.slug}`}
+        url={`https://clashmarket.online/account/${account.slug}`}
         image={account.images?.[0] || undefined}
       />
       <Navbar />

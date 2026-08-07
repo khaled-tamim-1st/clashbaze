@@ -13,7 +13,7 @@ export default function Blog() {
       <SEO
         title="مدونة كلاش ماركت"
         description="أحدث المقالات والنصائح حول حسابات كلاش أوف كلانز وكلاش رويال من كلاش ماركت."
-        url="https://clashbaze.com/blog"
+        url="https://clashmarket.online/blog"
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">

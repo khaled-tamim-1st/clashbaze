@@ -46,7 +46,7 @@ export default function BlogDetail() {
       <SEO
         title={`${seoTitle} - مدونة كلاش ماركت`}
         description={seoDescription}
-        url={`https://clashbaze.com/blog/${post.slug}`}
+        url={`https://clashmarket.online/blog/${post.slug}`}
         image={post.coverImage || undefined}
       />
       <Navbar />

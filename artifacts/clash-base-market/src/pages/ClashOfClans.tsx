@@ -12,7 +12,7 @@ export default function ClashOfClans() {
       <SEO
         title="حسابات كلاش أوف كلانز للبيع - أفضل الحسابات"
         description="تسوق أفضل حسابات كلاش أوف كلانز (CoC) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري عبر كلاش ماركت."
-        url="https://clashbaze.com/clash-of-clans"
+        url="https://clashmarket.online/clash-of-clans"
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
