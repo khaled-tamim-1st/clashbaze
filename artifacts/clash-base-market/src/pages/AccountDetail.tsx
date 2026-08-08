@@ -42,7 +42,7 @@ export default function AccountDetail() {
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title}`;
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
-  const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانز" : "كلاش رويال";
+  const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const seoDescription = account.description
     ? account.description.slice(0, 160)
     : `${account.title} - ${gameLabel}، السعر ${account.price.toLocaleString("ar-SA")} ر.س. تفاصيل الحساب وشراء آمن عبر الواتساب من كلاش ماركت.`;
@@ -64,7 +64,7 @@ export default function AccountDetail() {
           <div>
             <div className="mb-4">
               <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold text-white ${account.game === 'clash-of-clans' ? 'bg-blue-600' : 'bg-red-600'}`}>
-                {account.game === "clash-of-clans" ? "كلاش أوف كلانز" : "كلاش رويال"}
+                {account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال"}
               </span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{account.title}</h1>

@@ -8,7 +8,7 @@ const router = Router();
 const WHATSAPP_NUMBER = process.env["WHATSAPP_NUMBER"] || "";
 
 const GAME_LABEL: Record<string, string> = {
-  "clash-of-clans": "كلاش أوف كلانز",
+  "clash-of-clans": "كلاش أوف كلانس",
   "clash-royale": "كلاش رويال",
 };
 

@@ -27,7 +27,7 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">حسابات كلاش أوف كلانز</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">حسابات كلاش أوف كلانس</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold">{stats.cocAccounts}</div>

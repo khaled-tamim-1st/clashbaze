@@ -33,10 +33,10 @@ router.get("/clash-of-clans", async (req, res) => {
 
     const accountsHtml = accounts.length
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
-      : `<p>لا توجد حسابات كلاش أوف كلانز متاحة حاليًا.</p>`;
+      : `<p>لا توجد حسابات كلاش أوف كلانس متاحة حاليًا.</p>`;
 
-    const title = `حسابات كلاش أوف كلانز للبيع - ${SITE_NAME}`;
-    const description = "تسوق أفضل حسابات كلاش أوف كلانز (CoC) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري.";
+    const title = `حسابات كلاش أوف كلانس للبيع - ${SITE_NAME}`;
+    const description = "تسوق أفضل حسابات كلاش أوف كلانس (CoC) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري.";
 
     const jsonLd = {
       "@context": "https://schema.org",
@@ -47,8 +47,8 @@ router.get("/clash-of-clans", async (req, res) => {
     };
 
     const bodyHtml = `
-      <span class="badge coc">كلاش أوف كلانز</span>
-      <h1>حسابات كلاش أوف كلانز للبيع</h1>
+      <span class="badge coc">كلاش أوف كلانس</span>
+      <h1>حسابات كلاش أوف كلانس للبيع</h1>
       <p>${description}</p>
       ${accountsHtml}
       <p><a class="back-link" href="/">← العودة للصفحة الرئيسية</a></p>

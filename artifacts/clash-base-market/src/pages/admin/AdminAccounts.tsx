@@ -196,7 +196,7 @@ export default function AdminAccounts() {
                   <Input
                     value={form.title}
                     onChange={(e) => { set("title", e.target.value); if (!editTarget) set("slug", toSlug(e.target.value)); }}
-                    required placeholder="حساب كلاش أوف كلانز TH16..."
+                    required placeholder="حساب كلاش أوف كلانس TH16..."
                   />
                 </div>
                 <div className="space-y-2">
@@ -208,7 +208,7 @@ export default function AdminAccounts() {
                   <Select value={form.game} onValueChange={(v) => set("game", v)}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="clash-of-clans">كلاش أوف كلانز</SelectItem>
+                      <SelectItem value="clash-of-clans">كلاش أوف كلانس</SelectItem>
                       <SelectItem value="clash-royale">كلاش رويال</SelectItem>
                     </SelectContent>
                   </Select>

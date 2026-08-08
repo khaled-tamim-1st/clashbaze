@@ -12,7 +12,7 @@ export default function Blog() {
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
         title="مدونة كلاش ماركت"
-        description="أحدث المقالات والنصائح حول حسابات كلاش أوف كلانز وكلاش رويال من كلاش ماركت."
+        description="أحدث المقالات والنصائح حول حسابات كلاش أوف كلانس وكلاش رويال من كلاش ماركت."
         url="https://clashmarket.online/blog"
       />
       <Navbar />

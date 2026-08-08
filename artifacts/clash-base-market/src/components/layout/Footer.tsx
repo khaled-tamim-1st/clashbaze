@@ -18,7 +18,7 @@ export function Footer() {
             <h3 className="text-lg font-bold mb-4 text-foreground">روابط سريعة</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/" className="hover:text-primary">الرئيسية</Link></li>
-              <li><Link href="/clash-of-clans" className="hover:text-primary">حسابات كلاش أوف كلانز</Link></li>
+              <li><Link href="/clash-of-clans" className="hover:text-primary">حسابات كلاش أوف كلانس</Link></li>
               <li><Link href="/clash-royale" className="hover:text-primary">حسابات كلاش رويال</Link></li>
             </ul>
           </div>

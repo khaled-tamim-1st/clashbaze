@@ -10,13 +10,13 @@ export default function ClashOfClans() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="حسابات كلاش أوف كلانز للبيع - أفضل الحسابات"
-        description="تسوق أفضل حسابات كلاش أوف كلانز (CoC) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري عبر كلاش ماركت."
+        title="حسابات كلاش أوف كلانس للبيع - أفضل الحسابات"
+        description="تسوق أفضل حسابات كلاش أوف كلانس (CoC) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري عبر كلاش ماركت."
         url="https://clashmarket.online/clash-of-clans"
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8">حسابات كلاش أوف كلانز</h1>
+        <h1 className="text-4xl font-bold mb-8">حسابات كلاش أوف كلانس</h1>
         
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

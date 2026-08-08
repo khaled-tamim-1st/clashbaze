@@ -109,7 +109,7 @@ export function AccountCard({ account }: { account: Account }) {
     }
   >
     {account.game === "clash-of-clans"
-      ? "كلاش أوف كلانز"
+      ? "كلاش أوف كلانس"
       : "كلاش رويال"}
   </Badge>
   </div>

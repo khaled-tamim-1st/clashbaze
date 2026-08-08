@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
 
     const cocHtml = cocAccounts.length
       ? `<div class="grid-list">${cocAccounts.map(accountCardHtml).join("")}</div>`
-      : `<p>لا توجد حسابات كلاش أوف كلانز متاحة حاليًا.</p>`;
+      : `<p>لا توجد حسابات كلاش أوف كلانس متاحة حاليًا.</p>`;
 
     const royaleHtml = royaleAccounts.length
       ? `<div class="grid-list">${royaleAccounts.map(accountCardHtml).join("")}</div>`
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
       : "";
 
     const description =
-      "كلاش ماركت - المتجر الموثوق لبيع وشراء حسابات كلاش أوف كلانز وكلاش رويال بأسعار مناسبة وضمان كامل.";
+      "كلاش ماركت - المتجر الموثوق لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال بأسعار مناسبة وضمان كامل.";
 
     const jsonLd = [
       {
@@ -85,9 +85,9 @@ router.get("/", async (req, res) => {
       <h1>${escapeHtml(SITE_NAME)} - بيع وشراء حسابات كلاش</h1>
       <p>${description}</p>
 
-      <h2>حسابات كلاش أوف كلانز</h2>
+      <h2>حسابات كلاش أوف كلانس</h2>
       ${cocHtml}
-      <p><a href="/clash-of-clans">عرض كل حسابات كلاش أوف كلانز ←</a></p>
+      <p><a href="/clash-of-clans">عرض كل حسابات كلاش أوف كلانس ←</a></p>
 
       <h2>حسابات كلاش رويال</h2>
       ${royaleHtml}
@@ -97,7 +97,7 @@ router.get("/", async (req, res) => {
     `;
 
     const html = pageShell({
-      title: `${SITE_NAME} - بيع وشراء حسابات كلاش أوف كلانز وكلاش رويال`,
+      title: `${SITE_NAME} - بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال`,
       description,
       canonicalPath: "/",
       ogImage: `${SITE_URL}/opengraph.png`,

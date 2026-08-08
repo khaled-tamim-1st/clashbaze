@@ -165,7 +165,7 @@ export default function AdminBlog() {
                   <Input
                     value={form.title}
                     onChange={(e) => { set("title", e.target.value); if (!editTarget) set("slug", toSlug(e.target.value)); }}
-                    required placeholder="دليل كلاش أوف كلانز..."
+                    required placeholder="دليل كلاش أوف كلانس..."
                   />
                 </div>
                 <div className="space-y-2">
@@ -178,7 +178,7 @@ export default function AdminBlog() {
                     <SelectTrigger><SelectValue placeholder="اختر اللعبة" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">عام</SelectItem>
-                      <SelectItem value="clash-of-clans">كلاش أوف كلانز</SelectItem>
+                      <SelectItem value="clash-of-clans">كلاش أوف كلانس</SelectItem>
                       <SelectItem value="clash-royale">كلاش رويال</SelectItem>
                     </SelectContent>
                   </Select>

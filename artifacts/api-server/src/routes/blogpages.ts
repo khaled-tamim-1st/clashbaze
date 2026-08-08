@@ -174,7 +174,7 @@ router.get("/blog", async (req, res) => {
 
     const html = pageShell({
       title: `مدونة ${SITE_NAME}`,
-      description: `أحدث المقالات والنصائح حول حسابات كلاش أوف كلانز وكلاش رويال من ${SITE_NAME}.`,
+      description: `أحدث المقالات والنصائح حول حسابات كلاش أوف كلانس وكلاش رويال من ${SITE_NAME}.`,
       canonicalPath: "/blog",
       bodyHtml: `<h1>مدونة ${escapeHtml(SITE_NAME)}</h1><ul class="post-list">${listHtml}</ul>`,
     });
