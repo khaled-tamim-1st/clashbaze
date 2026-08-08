@@ -10,6 +10,14 @@
 
 const BOT_UA_REGEX = /googlebot|bingbot|yandex|duckduckbot|baiduspider|applebot|facebookexternalhit|whatsapp|twitterbot|linkedinbot|slackbot|telegrambot|msnbot|pinterestbot|scrapingbot|curl|wget/i;
 
+// امتدادات ملفات static (صور/فونتات/سكريبتات) — هذه دائمًا موجودة فقط على
+// FRONTEND_ORIGIN (Cloudflare Pages بيقدّم مجلد public/dist)، والـ VPS
+// (Express) لا يخدم أي static assets إطلاقًا. لو تُركت هذه الطلبات ضمن
+// منطق "بوت → VPS" أدناه، كل طلبات og:image من WhatsApp/Facebook (وأي بوت
+// آخر) كانت ترجع 404 من الـ VPS، فتظهر معاينة بدون صورة رغم أن og:image
+// tag نفسه صحيح تمامًا في الـ HTML.
+const STATIC_ASSET_REGEX = /\.(png|jpe?g|gif|webp|svg|ico|avif|css|js|mjs|woff2?|ttf|eot|json|txt|map)$/i;
+
 // الدول المستهدفة الأساسية (الخليج + الشرق الأوسط)
 const TARGET_REGIONS = ["SA", "AE", "KW", "QA", "BH", "OM", "EG", "JO", "LB"];
 
@@ -40,17 +48,25 @@ export default {
       return proxyTo(VPS_ORIGIN, request, context);
     }
 
-    // 3. بوت؟ → VPS (HTML مُجهّز للـ SEO)
+    // 3. ملفات static (صور og:image، فونتات، CSS/JS) → دايمًا FRONTEND_ORIGIN
+    // بغض النظر عن كون الزائر بوت أو إنسان. الـ VPS مالوش static file
+    // serving إطلاقًا، فلو سابنا البوتات (بما فيهم WhatsApp/Googlebot) توجه
+    // لملفات زي opengraph.png هترجع 404 من الـ VPS.
+    if (STATIC_ASSET_REGEX.test(new URL(request.url).pathname)) {
+      return proxyTo(FRONTEND_ORIGIN, request, context);
+    }
+
+    // 4. بوت؟ → VPS (HTML مُجهّز للـ SEO)
     if (context.isBot) {
       return proxyTo(VPS_ORIGIN, request, context);
     }
 
-    // 4. إنسان عادي من منطقة مستهدفة (الخليج) → Cloudflare Pages (أداء محلي أفضل)
+    // 5. إنسان عادي من منطقة مستهدفة (الخليج) → Cloudflare Pages (أداء محلي أفضل)
     if (context.isTargetRegion) {
       return proxyTo(FRONTEND_ORIGIN, request, context);
     }
 
-    // 5. إنسان عادي من خارج المنطقة المستهدفة
+    // 6. إنسان عادي من خارج المنطقة المستهدفة
     // قرارين ممكنين:
     // أ) أرسله للفرونت عادي (global CDN يخدمه)
     // ب) أرسله للـ VPS (لأنه مش من الجمهور المقصود — قرار بيزنس)
