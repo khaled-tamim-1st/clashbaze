@@ -54,4 +54,5 @@ Thumbs.db
 !.env.example
 
 # Database backup
-backup.dumpservice-account.json
+backup.dump
+service-account.json
