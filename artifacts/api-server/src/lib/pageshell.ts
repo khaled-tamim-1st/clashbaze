@@ -87,7 +87,7 @@ export function pageShell(opts: {
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-
+  <link rel="icon" type="image/png" sizes="48x48" href="https://clashmarket.online/favicon.png" />
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
