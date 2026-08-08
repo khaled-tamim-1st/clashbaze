@@ -86,6 +86,13 @@ export function pageShell(opts: {
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <PageMap>
+    <DataObject type="thumbnail">
+      <Attribute name="src" value="https://clashmarket.online/thumbnail.png" />
+      <Attribute name="width" value="400" />
+      <Attribute name="height" value="400" />
+    </DataObject>
+  </PageMap>
   <meta charset="UTF-8" />
   <meta
       property="og:image"
