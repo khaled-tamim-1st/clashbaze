@@ -5,7 +5,9 @@ import { desc, eq } from "drizzle-orm";
 const router = Router();
 
 const SITE_NAME = "كلاش ماركت";
-const SITE_URL = process.env["FRONTEND_URL"] || "";
+// نفس fallback المستخدم في lib/pageshell.ts — يمنع أن تصبح og:image/canonical
+// روابط نسبية لو FRONTEND_URL غير مضبوط في بيئة الإنتاج
+const SITE_URL = process.env["FRONTEND_URL"] || "https://clashmarket.online";
 
 function escapeHtml(str: string): string {
   return str

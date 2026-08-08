@@ -4,7 +4,9 @@ import { ne } from "drizzle-orm";
 
 const router = Router();
 
-const SITE_URL = (process.env["FRONTEND_URL"] || "").replace(/\/$/, "");
+// نفس fallback المستخدم في lib/pageshell.ts — يمنع أن يصبح sitemap.xml فيه
+// روابط نسبية لو FRONTEND_URL غير مضبوط في بيئة الإنتاج
+const SITE_URL = (process.env["FRONTEND_URL"] || "https://clashmarket.online").replace(/\/$/, "");
 
 function escapeXml(str: string): string {
   return str
@@ -50,10 +52,6 @@ router.get("/robots.txt", (req, res) => {
 
 router.get("/sitemap.xml", async (req, res) => {
   try {
-    if (!SITE_URL) {
-      req.log.warn("FRONTEND_URL is not set — sitemap URLs will be relative and likely rejected by search engines.");
-    }
-
     const [accounts, posts] = await Promise.all([
       // نستبعد الحسابات المباعة (sold) من الـ sitemap لأنها صفحات منتهية الغرض التجاري،
       // وإدراجها بيضيّع crawl budget ويقلل جودة الإشارة العامة للموقع.

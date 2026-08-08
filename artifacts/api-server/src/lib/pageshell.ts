@@ -1,5 +1,11 @@
+// Fallback يحمي من أن يصبح SITE_URL فارغًا لو متغيّر البيئة FRONTEND_URL
+// غير مضبوط في الإنتاج — لأن SITE_URL فارغ يعني أن og:image/canonical/og:url
+// ستصبح روابط نسبية، وهو ما يمنع WhatsApp/Facebook من عرض صورة المعاينة
+// (تظهر بطاقة فيها عنوان ورابط بدون صورة). الدومين الافتراضي هنا مطابق
+// للدومين المكتوب في artifacts/worker/index.ts (FRONTEND_ORIGIN).
+const FALLBACK_SITE_URL = "https://clashmarket.online";
 export const SITE_NAME = "كلاش ماركت";
-export const SITE_URL = (process.env["FRONTEND_URL"] || "").replace(/\/$/, "");
+export const SITE_URL = (process.env["FRONTEND_URL"] || FALLBACK_SITE_URL).replace(/\/$/, "");
 
 export function escapeHtml(str: string): string {
   return str
