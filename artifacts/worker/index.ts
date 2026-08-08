@@ -36,6 +36,18 @@ interface RequestContext {
 
 export default {
   async fetch(request: Request): Promise<Response> {
+    const incomingUrl = new URL(request.url);
+
+    // طبقة حماية إضافية: أجبر HTTPS دائمًا حتى لو كان "Always Use HTTPS" في
+    // Cloudflare (SSL/TLS → Edge Certificates) متوقف أو تغيّر لاحقًا.
+    // بدون هذا، أي طلب http:// كان يوصل للـ Worker ويُخدَم بـ 200 عادي
+    // (نفس المحتوى على بروتوكولين)، وهو بالضبط ما تُبلغ عنه Google بتحذير
+    // "بروتوكول HTTPS غير صالح" في Search Console.
+    if (incomingUrl.protocol === "http:") {
+      incomingUrl.protocol = "https:";
+      return Response.redirect(incomingUrl.toString(), 301);
+    }
+
     const context = analyzeRequest(request);
 
     // 1. /api/* → دايمًا للـ VPS (بغض النظر عن الموقع أو نوع الزائر)
