@@ -88,17 +88,14 @@ export function pageShell(opts: {
 <head>
   <PageMap>
     <DataObject type="thumbnail">
-      <Attribute name="src" value="https://clashmarket.online/thumbnail.png" />
-      <Attribute name="width" value="400" />
-      <Attribute name="height" value="400" />
+      <Attribute name="src" value="${escapeHtml(ogImage)}" />
+      <Attribute name="width" value="1200" />
+      <Attribute name="height" value="630" />
     </DataObject>
   </PageMap>
   <meta charset="UTF-8" />
-  <meta
-      property="og:image"
-      content="https://clashmarket.online/favicon.ico"
-    />
-  <link rel="rel" href="https://clashmarket.online/favicon.ico" />
+  
+  <link rel="icon" href="https://clashmarket.online/favicon.ico" />
 <link rel="shortcut icon" href="https://clashmarket.online/favicon.ico" type="image/x-icon" />
 <link rel="icon" href="https://clashmarket.online/favicon.ico" type="image/x-icon" />
   <meta
