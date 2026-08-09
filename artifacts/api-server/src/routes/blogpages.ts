@@ -63,6 +63,11 @@ function pageShell(opts: { title: string; description: string; canonicalPath: st
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="application-name" content="${escapeHtml(SITE_NAME)}" />
+  <meta name="apple-mobile-web-app-title" content="${escapeHtml(SITE_NAME)}" />
+  <link rel="icon" href="${escapeHtml(`${SITE_URL}/favicon.ico`)}" type="image/x-icon" />
+  <link rel="shortcut icon" href="${escapeHtml(`${SITE_URL}/favicon.ico`)}" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="${escapeHtml(`${SITE_URL}/favicon.ico`)}" />
   <title>${escapeHtml(opts.title)}</title>
   <meta name="description" content="${escapeHtml(opts.description)}" />
   <meta name="robots" content="${robotsContent}" />
