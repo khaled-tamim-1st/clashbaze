@@ -5,4 +5,4 @@ Disallow: /admin/accounts
 Disallow: /admin/blog
 Disallow: /login
 
-Sitemap: https://clashmarket.online/sitemap.xml
+Sitemap: https://www.clashmarket.online/sitemap.xml

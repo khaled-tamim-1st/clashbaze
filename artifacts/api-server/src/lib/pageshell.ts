@@ -3,7 +3,7 @@
 // ستصبح روابط نسبية، وهو ما يمنع WhatsApp/Facebook من عرض صورة المعاينة
 // (تظهر بطاقة فيها عنوان ورابط بدون صورة). الدومين الافتراضي هنا مطابق
 // للدومين المكتوب في artifacts/worker/index.ts (FRONTEND_ORIGIN).
-const FALLBACK_SITE_URL = "https://clashmarket.online";
+const FALLBACK_SITE_URL = "https://www.clashmarket.online";
 export const SITE_NAME = "كلاش ماركت";
 export const SITE_URL = (process.env["FRONTEND_URL"] || FALLBACK_SITE_URL).replace(/\/$/, "");
 
@@ -95,9 +95,9 @@ export function pageShell(opts: {
   </PageMap>
   <meta charset="UTF-8" />
   
-  <link rel="icon" href="https://clashmarket.online/favicon.ico" />
-<link rel="shortcut icon" href="https://clashmarket.online/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="https://clashmarket.online/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="https://www.clashmarket.online/favicon.ico" />
+<link rel="shortcut icon" href="https://www.clashmarket.online/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="https://www.clashmarket.online/favicon.ico" type="image/x-icon" />
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"

@@ -7,7 +7,7 @@ const router = Router();
 const SITE_NAME = "كلاش ماركت";
 // نفس fallback المستخدم في lib/pageshell.ts — يمنع أن تصبح og:image/canonical
 // روابط نسبية لو FRONTEND_URL غير مضبوط في بيئة الإنتاج
-const SITE_URL = process.env["FRONTEND_URL"] || "https://clashmarket.online";
+const SITE_URL = process.env["FRONTEND_URL"] || "https://www.clashmarket.online";
 
 function escapeHtml(str: string): string {
   return str

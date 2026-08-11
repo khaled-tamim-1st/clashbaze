@@ -12,7 +12,7 @@ export default function ClashRoyale() {
       <SEO
         title="حسابات كلاش رويال للبيع - أفضل الحسابات"
         description="تسوق أحدث حسابات كلاش رويال (Clash Royale) مع كروت ماكس وأرينا عالية وأسعار تنافسية عبر كلاش ماركت."
-        url="https://clashmarket.online/clash-royale"
+        url="https://www.clashmarket.online/clash-royale"
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">

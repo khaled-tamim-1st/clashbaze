@@ -6,7 +6,7 @@ const router = Router();
 
 // نفس fallback المستخدم في lib/pageshell.ts — يمنع أن يصبح sitemap.xml فيه
 // روابط نسبية لو FRONTEND_URL غير مضبوط في بيئة الإنتاج
-const SITE_URL = (process.env["FRONTEND_URL"] || "https://clashmarket.online").replace(/\/$/, "");
+const SITE_URL = (process.env["FRONTEND_URL"] || "https://www.clashmarket.online").replace(/\/$/, "");
 
 function escapeXml(str: string): string {
   return str
