@@ -62,15 +62,24 @@ router.get("/", async (req, res) => {
 
     const allAccounts = [...cocAccounts, ...royaleAccounts];
 
+    const title = `كلاش ماركت | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال`;
     const description =
-      "كلاش ماركت - المنصة الموثوقة الأولى لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي. تاون ماكس، أبطال وسكنات نادرة، كروت ماكس، بأسعار منافسة وتسليم فوري عبر الواتساب.";
+      "متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج. قريات تاون ماكس، تشكيلات قوية، تسليم فوري، ودفع آمن عبر تابي ومدى.";
 
     const jsonLd = [
       {
         "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: SITE_NAME,
+        alternateName: ["Clash Market", "كلاش ماركت أونلاين", "clashmarket.online"],
+        url: SITE_URL || "https://www.clashmarket.online/",
+        inLanguage: "ar-SA",
+      },
+      {
+        "@context": "https://schema.org",
         "@type": "Organization",
         name: SITE_NAME,
-        url: SITE_URL || "https://www.clashmarket.online",
+        url: SITE_URL || "https://www.clashmarket.online/",
         logo: `${SITE_URL}/opengraph.png`,
         description,
         areaServed: [
@@ -80,16 +89,7 @@ router.get("/", async (req, res) => {
           { "@type": "Country", "name": "Qatar" },
           { "@type": "Country", "name": "Bahrain" },
           { "@type": "Country", "name": "Oman" }
-        ],
-        sameAs: []
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: SITE_NAME,
-        alternateName: "Clash Market",
-        url: SITE_URL || "https://www.clashmarket.online",
-        inLanguage: "ar-SA",
+        ]
       },
       {
         "@context": "https://schema.org",
@@ -105,7 +105,7 @@ router.get("/", async (req, res) => {
     ];
 
     const bodyHtml = `
-      <h1>${escapeHtml(SITE_NAME)} | سوق حسابات كلاش أوف كلانس وكلاش رويال في الخليج</h1>
+      <h1>${escapeHtml(SITE_NAME)} | متجر حسابات كلاش أوف كلانس وكلاش رويال في الخليج</h1>
       <p>${description}</p>
 
       <section style="margin: 32px 0;">
@@ -142,7 +142,7 @@ router.get("/", async (req, res) => {
     `;
 
     const html = pageShell({
-      title: `${SITE_NAME} | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج`,
+      title,
       description,
       canonicalPath: "/",
       ogImage: `${SITE_URL}/opengraph.png`,

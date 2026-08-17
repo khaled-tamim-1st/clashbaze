@@ -105,7 +105,8 @@ export function pageShell(opts: {
   
   <link rel="icon" href="${escapeHtml(`${SITE_URL}/favicon.ico`)}" type="image/x-icon" />
   <link rel="shortcut icon" href="${escapeHtml(`${SITE_URL}/favicon.ico`)}" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="${escapeHtml(`${SITE_URL}/opengraph.png`)}" />
+  <link rel="icon" type="image/png" sizes="192x192" href="${escapeHtml(`${SITE_URL}/thumbnail.png`)}" />
+  <link rel="apple-touch-icon" href="${escapeHtml(`${SITE_URL}/thumbnail.png`)}" />
 
   <title>${escapeHtml(opts.title)}</title>
   <meta name="description" content="${escapeHtml(opts.description)}" />

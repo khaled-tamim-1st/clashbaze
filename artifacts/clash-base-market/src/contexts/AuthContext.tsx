@@ -29,6 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // `Authorization: Bearer <token>` so the server can verify admin writes.
     setAuthTokenGetter(() => userRef.current?.getIdToken() ?? null);
 
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       userRef.current = u;
       setUser(u);
@@ -38,7 +43,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logout = async () => {
-    await firebaseSignOut(auth);
+    if (auth) {
+      await firebaseSignOut(auth);
+    }
   };
 
   const isAdmin = user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();

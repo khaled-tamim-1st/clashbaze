@@ -36,6 +36,10 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
+    if (!auth) {
+      setLoginError("خدمة المصادقة غير مهيأة");
+      return;
+    }
     setLoginLoading(true);
     try {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
@@ -50,6 +54,11 @@ export default function Login() {
     e.preventDefault();
     setRegError("");
     setRegSuccess("");
+
+    if (!auth) {
+      setRegError("خدمة المصادقة غير مهيأة");
+      return;
+    }
 
     if (regPassword !== regConfirm) {
       setRegError("كلمة المرور غير متطابقة");

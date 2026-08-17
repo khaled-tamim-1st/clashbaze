@@ -24,7 +24,7 @@ const TARGET_REGIONS = ["SA", "AE", "KW", "QA", "BH", "OM", "EG", "JO", "LB"];
 // Origins (استبدل بـ روابطك الحقيقية)
 // Origins
 const VPS_ORIGIN = "https://api.clashmarket.online";
-const FRONTEND_ORIGIN = "https://www.clashmarket.kh603333.workers.dev";
+const FRONTEND_ORIGIN = "https://clashmarket.kh603333.workers.dev";
 
 interface RequestContext {
   country: string;
@@ -129,8 +129,8 @@ async function proxyTo(
   // نسخ الـ headers
   const headers = new Headers(request.headers);
 
-  // Host سيتم تحديده بواسطة fetch للـ Origin الجديد
-  headers.delete("Host");
+  // تعيين الـ Host header بدقة ليطابق الدومين الهدف حتى يتعرف عليه Cloudflare
+  headers.set("Host", targetUrl.host);
 
   const init: RequestInit = {
     method: request.method,
@@ -143,5 +143,42 @@ async function proxyTo(
     init.body = request.body;
   }
 
-  return fetch(targetUrl.toString(), init);
+  try {
+    const response = await fetch(targetUrl.toString(), init);
+    
+    // إذا أرجع الـ Frontend Worker خطأ 404 أو فشل وكان الطلب لصفحة عادية (وليس ملف static)، نحوّل تلقائياً للـ VPS
+    if (
+      (!response.ok || response.status === 404) &&
+      origin === FRONTEND_ORIGIN &&
+      !STATIC_ASSET_REGEX.test(incomingUrl.pathname)
+    ) {
+      const vpsUrl = new URL(VPS_ORIGIN);
+      vpsUrl.pathname = incomingUrl.pathname;
+      vpsUrl.search = incomingUrl.search;
+      const vpsHeaders = new Headers(request.headers);
+      vpsHeaders.set("Host", vpsUrl.host);
+      return fetch(vpsUrl.toString(), {
+        method: request.method,
+        headers: vpsHeaders,
+        redirect: "manual",
+      });
+    }
+    
+    return response;
+  } catch (_err) {
+    // في حال حدوث أي خطأ في الاتصال بالفرونت، الـ VPS يعمل كـ Fallback فوري
+    if (origin === FRONTEND_ORIGIN && !STATIC_ASSET_REGEX.test(incomingUrl.pathname)) {
+      const vpsUrl = new URL(VPS_ORIGIN);
+      vpsUrl.pathname = incomingUrl.pathname;
+      vpsUrl.search = incomingUrl.search;
+      const vpsHeaders = new Headers(request.headers);
+      vpsHeaders.set("Host", vpsUrl.host);
+      return fetch(vpsUrl.toString(), {
+        method: request.method,
+        headers: vpsHeaders,
+        redirect: "manual",
+      });
+    }
+    throw _err;
+  }
 }
