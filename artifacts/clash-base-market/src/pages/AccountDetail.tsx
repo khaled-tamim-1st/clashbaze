@@ -47,13 +47,44 @@ export default function AccountDetail() {
     ? account.description.slice(0, 160)
     : `${account.title} - ${gameLabel}، السعر ${account.price.toLocaleString("ar-SA")} ر.س. تفاصيل الحساب وشراء آمن عبر الواتساب من كلاش ماركت.`;
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: account.title,
+    description: seoDescription,
+    image: account.images && account.images.length > 0 ? account.images : ["https://www.clashmarket.online/opengraph.png"],
+    brand: {
+      "@type": "Brand",
+      name: "Supercell",
+    },
+    category: gameLabel,
+    offers: {
+      "@type": "Offer",
+      price: account.price,
+      priceCurrency: "SAR",
+      priceValidUntil: "2026-12-31",
+      itemCondition: "https://schema.org/UsedCondition",
+      availability:
+        account.status === "available"
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      url: `https://www.clashmarket.online/account/${account.slug}`,
+      seller: {
+        "@type": "Organization",
+        name: "كلاش ماركت",
+        url: "https://www.clashmarket.online",
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title={`حساب ${account.title}`}
+        title={`${account.title} - ${gameLabel} للبيع`}
         description={seoDescription}
         url={`https://www.clashmarket.online/account/${account.slug}`}
         image={account.images?.[0] || undefined}
+        jsonLd={productJsonLd}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">

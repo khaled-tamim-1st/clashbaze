@@ -7,16 +7,32 @@ import { SEO } from "@/components/SEO";
 export default function ClashOfClans() {
   const { data: accounts, isLoading } = useListAccounts({ game: "clash-of-clans" });
 
+  const itemListJsonLd = accounts && accounts.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "حسابات كلاش أوف كلانس للبيع في السعودية والخليج",
+    itemListElement: accounts.map((a, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `https://www.clashmarket.online/account/${a.slug}`,
+      name: a.title,
+    })),
+  } : undefined;
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="حسابات كلاش أوف كلانس للبيع - أفضل الحسابات"
-        description="تسوق أفضل حسابات كلاش أوف كلانس (CoC) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري عبر كلاش ماركت."
+        title="حسابات كلاش أوف كلانس للبيع في السعودية والخليج (تاون ماكس)"
+        description="تسوق أفضل حسابات كلاش أوف كلانس (Clash of Clans) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري عبر كلاش ماركت. تاون 14 و15 و16 و17 ماكس مع أبطال وجواهر وسكنات."
         url="https://www.clashmarket.online/clash-of-clans"
+        jsonLd={itemListJsonLd}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8">حسابات كلاش أوف كلانس</h1>
+        <h1 className="text-4xl font-bold mb-4">حسابات كلاش أوف كلانس للبيع</h1>
+        <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
+          تصفح أكبر سوق لشراء وبيع حسابات كلاش أوف كلانس (CoC) في المملكة العربية السعودية ودول الخليج العربي. قرى جاهزة للحروب، أبطال ماكس، ودفاعات قوية مع تسليم آمن وفوري عبر الواتساب.
+        </p>
         
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

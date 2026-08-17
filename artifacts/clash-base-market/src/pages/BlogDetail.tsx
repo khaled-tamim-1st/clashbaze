@@ -41,13 +41,41 @@ export default function BlogDetail() {
   const seoTitle = post.seoTitle || post.title;
   const seoDescription = post.seoDescription || stripHtml(post.content).slice(0, 160);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: seoDescription,
+    inLanguage: "ar-SA",
+    image: post.coverImage ? [post.coverImage] : ["https://www.clashmarket.online/opengraph.png"],
+    datePublished: post.createdAt,
+    dateModified: post.createdAt,
+    author: {
+      "@type": "Organization",
+      name: "كلاش ماركت",
+      url: "https://www.clashmarket.online",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "كلاش ماركت",
+      url: "https://www.clashmarket.online",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.clashmarket.online/opengraph.png",
+      },
+    },
+    mainEntityOfPage: `https://www.clashmarket.online/blog/${post.slug}`,
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title={`${seoTitle} - مدونة كلاش ماركت`}
+        title={`${seoTitle} | مدونة كلاش ماركت`}
         description={seoDescription}
         url={`https://www.clashmarket.online/blog/${post.slug}`}
         image={post.coverImage || undefined}
+        type="article"
+        jsonLd={articleJsonLd}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16 max-w-4xl">

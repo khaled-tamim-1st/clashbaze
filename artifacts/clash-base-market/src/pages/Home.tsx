@@ -76,79 +76,77 @@ export default function Home() {
               loading="lazy"
             />
           </section>
-```jsx
-{/* Featured Accounts */}
-<section className="py-16 overflow-hidden">
-  <div className="container mx-auto px-4 mb-8 text-center">
-    <h2 className="text-3xl font-bold text-foreground">
-      حسابات مميزة
-    </h2>
-  </div>
-
-  {loadingFeatured ? (
-    <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[1, 2, 3].map((i) => (
-        <div
-          key={i}
-          className="h-96 bg-muted animate-pulse rounded-lg"
-        />
-      ))}
-    </div>
-  ) : !featuredAccounts || featuredAccounts.length === 0 ? (
-    <div className="container mx-auto px-4 text-center py-12 text-muted-foreground">
-      لا توجد حسابات مميزة حالياً
-    </div>
-  ) : (
-    <div className="marquee-container">
-      <div className="marquee-track flex flex-nowrap">
-
-        {/* المجموعة الأولى */}
-        <div className="flex flex-nowrap gap-6 shrink-0">
-          {featuredAccounts.map((account, i) => (
-            <div
-              key={`first-${account.id}-${i}`}
-              className="w-[300px] shrink-0"
-            >
-              <AccountCard account={account} />
+          {/* Featured Accounts */}
+          <section className="py-16 overflow-hidden">
+            <div className="container mx-auto px-4 mb-8 text-center">
+              <h2 className="text-3xl font-bold text-foreground">
+                حسابات مميزة
+              </h2>
             </div>
-          ))}
-        </div>
 
-        {/* المجموعة الثانية */}
-        <div
-          className="flex flex-nowrap gap-6 shrink-0"
-          aria-hidden="true"
-        >
-          {featuredAccounts.map((account, i) => (
-            <div
-              key={`second-${account.id}-${i}`}
-              className="w-[300px] shrink-0"
-            >
-              <AccountCard account={account} />
-            </div>
-          ))}
-        </div>
+            {loadingFeatured ? (
+              <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="h-96 bg-muted animate-pulse rounded-lg"
+                  />
+                ))}
+              </div>
+            ) : !featuredAccounts || featuredAccounts.length === 0 ? (
+              <div className="container mx-auto px-4 text-center py-12 text-muted-foreground">
+                لا توجد حسابات مميزة حالياً
+              </div>
+            ) : (
+              <div className="marquee-container">
+                <div className="marquee-track flex flex-nowrap">
 
-        {/* المجموعة الثالثة */}
-        <div
-          className="flex flex-nowrap gap-6 shrink-0"
-          aria-hidden="true"
-        >
-          {featuredAccounts.map((account, i) => (
-            <div
-              key={`third-${account.id}-${i}`}
-              className="w-[300px] shrink-0"
-            >
-              <AccountCard account={account} />
-            </div>
-          ))}
-        </div>
+                  {/* المجموعة الأولى */}
+                  <div className="flex flex-nowrap gap-6 shrink-0">
+                    {featuredAccounts.map((account, i) => (
+                      <div
+                        key={`first-${account.id}-${i}`}
+                        className="w-[300px] shrink-0"
+                      >
+                        <AccountCard account={account} />
+                      </div>
+                    ))}
+                  </div>
 
-      </div>
-    </div>
-  )}
-</section>
-```
+                  {/* المجموعة الثانية */}
+                  <div
+                    className="flex flex-nowrap gap-6 shrink-0"
+                    aria-hidden="true"
+                  >
+                    {featuredAccounts.map((account, i) => (
+                      <div
+                        key={`second-${account.id}-${i}`}
+                        className="w-[300px] shrink-0"
+                      >
+                        <AccountCard account={account} />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* المجموعة الثالثة */}
+                  <div
+                    className="flex flex-nowrap gap-6 shrink-0"
+                    aria-hidden="true"
+                  >
+                    {featuredAccounts.map((account, i) => (
+                      <div
+                        key={`third-${account.id}-${i}`}
+                        className="w-[300px] shrink-0"
+                      >
+                        <AccountCard account={account} />
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+            )}
+          </section>
 
           <Testimonials />
 

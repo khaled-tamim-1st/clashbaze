@@ -60,44 +60,89 @@ router.get("/", async (req, res) => {
           .join("")}</ul>`
       : "";
 
+    const allAccounts = [...cocAccounts, ...royaleAccounts];
+
     const description =
-      "كلاش ماركت - المتجر الموثوق لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال بأسعار مناسبة وضمان كامل.";
+      "كلاش ماركت - المنصة الموثوقة الأولى لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي. تاون ماكس، أبطال وسكنات نادرة، كروت ماكس، بأسعار منافسة وتسليم فوري عبر الواتساب.";
 
     const jsonLd = [
       {
         "@context": "https://schema.org",
         "@type": "Organization",
         name: SITE_NAME,
-        url: SITE_URL || undefined,
+        url: SITE_URL || "https://www.clashmarket.online",
+        logo: `${SITE_URL}/opengraph.png`,
         description,
+        areaServed: [
+          { "@type": "Country", "name": "Saudi Arabia" },
+          { "@type": "Country", "name": "United Arab Emirates" },
+          { "@type": "Country", "name": "Kuwait" },
+          { "@type": "Country", "name": "Qatar" },
+          { "@type": "Country", "name": "Bahrain" },
+          { "@type": "Country", "name": "Oman" }
+        ],
+        sameAs: []
       },
       {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_NAME,
-  alternateName: "Clash Market",
-  url: SITE_URL,
-  inLanguage: "ar",
-},
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: SITE_NAME,
+        alternateName: "Clash Market",
+        url: SITE_URL || "https://www.clashmarket.online",
+        inLanguage: "ar-SA",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "أحدث حسابات كلاش للبيع في السعودية والخليج",
+        itemListElement: allAccounts.map((a, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${SITE_URL}/account/${a.slug}`,
+          name: a.title,
+        })),
+      }
     ];
 
     const bodyHtml = `
-      <h1>${escapeHtml(SITE_NAME)} - بيع وشراء حسابات كلاش</h1>
+      <h1>${escapeHtml(SITE_NAME)} | سوق حسابات كلاش أوف كلانس وكلاش رويال في الخليج</h1>
       <p>${description}</p>
 
-      <h2>حسابات كلاش أوف كلانس</h2>
-      ${cocHtml}
-      <p><a href="/clash-of-clans">عرض كل حسابات كلاش أوف كلانس ←</a></p>
+      <section style="margin: 32px 0;">
+        <h2>حسابات كلاش أوف كلانس للبيع (Clash of Clans)</h2>
+        <p>تصفح أقوى قريات كلاش تاون هول 14، 15، 16، و17 ماكس ليفل، أبطال ماكس، ودفاعات قوية جاهزة للحروب والدوريات في السعودية والخليج.</p>
+        ${cocHtml}
+        <p><a href="/clash-of-clans" class="cta">استعراض كافة حسابات كلاش أوف كلانس ←</a></p>
+      </section>
 
-      <h2>حسابات كلاش رويال</h2>
-      ${royaleHtml}
-      <p><a href="/clash-royale">عرض كل حسابات كلاش رويال ←</a></p>
+      <section style="margin: 48px 0;">
+        <h2>حسابات كلاش رويال للبيع (Clash Royale)</h2>
+        <p>تشكيلات ماكس، ساحات دوري الأبطال، إيموتات نادرة، وتطويرات بطاقات كاملة (Evolutions) مع تسليم فوري وضمان كامل.</p>
+        ${royaleHtml}
+        <p><a href="/clash-royale" class="cta">استعراض كافة حسابات كلاش رويال ←</a></p>
+      </section>
 
-      ${latestPosts.length ? `<h2>أحدث المقالات</h2>${blogHtml}<p><a href="/blog">عرض كل المقالات ←</a></p>` : ""}
+      <section style="margin: 48px 0; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
+        <h2>لماذا تختار كلاش ماركت في السعودية ودول الخليج؟</h2>
+        <ul style="color: #cbd5e1; padding-right: 20px; line-height: 2;">
+          <li><strong>أمان وضمان 100%:</strong> فحص دقيق لكل حساب والتأكد من ربط السوبر سيل آيدي وتغيير الإيميل بسلاسة.</li>
+          <li><strong>طرق دفع مرنة ومحلية:</strong> دعم مدى، تابي، تمارا، Apple Pay، التحويل البنكي، والبطاقات الائتمانية.</li>
+          <li><strong>دعم مباشر وسريع:</strong> إتمام المعاملات فورياً والتواصل المباشر عبر الواتساب دون تعقيد.</li>
+          <li><strong>أسعار تنافسية:</strong> تقييم عادل للقرى والحسابات بناءً على السوق الخليجي والعربي.</li>
+        </ul>
+      </section>
+
+      ${latestPosts.length ? `
+      <section style="margin: 48px 0;">
+        <h2>أحدث مقالات ونصائح ألعاب سوبر سيل</h2>
+        <p>شروحات استراتيجيات الهجوم، تصاميم القرى، وتحديثات كلاش أولاً بأول.</p>
+        ${blogHtml}
+        <p><a href="/blog" class="back-link">زيارة مدونة كلاش ماركت للمزيد من الشروحات ←</a></p>
+      </section>` : ""}
     `;
 
     const html = pageShell({
-      title: `${SITE_NAME} - بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال`,
+      title: `${SITE_NAME} | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج`,
       description,
       canonicalPath: "/",
       ogImage: `${SITE_URL}/opengraph.png`,

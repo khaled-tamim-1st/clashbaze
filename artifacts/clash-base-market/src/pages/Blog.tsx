@@ -11,13 +11,16 @@ export default function Blog() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="مدونة كلاش ماركت"
-        description="أحدث المقالات والنصائح حول حسابات كلاش أوف كلانس وكلاش رويال من كلاش ماركت."
+        title="مدونة كلاش ماركت | شروحات واستراتيجيات ألعاب سوبر سيل"
+        description="أحدث المقالات والشروحات حول بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال، تصاميم القرى، واستراتيجيات الهجوم في الخليج العربي."
         url="https://www.clashmarket.online/blog"
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8">المدونة</h1>
+        <h1 className="text-4xl font-bold mb-4">مدونة كلاش ماركت</h1>
+        <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
+          دليلك الأفضل لاحتراف كلاش أوف كلانس وكلاش رويال، أحدث التحديثات، وأفضل النصائح لاختيار وتأمين حسابك بأمان.
+        </p>
         
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
