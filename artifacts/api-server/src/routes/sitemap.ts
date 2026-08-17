@@ -17,13 +17,29 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
-function urlEntry(path: string, opts: { lastmod?: Date; priority?: string; changefreq?: string } = {}) {
-  const { lastmod, priority = "0.7", changefreq = "weekly" } = opts;
+function urlEntry(
+  path: string,
+  opts: {
+    lastmod?: Date;
+    priority?: string;
+    changefreq?: string;
+    imageUrl?: string | null;
+    imageTitle?: string;
+  } = {},
+) {
+  const { lastmod, priority = "0.7", changefreq = "weekly", imageUrl, imageTitle } = opts;
+  const imageXml = imageUrl
+    ? `\n    <image:image>
+      <image:loc>${escapeXml(imageUrl.startsWith("http") ? imageUrl : `${SITE_URL}${imageUrl}`)}</image:loc>
+      ${imageTitle ? `<image:title>${escapeXml(imageTitle)}</image:title>` : ""}
+    </image:image>`
+    : "";
+
   return `  <url>
     <loc>${escapeXml(SITE_URL + path)}</loc>
     ${lastmod ? `<lastmod>${lastmod.toISOString().split("T")[0]}</lastmod>` : ""}
     <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
+    <priority>${priority}</priority>${imageXml}
   </url>`;
 }
 
@@ -53,20 +69,51 @@ router.get("/robots.txt", (req, res) => {
 router.get("/sitemap.xml", async (req, res) => {
   try {
     const [accounts, posts] = await Promise.all([
-      // نستبعد الحسابات المباعة (sold) من الـ sitemap لأنها صفحات منتهية الغرض التجاري،
-      // وإدراجها بيضيّع crawl budget ويقلل جودة الإشارة العامة للموقع.
       db
-        .select({ slug: accountsTable.slug, createdAt: accountsTable.createdAt, status: accountsTable.status })
+        .select({
+          slug: accountsTable.slug,
+          title: accountsTable.title,
+          images: accountsTable.images,
+          createdAt: accountsTable.createdAt,
+          status: accountsTable.status,
+        })
         .from(accountsTable)
         .where(ne(accountsTable.status, "sold")),
-      db.select({ slug: blogTable.slug, createdAt: blogTable.createdAt }).from(blogTable),
+      db
+        .select({
+          slug: blogTable.slug,
+          title: blogTable.title,
+          coverImage: blogTable.coverImage,
+          createdAt: blogTable.createdAt,
+        })
+        .from(blogTable),
     ]);
 
     const staticUrls = [
-      urlEntry("/", { priority: "1.0", changefreq: "daily" }),
-      urlEntry("/clash-of-clans", { priority: "0.9", changefreq: "daily" }),
-      urlEntry("/clash-royale", { priority: "0.9", changefreq: "daily" }),
-      urlEntry("/blog", { priority: "0.8", changefreq: "weekly" }),
+      urlEntry("/", {
+        priority: "1.0",
+        changefreq: "daily",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "كلاش ماركت | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال",
+      }),
+      urlEntry("/clash-of-clans", {
+        priority: "0.9",
+        changefreq: "daily",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "حسابات كلاش أوف كلانس للبيع",
+      }),
+      urlEntry("/clash-royale", {
+        priority: "0.9",
+        changefreq: "daily",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "حسابات كلاش رويال للبيع",
+      }),
+      urlEntry("/blog", {
+        priority: "0.8",
+        changefreq: "weekly",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "مدونة كلاش ماركت",
+      }),
     ];
 
     const accountUrls = accounts.map((a) =>
@@ -74,12 +121,24 @@ router.get("/sitemap.xml", async (req, res) => {
         lastmod: a.createdAt,
         priority: a.status === "reserved" ? "0.7" : "0.8",
         changefreq: "daily",
+        imageUrl: a.images && a.images.length > 0 ? a.images[0] : `${SITE_URL}/thumbnail.png`,
+        imageTitle: a.title,
       }),
     );
-    const blogUrls = posts.map((p) => urlEntry(`/blog/${p.slug}`, { lastmod: p.createdAt, priority: "0.6", changefreq: "monthly" }));
+
+    const blogUrls = posts.map((p) =>
+      urlEntry(`/blog/${p.slug}`, {
+        lastmod: p.createdAt,
+        priority: "0.6",
+        changefreq: "monthly",
+        imageUrl: p.coverImage || `${SITE_URL}/thumbnail.png`,
+        imageTitle: p.title,
+      }),
+    );
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${[...staticUrls, ...accountUrls, ...blogUrls].join("\n")}
 </urlset>`;
 
