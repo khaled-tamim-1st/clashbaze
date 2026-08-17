@@ -130,9 +130,7 @@ export default function Home() {
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                       حسابات مميزة
                     </h2>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      اسحب يمين ويسار أو استخدم الأسهم لاستعراض الحسابات
-                    </p>
+                    
                   </div>
                 </div>
 
