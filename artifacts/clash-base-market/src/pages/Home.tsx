@@ -61,7 +61,7 @@ export default function Home() {
         title="كلاش ماركت | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال"
         description="متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج. قريات تاون ماكس، تشكيلات قوية، تسليم فوري، ودفع آمن عبر تابي ومدى."
         url="https://www.clashmarket.online/"
-        image="https://www.clashmarket.online/opengraph.png"
+        image="https://www.clashmarket.online/thumbnail.png"
       />
 
       <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">

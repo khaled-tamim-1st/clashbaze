@@ -80,7 +80,7 @@ router.get("/", async (req, res) => {
         "@type": "Organization",
         name: SITE_NAME,
         url: SITE_URL || "https://www.clashmarket.online/",
-        logo: `${SITE_URL}/opengraph.png`,
+        logo: `${SITE_URL}/thumbnail.png`,
         description,
         areaServed: [
           { "@type": "Country", "name": "Saudi Arabia" },
@@ -145,7 +145,7 @@ router.get("/", async (req, res) => {
       title,
       description,
       canonicalPath: "/",
-      ogImage: `${SITE_URL}/opengraph.png`,
+      ogImage: `${SITE_URL}/thumbnail.png`,
       bodyHtml,
       jsonLd,
     });

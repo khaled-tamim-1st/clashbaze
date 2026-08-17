@@ -69,7 +69,7 @@ export function pageShell(opts: {
   const resolvedOgImage =
     opts.ogImage && /^https?:\/\//i.test(opts.ogImage)
       ? opts.ogImage
-      : `${SITE_URL}/opengraph.png`;
+      : `${SITE_URL}/thumbnail.png`;
   const ogImage = resolvedOgImage;
 
   const jsonLdArray = opts.jsonLd
@@ -82,7 +82,9 @@ export function pageShell(opts: {
     .join("\n  ");
 
   const ogType = opts.ogType === "article" ? "article" : "website";
-  const robotsContent = opts.noindex ? "noindex, follow" : "index, follow";
+  const robotsContent = opts.noindex
+    ? "noindex, follow"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
