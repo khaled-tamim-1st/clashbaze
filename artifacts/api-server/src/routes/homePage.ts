@@ -101,6 +101,52 @@ router.get("/", async (req, res) => {
           url: `${SITE_URL}/account/${a.slug}`,
           name: a.title,
         })),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "كيف تتم عملية شراء ونقل حساب كلاش أوف كلانس أو كلاش رويال؟",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "بعد اختيار الحساب المناسب، تضغط على زر شراء عبر الواتساب، يتواصل معك الوسيط المعتمد ويتم نقل ملكية السوبر سيل آيدي (Supercell ID) وتغيير البريد الإلكتروني وتفعيل الحماية بخطوتين برقمك فوراً وبأمان 100%."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "ما هي طرق الدفع المتاحة في السعودية ودول الخليج؟",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "نوفر كافة طرق الدفع المحلية المعتمدة: مدى (Mada)، تابي (Tabby)، تمارا (Tamara) للتقسيط، Apple Pay، تحويل بنكي سعودي وخليجي مباشر، والبطاقات الائتمانية (Visa / MasterCard)."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "هل الحسابات المعروضة في كلاش ماركت مضمونة؟",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "نعم، جميع الحسابات مفحوصة وموثقة مع ضمان كامل ضد السحب أو الاسترجاع، ووساطة رسمية تضمن حقوق المشتري والبائع."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "كم يستغرق تسليم الحساب بعد إتمام الدفع؟",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "التسليم فوري ومباشر، عادةً يستغرق من 5 إلى 15 دقيقة لإتمام نقل الحساب وتأكيده معك خطوة بخطوة."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "هل يمكنني بيع حسابي عبر متجر كلاش ماركت؟",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "نعم، يمكنك التواصل معنا عبر الواتساب لعرض مواصفات حسابك وتقييمه وعرضه للمشترين بعمولة وساطة رمزية وأمان تام."
+            }
+          }
+        ]
       }
     ];
 
@@ -130,6 +176,35 @@ router.get("/", async (req, res) => {
           <li><strong>دعم مباشر وسريع:</strong> إتمام المعاملات فورياً والتواصل المباشر عبر الواتساب دون تعقيد.</li>
           <li><strong>أسعار تنافسية:</strong> تقييم عادل للقرى والحسابات بناءً على السوق الخليجي والعربي.</li>
         </ul>
+      </section>
+
+      <section style="margin: 48px 0; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
+        <h2>الأسئلة الشائعة حول بيع وشراء حسابات كلاش</h2>
+        
+        <div style="margin-top: 16px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
+          <h3 style="font-size: 1.15rem; color: #f59e0b; margin-bottom: 8px;">س: كيف تتم عملية شراء ونقل حساب كلاش أوف كلانس أو كلاش رويال؟</h3>
+          <p style="color: #cbd5e1; margin: 0;">بعد اختيار الحساب المناسب، تضغط على زر شراء عبر الواتساب، يتواصل معك الوسيط المعتمد ويتم نقل ملكية السوبر سيل آيدي وتغيير البريد الإلكتروني وتفعيل الحماية برقمك فوراً وبأمان 100%.</p>
+        </div>
+
+        <div style="margin-top: 16px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
+          <h3 style="font-size: 1.15rem; color: #f59e0b; margin-bottom: 8px;">س: ما هي طرق الدفع المتاحة في السعودية ودول الخليج؟</h3>
+          <p style="color: #cbd5e1; margin: 0;">نوفر كافة طرق الدفع المحلية المعتمدة: مدى، تابي، تمارا للتقسيط، Apple Pay، تحويل بنكي سعودي وخليجي مباشر، والبطاقات الائتمانية (Visa / MasterCard).</p>
+        </div>
+
+        <div style="margin-top: 16px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
+          <h3 style="font-size: 1.15rem; color: #f59e0b; margin-bottom: 8px;">س: هل الحسابات المعروضة في كلاش ماركت مضمونة؟</h3>
+          <p style="color: #cbd5e1; margin: 0;">نعم، جميع الحسابات مفحوصة وموثقة مع ضمان كامل ضد السحب أو الاسترجاع، ووساطة رسمية تضمن حقوق المشتري والبائع.</p>
+        </div>
+
+        <div style="margin-top: 16px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
+          <h3 style="font-size: 1.15rem; color: #f59e0b; margin-bottom: 8px;">س: كم يستغرق تسليم الحساب بعد إتمام الدفع؟</h3>
+          <p style="color: #cbd5e1; margin: 0;">التسليم فوري ومباشر، عادةً يستغرق من 5 إلى 15 دقيقة لإتمام نقل الحساب وتأكيده معك خطوة بخطوة.</p>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <h3 style="font-size: 1.15rem; color: #f59e0b; margin-bottom: 8px;">س: هل يمكنني بيع حسابي عبر متجر كلاش ماركت؟</h3>
+          <p style="color: #cbd5e1; margin: 0;">نعم، يمكنك التواصل معنا عبر الواتساب لعرض مواصفات حسابك وتقييمه وعرضه للمشترين بعمولة وساطة رمزية وأمان تام.</p>
+        </div>
       </section>
 
       ${latestPosts.length ? `
