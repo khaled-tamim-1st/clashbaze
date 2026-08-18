@@ -38,13 +38,13 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const incomingUrl = new URL(request.url);
 
-    // طبقة حماية إضافية: أجبر HTTPS دائمًا حتى لو كان "Always Use HTTPS" في
-    // Cloudflare (SSL/TLS → Edge Certificates) متوقف أو تغيّر لاحقًا.
-    // بدون هذا، أي طلب http:// كان يوصل للـ Worker ويُخدَم بـ 200 عادي
-    // (نفس المحتوى على بروتوكولين)، وهو بالضبط ما تُبلغ عنه Google بتحذير
-    // "بروتوكول HTTPS غير صالح" في Search Console.
-    if (incomingUrl.protocol === "http:") {
+    // طبقة حماية وإجبار الـ Canonical Domain:
+    // 1. تحويل http:// إلى https://
+    // 2. تحويل clashmarket.online (Apex) إلى www.clashmarket.online لمنع تكرار الصفحات (Duplicate Pages)
+    const isApexDomain = incomingUrl.hostname === "clashmarket.online";
+    if (incomingUrl.protocol === "http:" || isApexDomain) {
       incomingUrl.protocol = "https:";
+      incomingUrl.hostname = "www.clashmarket.online";
       return Response.redirect(incomingUrl.toString(), 301);
     }
 
