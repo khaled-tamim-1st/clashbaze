@@ -6,7 +6,6 @@ import { useGetFeaturedAccounts, useListAccounts, useListBlogPosts } from "@work
 import { AccountCard } from "@/components/AccountCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Testimonials } from "@/components/Testimonials";
-import { FAQ, faqData } from "@/components/FAQ";
 import { SEO } from "../components/SEO";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
@@ -15,19 +14,6 @@ export default function Home() {
   const { data: featuredAccounts, isLoading: loadingFeatured } = useGetFeaturedAccounts();
   const { data: latestAccounts, isLoading: loadingLatest } = useListAccounts({ limit: 6 });
   const { data: blogPosts, isLoading: loadingBlogs } = useListBlogPosts({ limit: 3 });
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqData.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
 
   // تحكم بالسحب والتمرير التفاعلي بالماوس والتاتش
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -76,7 +62,6 @@ export default function Home() {
         description="متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج. قريات تاون ماكس، تشكيلات قوية، تسليم فوري، ودفع آمن عبر تابي ومدى."
         url="https://www.clashmarket.online/"
         image="https://www.clashmarket.online/thumbnail.png"
-        jsonLd={faqJsonLd}
       />
 
       <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
@@ -212,8 +197,6 @@ export default function Home() {
           </section>
 
           <Testimonials />
-
-          <FAQ />
 
           {/* Blog Preview */}
           <section className="py-16 container mx-auto px-4">
