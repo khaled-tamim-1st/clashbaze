@@ -8,7 +8,8 @@
  * 4. optimized CDN/latency للخليج تحديدًا
  */
 
-const BOT_UA_REGEX = /googlebot|google-inspectiontool|googlebot-image|bingbot|yandex|duckduckbot|baiduspider|applebot|facebookexternalhit|whatsapp|twitterbot|linkedinbot|slackbot|telegrambot|msnbot|pinterestbot|scrapingbot|ahrefsbot|semrushbot|mj12bot|dotbot|screaming frog|gptbot|chatgpt-user|claude-web|claudebot|perplexitybot|anthropic-ai|bytespider|curl|wget/i;
+const BOT_UA_REGEX =
+  /bot|spider|crawler|archiver|scraper|checker|audit|preview|google|bing|yandex|duckduck|baidu|apple|facebook|whatsapp|twitter|linkedin|slack|telegram|pinterest|ahrefs|semrush|mj12|dotbot|screaming|gpt|claude|perplexity|anthropic|bytespider|curl|wget|httpclient|lighthouse|pagespeed/i;
 
 // امتدادات ملفات static (صور/فونتات/سكريبتات) — هذه دائمًا موجودة فقط على
 // FRONTEND_ORIGIN (Cloudflare Pages بيقدّم مجلد public/dist)، والـ VPS
