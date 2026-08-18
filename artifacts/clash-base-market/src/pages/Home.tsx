@@ -1,4 +1,3 @@
-import { useState, useRef } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,52 +6,12 @@ import { AccountCard } from "@/components/AccountCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Testimonials } from "@/components/Testimonials";
 import { SEO } from "../components/SEO";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 export default function Home() {
   // 1. استدعاء الـ Hooks داخل نطاق الدالة
   const { data: featuredAccounts, isLoading: loadingFeatured } = useGetFeaturedAccounts();
   const { data: latestAccounts, isLoading: loadingLatest } = useListAccounts({ limit: 6 });
   const { data: blogPosts, isLoading: loadingBlogs } = useListBlogPosts({ limit: 3 });
-
-  // تحكم بالسحب والتمرير التفاعلي بالماوس والتاتش
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const amount = 340;
-      scrollRef.current.scrollBy({
-        left: direction === "right" ? amount : -amount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   return (
     <>
@@ -118,82 +77,76 @@ export default function Home() {
             />
           </section>
 
-          {/* Featured Accounts - Interactive Slider */}
-          <section className="py-16 bg-card/30 border-y border-border/50">
-            <div className="container mx-auto px-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
-                      حسابات مميزة
-                    </h2>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      اسحب يمين ويسار أو استخدم الأسهم لاستعراض الحسابات
-                    </p>
-                  </div>
-                </div>
-
-                {featuredAccounts && featuredAccounts.length > 0 && (
-                  <div className="flex items-center gap-2 self-end sm:self-auto">
-                    <button
-                      onClick={() => scroll("right")}
-                      className="w-10 h-10 rounded-full border border-border bg-card hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95"
-                      aria-label="السابق"
-                      title="السابق"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => scroll("left")}
-                      className="w-10 h-10 rounded-full border border-border bg-card hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all cursor-pointer shadow-sm active:scale-95"
-                      aria-label="التالي"
-                      title="التالي"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {loadingFeatured ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="h-96 bg-muted animate-pulse rounded-xl"
-                    />
-                  ))}
-                </div>
-              ) : !featuredAccounts || featuredAccounts.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
-                  لا توجد حسابات مميزة حالياً
-                </div>
-              ) : (
-                <div
-                  ref={scrollRef}
-                  onMouseDown={handleMouseDown}
-                  onMouseLeave={handleMouseLeave}
-                  onMouseUp={handleMouseUp}
-                  onMouseMove={handleMouseMove}
-                  className={`flex gap-6 overflow-x-auto pb-6 pt-2 select-none scroll-smooth ${
-                    isDragging ? "cursor-grabbing" : "cursor-grab"
-                  }`}
-                  style={{ scrollbarWidth: "none" }}
-                >
-                  {featuredAccounts.map((account) => (
-                    <div
-                      key={account.id}
-                      className="w-[300px] shrink-0 transition-transform duration-200 hover:-translate-y-1"
-                    >
-                      <AccountCard account={account} />
-                    </div>
-                  ))}
-                </div>
-              )}
+          {/* Featured Accounts */}
+          <section className="py-16 overflow-hidden">
+            <div className="container mx-auto px-4 mb-8 text-center">
+              <h2 className="text-3xl font-bold text-foreground">
+                حسابات مميزة
+              </h2>
             </div>
+
+            {loadingFeatured ? (
+              <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="h-96 bg-muted animate-pulse rounded-lg"
+                  />
+                ))}
+              </div>
+            ) : !featuredAccounts || featuredAccounts.length === 0 ? (
+              <div className="container mx-auto px-4 text-center py-12 text-muted-foreground">
+                لا توجد حسابات مميزة حالياً
+              </div>
+            ) : (
+              <div className="marquee-container">
+                <div className="marquee-track flex flex-nowrap">
+
+                  {/* المجموعة الأولى */}
+                  <div className="flex flex-nowrap gap-6 shrink-0">
+                    {featuredAccounts.map((account, i) => (
+                      <div
+                        key={`first-${account.id}-${i}`}
+                        className="w-[300px] shrink-0"
+                      >
+                        <AccountCard account={account} />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* المجموعة الثانية */}
+                  <div
+                    className="flex flex-nowrap gap-6 shrink-0"
+                    aria-hidden="true"
+                  >
+                    {featuredAccounts.map((account, i) => (
+                      <div
+                        key={`second-${account.id}-${i}`}
+                        className="w-[300px] shrink-0"
+                      >
+                        <AccountCard account={account} />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* المجموعة الثالثة */}
+                  <div
+                    className="flex flex-nowrap gap-6 shrink-0"
+                    aria-hidden="true"
+                  >
+                    {featuredAccounts.map((account, i) => (
+                      <div
+                        key={`third-${account.id}-${i}`}
+                        className="w-[300px] shrink-0"
+                      >
+                        <AccountCard account={account} />
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+            )}
           </section>
 
           <Testimonials />
