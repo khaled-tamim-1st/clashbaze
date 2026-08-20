@@ -6,9 +6,13 @@ import { Link } from "wouter";
 
 import { formatImageUrl } from "@/lib/utils";
 
+import { useCurrency } from "@/contexts/CurrencyContext";
+
 export function AccountCard({ account }: { account: Account }) {
+  const { formatPrice } = useCurrency();
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
-  const message = `أريد شراء حساب ${account.whatsappMessage || account.title}`;
+  const priceFormatted = formatPrice(account.price);
+  const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (
@@ -122,9 +126,9 @@ export function AccountCard({ account }: { account: Account }) {
         </Link>
         <div className="mt-2 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-xl font-bold text-primary">{account.price.toLocaleString("ar-SA")} ر.س</span>
+            <span className="text-xl font-bold text-primary">{formatPrice(account.price)}</span>
             {account.oldPrice && (
-              <span className="text-sm text-muted-foreground line-through">{account.oldPrice.toLocaleString("ar-SA")} ر.س</span>
+              <span className="text-sm text-muted-foreground line-through">{formatPrice(account.oldPrice)}</span>
             )}
           </div>
           {account.game === "clash-of-clans" && account.townHall && (

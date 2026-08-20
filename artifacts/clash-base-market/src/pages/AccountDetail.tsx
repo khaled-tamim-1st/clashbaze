@@ -7,12 +7,15 @@ import { AccountCard } from "@/components/AccountCard";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 
+import { useCurrency } from "@/contexts/CurrencyContext";
+
 export default function AccountDetail() {
   const [, params] = useRoute("/account/:slug");
   const slug = params?.slug || "";
   
   const { data: account, isLoading } = useGetAccount(slug);
   const { data: relatedAccounts, isLoading: loadingRelated } = useGetRelatedAccounts(slug);
+  const { formatPrice } = useCurrency();
 
   if (isLoading) {
     return (
@@ -39,13 +42,14 @@ export default function AccountDetail() {
   }
 
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
-  const message = `أريد شراء حساب ${account.whatsappMessage || account.title}`;
+  const priceFormatted = formatPrice(account.price);
+  const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const seoDescription = account.description
     ? account.description.slice(0, 160)
-    : `${account.title} - ${gameLabel}، السعر ${account.price.toLocaleString("ar-SA")} ر.س. تفاصيل الحساب وشراء آمن عبر الواتساب من كلاش ماركت.`;
+    : `${account.title} - ${gameLabel}، السعر ${formatPrice(account.price)} ر.س. تفاصيل الحساب وشراء آمن عبر الواتساب من كلاش ماركت.`;
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -123,9 +127,9 @@ export default function AccountDetail() {
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{account.title}</h1>
             
             <div className="flex items-center gap-4 mb-8">
-              <span className="text-3xl font-extrabold text-primary">{account.price.toLocaleString("ar-SA")} ر.س</span>
+              <span className="text-3xl font-extrabold text-primary">{formatPrice(account.price)}</span>
               {account.oldPrice && (
-                <span className="text-xl text-muted-foreground line-through">{account.oldPrice.toLocaleString("ar-SA")} ر.س</span>
+                <span className="text-xl text-muted-foreground line-through">{formatPrice(account.oldPrice)}</span>
               )}
             </div>
 

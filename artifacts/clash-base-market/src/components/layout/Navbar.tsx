@@ -12,6 +12,8 @@ const navLinks = [
   { href: "/blog", label: "المدونة" },
 ];
 
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [location] = useLocation();
@@ -45,7 +47,8 @@ export function Navbar() {
           <NavLinks />
         </nav>
 
-        <div className="hidden md:flex items-center gap-2 shrink-0">
+        <div className="hidden md:flex items-center gap-3 shrink-0">
+          <CurrencySwitcher />
           {user ? (
             isAdmin ? (
               <div className="flex items-center gap-2">
@@ -64,7 +67,8 @@ export function Navbar() {
           )}
         </div>
 
-        <div className="md:hidden">
+        <div className="flex md:hidden items-center gap-2">
+          <CurrencySwitcher />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="sm" className="p-2">
