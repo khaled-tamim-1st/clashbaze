@@ -27,8 +27,21 @@ function whatsappLink(title: string, whatsappMessage: string | null): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
+function formatCloudinaryUrl(url: string | undefined | null): string {
+  if (!url) return "";
+  if (url.includes("res.cloudinary.com") && url.includes("/upload/")) {
+    let formatted = url.replace(/\.(heic|heif)$/i, ".jpg");
+    if (!formatted.includes("/f_auto") && !formatted.includes("/q_auto")) {
+      formatted = formatted.replace("/upload/", "/upload/f_auto,q_auto/");
+    }
+    return formatted;
+  }
+  return url;
+}
+
 function accountCardHtml(a: typeof accountsTable.$inferSelect): string {
-  const image = a.images?.[0] || "";
+  const rawImage = a.images?.[0] || "";
+  const image = formatCloudinaryUrl(rawImage);
   return `<a class="card" href="/account/${escapeHtml(a.slug)}">
     ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(a.title)}" loading="lazy" />` : ""}
     <div class="card-body">
@@ -162,7 +175,9 @@ router.get("/account/:slug", async (req, res) => {
       )
       .join("\n");
 
-    const galleryHtml = (account.images || [])
+    const formattedImages = (account.images || []).map(formatCloudinaryUrl);
+
+    const galleryHtml = formattedImages
       .map((img) => `<img src="${escapeHtml(img)}" alt="${escapeHtml(account.title)}" loading="lazy" />`)
       .join("\n");
 
@@ -175,7 +190,7 @@ router.get("/account/:slug", async (req, res) => {
       "@type": "Product",
       name: account.title,
       description,
-      image: account.images && account.images.length > 0 ? account.images : [`${SITE_URL}/opengraph.png`],
+      image: formattedImages.length > 0 ? formattedImages : [`${SITE_URL}/opengraph.png`],
       brand: {
         "@type": "Brand",
         name: "Supercell",

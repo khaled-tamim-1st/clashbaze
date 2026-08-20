@@ -4,6 +4,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
+import { formatImageUrl } from "@/lib/utils";
+
 export function AccountCard({ account }: { account: Account }) {
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title}`;
@@ -15,7 +17,7 @@ export function AccountCard({ account }: { account: Account }) {
         {account.images && account.images.length > 0 ? (
           <img 
             loading="lazy"
-            src={account.images[0]} 
+            src={formatImageUrl(account.images[0])} 
             alt={account.title} 
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
