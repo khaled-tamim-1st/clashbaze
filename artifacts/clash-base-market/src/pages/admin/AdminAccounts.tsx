@@ -248,8 +248,34 @@ export default function AdminAccounts() {
               </div>
 
               <div className="space-y-2">
-                <Label>الوصف</Label>
-                <Textarea value={form.description} onChange={(e) => set("description", e.target.value)} rows={5} placeholder="اكتب وصف الحساب بالتفصيل هنا..." />
+                <div className="flex items-center justify-between">
+                  <Label>الوصف</Label>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs text-primary hover:text-primary hover:bg-primary/10 h-7 px-2"
+                    onClick={() => {
+                      const isCoc = form.game === "clash-of-clans";
+                      const autoDesc = isCoc
+                        ? `قرية كلاش أوف كلانس ${form.townHall ? `تاون هول ${form.townHall}` : "ماكس"} مميزة للبيع مع متجر كلاش ماركت.
+🔹 المستوى: ${form.level || "ماكس ليفل"}
+🔹 الدفاعات والأبطال: أبطال ودفاعات قوية جاهزة للحروب والدوريات بأعلى المستويات.
+🔹 الأمان والضمان: نقل ملكية السوبر سيل آيدي (Supercell ID) وتغيير البريد الإلكتروني فورياً بأمان 100% مع ضمان عدم الاسترجاع.
+🔹 التسليم: تسليم فوري ومباشر خلال دقائق عبر الواتساب في السعودية والخليج.
+🔹 طرق الدفع: مدى، تابي، تمارا للتقسيط، Apple Pay، وتحويل بنكي مباشر.`
+                        : `حساب كلاش رويال ${form.arena ? `ساحة ${form.arena}` : "مميز"} للبيع مع متجر كلاش ماركت.
+🔹 البطاقات والتطويرات: تشكيلات قوية، تطورات بطاقات كاملة (Evolutions)، وإيموتات نادرة.
+🔹 الأمان والضمان: نقل رسمي لسوبر سيل آيدي مع ضمان كامل ضد السحب.
+🔹 التسليم: فوري وسريع عبر الواتساب في السعودية ودول الخليج.
+🔹 طرق الدفع: مدى، تابي، تمارا، وApple Pay.`;
+                      set("description", autoDesc);
+                    }}
+                  >
+                    ✨ توليد وصف احترافي للـ SEO تلقائياً
+                  </Button>
+                </div>
+                <Textarea value={form.description} onChange={(e) => set("description", e.target.value)} rows={6} placeholder="اكتب وصف الحساب بالتفصيل أو اضغط على زر توليد الوصف أعلاه..." />
               </div>
               <div className="space-y-2">
                 <Label>روابط الصور (رابط واحد في كل سطر)</Label>
