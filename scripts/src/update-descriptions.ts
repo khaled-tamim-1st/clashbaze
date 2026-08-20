@@ -1,4 +1,4 @@
-import { db, accountsTable } from "@workspace/db";
+import { db, accountsTable } from "../../lib/db/src/index.ts";
 import { eq } from "drizzle-orm";
 
 async function updateAllAccountDescriptions() {
