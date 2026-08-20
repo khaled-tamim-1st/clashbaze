@@ -48,15 +48,15 @@ export default function AccountDetail() {
 
   const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const seoDescription = account.description
-    ? account.description.slice(0, 160)
-    : `${account.title} - ${gameLabel}، السعر ${formatPrice(account.price)} ر.س. تفاصيل الحساب وشراء آمن عبر الواتساب من كلاش ماركت.`;
+    ? `${account.description.slice(0, 120)} - شراء ${account.title} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س مع كلاش ماركت في السعودية والخليج.`
+    : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س في السعودية والخليج. مواصفات كاملة، تسليم فوري، ونقل إيميل Supercell ID بأمان مع كلاش ماركت.`;
 
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: account.title,
     description: seoDescription,
-    image: account.images && account.images.length > 0 ? account.images : ["https://www.clashmarket.online/opengraph.png"],
+    image: account.images && account.images.length > 0 ? account.images : ["https://www.clashmarket.online/thumbnail.png"],
     brand: {
       "@type": "Brand",
       name: "Supercell",
@@ -106,7 +106,7 @@ export default function AccountDetail() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title={`${account.title} - ${gameLabel} للبيع`}
+        title={`${account.title} - ${gameLabel} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س | كلاش ماركت`}
         description={seoDescription}
         url={`https://www.clashmarket.online/account/${account.slug}`}
         image={account.images?.[0] || undefined}

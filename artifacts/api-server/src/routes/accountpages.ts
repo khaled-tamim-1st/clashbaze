@@ -182,15 +182,15 @@ router.get("/account/:slug", async (req, res) => {
       .join("\n");
 
     const description = account.description
-      ? account.description.slice(0, 160)
-      : `شراء ${account.title} - ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س. تفاصيل ومواصفات الحساب، شراء فوري وآمن عبر الواتساب في السعودية والخليج مع ${SITE_NAME}.`;
+      ? `${account.description.slice(0, 120)} - شراء ${account.title} للبيع بسعر ${formatPrice(account.price)} ر.س مع كلاش ماركت في السعودية والخليج.`
+      : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س في السعودية والخليج. مواصفات كاملة، تسليم فوري، ونقل إيميل Supercell ID بأمان مع ${SITE_NAME}.`;
 
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Product",
       name: account.title,
       description,
-      image: formattedImages.length > 0 ? formattedImages : [`${SITE_URL}/opengraph.png`],
+      image: formattedImages.length > 0 ? formattedImages : [`${SITE_URL}/thumbnail.png`],
       brand: {
         "@type": "Brand",
         name: "Supercell",
@@ -245,7 +245,7 @@ router.get("/account/:slug", async (req, res) => {
 
     const relatedHtml = relatedFiltered.length
       ? `<section style="margin-top:48px; padding-top:32px; border-top:1px solid #334155;">
-          <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:16px;">حسابات ${escapeHtml(gameLabel)} مشابهة</h2>
+          <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:16px;">حسابات ${escapeHtml(gameLabel)} مشابهة قد تهمك</h2>
           <div class="grid-list">${relatedFiltered.map(accountCardHtml).join("\n")}</div>
         </section>`
       : "";
@@ -258,7 +258,7 @@ router.get("/account/:slug", async (req, res) => {
       </div>
       <h1>${escapeHtml(account.title)}</h1>
       <div class="meta" style="margin-bottom: 16px;">
-        الحالة: <span class="status ${escapeHtml(account.status)}" style="color: ${account.status === 'available' ? '#10b981' : '#f59e0b'}; font-weight: 700;">${escapeHtml(statusLabel)}</span> | وسيط آمن | تسليم فوري في السعودية والخليج
+        الحالة: <span class="status ${escapeHtml(account.status)}" style="color: ${account.status === 'available' ? '#10b981' : '#f59e0b'}; font-weight: 700;">${escapeHtml(statusLabel)}</span> | وسيط معتمد | تسليم فوري في السعودية ودول الخليج
       </div>
       ${account.images?.length ? `<div class="gallery">${galleryHtml}</div>` : ""}
       <div class="price-row">
@@ -266,16 +266,28 @@ router.get("/account/:slug", async (req, res) => {
         ${account.oldPrice ? `<span class="old-price">${formatPrice(account.oldPrice)} ر.س</span>` : ""}
       </div>
       ${specsHtml ? `<div class="specs">${specsHtml}</div>` : ""}
-      ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1;">${escapeHtml(account.description)}</div>` : ""}
-      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم فوري)</a>
+      ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1; line-height: 1.9;">${escapeHtml(account.description)}</div>` : ""}
+      
+      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم فوري وآمن)</a>
+
+      <section style="margin: 36px 0; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
+        <h2 style="font-size: 1.25rem; color: #f59e0b; margin-top: 0; margin-bottom: 12px;">🛡️ ضمان وأمان شراء الحسابات مع ${escapeHtml(SITE_NAME)}</h2>
+        <ul style="color: #cbd5e1; padding-right: 20px; line-height: 2; margin: 0;">
+          <li><strong>أمان 100%:</strong> فحص دقيق للحساب ونقل ملكية البريد الإلكتروني وسوبر سيل آيدي بالكامل.</li>
+          <li><strong>تسليم فوري:</strong> يتم إتمام عملية النقل والتسليم خلال 5 إلى 15 دقيقة عبر الواتساب.</li>
+          <li><strong>طرق دفع محلية متعددة:</strong> ندعم مدى، تابي، تمارا، Apple Pay، والتحويل البنكي المباشر.</li>
+          <li><strong>ضمان شامل:</strong> حماية كاملة للمشتري وضمان عدم الاسترجاع.</li>
+        </ul>
+      </section>
+
       ${relatedHtml}
     `;
 
     const html = pageShell({
-      title: `${account.title} - ${gameLabel} للبيع | ${SITE_NAME}`,
+      title: `${account.title} - ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س | ${SITE_NAME}`,
       description,
       canonicalPath: `/account/${account.slug}`,
-      ogImage: account.images?.[0] || null,
+      ogImage: formattedImages[0] || null,
       bodyHtml,
       jsonLd: [jsonLd, breadcrumbJsonLd(breadcrumbItems)],
     });
