@@ -10,7 +10,7 @@ export function CurrencySwitcher({ className = "" }: { className?: string }) {
       variant="outline"
       size="sm"
       onClick={toggleCurrency}
-      className={`h-9 px-3.5 gap-2 rounded-xl font-bold text-xs transition-all duration-300 cursor-pointer shadow-sm active:scale-95 bg-primary/15 border-primary/35 text-primary hover:bg-primary/25 hover:border-primary/60 hover:text-primary ${className}`}
+      className={`h-9 px-3.5 gap-2 rounded-xl font-extrabold text-xs transition-all duration-300 cursor-pointer shadow-sm active:scale-95 bg-purple-950/30 border-purple-500/40 text-purple-400 hover:text-purple-300 hover:bg-purple-900/40 hover:border-purple-400/60 shadow-[0_0_12px_rgba(168,85,247,0.2)] ${className}`}
       title={
         currency === "SAR"
           ? "العملة الحالية: ريال سعودي (اضغط للتبديل إلى الدولار)"
@@ -19,14 +19,14 @@ export function CurrencySwitcher({ className = "" }: { className?: string }) {
       aria-label="تبديل العملة"
     >
       {currency === "SAR" ? (
-        <span className="flex items-center gap-1.5">
-          <Coins className="w-4 h-4 text-primary" />
-          <span>ريال سعودي (SAR)</span>
+        <span className="flex items-center gap-1.5 text-purple-400 group-hover:text-purple-300">
+          <Coins className="w-4 h-4 text-purple-400" />
+          <span className="text-purple-300 font-black">ريال سعودي (SAR)</span>
         </span>
       ) : (
-        <span className="flex items-center gap-1.5">
-          <DollarSign className="w-4 h-4 text-primary" />
-          <span>USD ($)</span>
+        <span className="flex items-center gap-1.5 text-purple-400 group-hover:text-purple-300">
+          <DollarSign className="w-4 h-4 text-purple-400" />
+          <span className="text-purple-300 font-black">USD ($)</span>
         </span>
       )}
     </Button>
