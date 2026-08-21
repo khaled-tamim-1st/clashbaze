@@ -116,12 +116,24 @@ router.get("/sitemap.xml", async (req, res) => {
       }),
     ];
 
+function formatCloudinaryUrl(url: string | undefined | null): string {
+  if (!url) return "";
+  if (url.includes("res.cloudinary.com") && url.includes("/upload/")) {
+    let formatted = url.replace(/\.(heic|heif)$/i, ".jpg");
+    if (!formatted.includes("/f_auto") && !formatted.includes("/q_auto")) {
+      formatted = formatted.replace("/upload/", "/upload/f_auto,q_auto/");
+    }
+    return formatted;
+  }
+  return url;
+}
+
     const accountUrls = accounts.map((a) =>
       urlEntry(`/account/${a.slug}`, {
         lastmod: a.createdAt,
         priority: a.status === "reserved" ? "0.7" : "0.8",
         changefreq: "daily",
-        imageUrl: a.images && a.images.length > 0 ? a.images[0] : `${SITE_URL}/thumbnail.png`,
+        imageUrl: a.images && a.images.length > 0 ? formatCloudinaryUrl(a.images[0]) : `${SITE_URL}/thumbnail.png`,
         imageTitle: a.title,
       }),
     );
@@ -131,7 +143,7 @@ router.get("/sitemap.xml", async (req, res) => {
         lastmod: p.createdAt,
         priority: "0.6",
         changefreq: "monthly",
-        imageUrl: p.coverImage || `${SITE_URL}/thumbnail.png`,
+        imageUrl: p.coverImage ? formatCloudinaryUrl(p.coverImage) : `${SITE_URL}/thumbnail.png`,
         imageTitle: p.title,
       }),
     );
