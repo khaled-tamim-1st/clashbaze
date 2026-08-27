@@ -22,16 +22,16 @@ export default function ClashOfClans() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="حسابات كلاش أوف كلانس للبيع في السعودية والخليج (تاون ماكس)"
-        description="تسوق أفضل حسابات كلاش أوف كلانس (Clash of Clans) الموثوقة والمميزة بأسعار مناسبة وضمان تسليم فوري عبر كلاش ماركت. تاون 14 و15 و16 و17 ماكس مع أبطال وجواهر وسكنات."
+        title="متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس) | كلاش ماركت"
+        description="متجر حسابات كلاش أوف كلانس الموثوق لبيع وشراء قريات كلاش تاون 15 و16 و17 و18 ماكس بأسعار رخيصة وضمان كامل وتسليم فوري عبر الواتساب في السعودية والخليج."
         url="https://www.clashmarket.online/clash-of-clans"
         jsonLd={itemListJsonLd}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-4">حسابات كلاش أوف كلانس للبيع</h1>
+        <h1 className="text-4xl font-bold mb-4">متجر حسابات كلاش أوف كلانس للبيع</h1>
         <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
-          تصفح أكبر سوق لشراء وبيع حسابات كلاش أوف كلانس (CoC) في المملكة العربية السعودية ودول الخليج العربي. قرى جاهزة للحروب، أبطال ماكس، ودفاعات قوية مع تسليم آمن وفوري عبر الواتساب.
+          أكبر متجر حسابات كلاش أوف كلانس (Clash of Clans) لشراء وبيع القرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس جاهزة للحروب ودوري القبائل مع نقل ملكية Supercell ID وتسليم فوري وآمن.
         </p>
         
         {isLoading ? (

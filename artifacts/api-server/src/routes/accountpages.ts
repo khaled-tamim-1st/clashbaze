@@ -68,12 +68,12 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
 
       const isCoc = game === "clash-of-clans";
       const title = isCoc
-        ? `حسابات كلاش أوف كلانس للبيع في السعودية والخليج (تاون ماكس) | ${SITE_NAME}`
-        : `حسابات كلاش رويال للبيع في السعودية والخليج (كروت ماكس) | ${SITE_NAME}`;
+        ? `متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس) | ${SITE_NAME}`
+        : `متجر حسابات كلاش رويال للبيع (تشكيلات وكروت ماكس) | ${SITE_NAME}`;
       
       const description = isCoc
-        ? `تصفح أقوى حسابات كلاش أوف كلانس (Clash of Clans) للبيع في السعودية، الإمارات، والكويت. تاون 14 و15 و16 و17 ماكس، أبطال وسكنات نادرة بأسعار منافسة وتسليم فوري مع ${SITE_NAME}.`
-        : `تسوق أحدث حسابات كلاش رويال (Clash Royale) للبيع في السعودية ودول الخليج. كروت ماكس ليفل، أرينا ودوري الأبطال، إيموتات نادرة وتطويرات بطاقات مع ضمان كامل من ${SITE_NAME}.`;
+        ? `متجر حسابات كلاش أوف كلانس الموثوق لبيع وشراء قريات كلاش تاون 15 و16 و17 و18 ماكس بأسعار رخيصة وضمان كامل وتسليم فوري عبر الواتساب في السعودية والخليج.`
+        : `متجر حسابات كلاش رويال الموثوق لبيع وشراء حسابات كلاش رويال كروت ماكس ليفل، ساحات عالية، وتطورات بطاقات مع ضمان كامل وتسليم فوري من ${SITE_NAME}.`;
 
       const breadcrumbItems = [
         { name: SITE_NAME, path: "/" },
@@ -95,17 +95,19 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
 
       const introHtml = isCoc
         ? `<p style="margin-bottom: 24px; color: #94a3b8; font-size: 1.05rem;">
-            أكبر تشكيلة حسابات وقرى كلاش أوف كلانس للبيع في المملكة العربية السعودية ودول الخليج العربي. جميع الحسابات مفحوصة ومضمونة 100% مع ربط سوبر سيل آيدي وتسليم فوري عبر الواتساب.
+            أكبر متجر حسابات كلاش أوف كلانس (Clash of Clans) لشراء وبيع القرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس جاهزة للحروب ودوري القبائل مع نقل ملكية Supercell ID وتسليم فوري وآمن.
           </p>`
         : `<p style="margin-bottom: 24px; color: #94a3b8; font-size: 1.05rem;">
-            أفضل حسابات وتشكيلات كلاش رويال للبيع في السعودية والخليج. كروت ماكس، تطورات بطاقات (Evolutions)، رانكات وأرينا عالية مع ضمان وسيط كلاش ماركت.
+            أفضل متجر حسابات وتشكيلات كلاش رويال للبيع في السعودية والخليج. كروت ماكس، تطورات بطاقات (Evolutions)، رانكات وأرينا عالية مع ضمان وسيط كلاش ماركت.
           </p>`;
+
+      const headingHtml = isCoc ? "متجر حسابات كلاش أوف كلانس للبيع" : "متجر حسابات كلاش رويال للبيع";
 
       const html = pageShell({
         title,
         description,
         canonicalPath: req.path,
-        bodyHtml: `${breadcrumbHtml(breadcrumbItems)}<h1>حسابات ${escapeHtml(label)} للبيع</h1>${introHtml}${listHtml}`,
+        bodyHtml: `${breadcrumbHtml(breadcrumbItems)}<h1>${escapeHtml(headingHtml)}</h1>${introHtml}${listHtml}`,
         jsonLd: [itemListJsonLd, breadcrumbJsonLd(breadcrumbItems)],
       });
 
