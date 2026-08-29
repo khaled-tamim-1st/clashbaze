@@ -91,6 +91,7 @@ export function pageShell(opts: {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="ahrefs-site-verification" content="8e30dd2673f927f4a19ba60ed8d6424278e3d29df74d62303d559c5a504a5dc4" />
   <meta name="application-name" content="${escapeHtml(SITE_NAME)}" />
   <meta name="apple-mobile-web-app-title" content="${escapeHtml(SITE_NAME)}" />
 
