@@ -322,8 +322,8 @@ router.get("/account/:slug", async (req, res) => {
 
     const html = pageShell({
       title: isCoc && account.townHall
-        ? `${account.title} - قرية كلاش تاون ${account.townHall} للبيع بسعر ${formatPrice(account.price)} ر.س | ${SITE_NAME}`
-        : `${account.title} - ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س | ${SITE_NAME}`,
+        ? `${account.title} - تاون ${account.townHall} | ${SITE_NAME}`
+        : `${account.title} | ${SITE_NAME}`,
       description,
       canonicalPath: `/account/${account.slug}`,
       ogImage: formattedImages[0] || null,

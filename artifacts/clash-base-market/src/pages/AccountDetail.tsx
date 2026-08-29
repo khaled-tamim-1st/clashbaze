@@ -108,8 +108,8 @@ export default function AccountDetail() {
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
         title={isCoc && account.townHall
-          ? `${account.title} - قرية كلاش تاون ${account.townHall} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س | كلاش ماركت`
-          : `${account.title} - ${gameLabel} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س | كلاش ماركت`}
+          ? `${account.title} - تاون ${account.townHall} | كلاش ماركت`
+          : `${account.title} | كلاش ماركت`}
         description={seoDescription}
         url={`https://www.clashmarket.online/account/${account.slug}`}
         image={account.images?.[0] || undefined}
