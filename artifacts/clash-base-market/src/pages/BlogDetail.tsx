@@ -70,7 +70,7 @@ export default function BlogDetail() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title={`${seoTitle} | مدونة كلاش ماركت`}
+        title={seoTitle.includes("كلاش ماركت") ? seoTitle : `${seoTitle} | كلاش ماركت`}
         description={seoDescription}
         url={`https://www.clashmarket.online/blog/${post.slug}`}
         image={post.coverImage || undefined}

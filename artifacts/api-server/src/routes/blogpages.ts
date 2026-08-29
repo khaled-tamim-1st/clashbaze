@@ -153,8 +153,12 @@ router.get("/blog/:slug", async (req, res) => {
       <p><a class="back-link" href="/blog">← العودة إلى قائمة مقالات المدونة</a></p>
     `;
 
+    const resolvedTitle = (post.seoTitle || post.title).includes(SITE_NAME)
+      ? (post.seoTitle || post.title)
+      : `${post.seoTitle || post.title} | ${SITE_NAME}`;
+
     const html = pageShell({
-      title: `${title} | مدونة ${SITE_NAME}`,
+      title: resolvedTitle,
       description,
       canonicalPath: `/blog/${post.slug}`,
       ogImage: post.coverImage,
