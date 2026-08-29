@@ -354,7 +354,7 @@ export function pageShell(opts: {
       <a href="/clash-royale">حسابات كلاش رويال</a>
       <a href="/blog">مدونة كلاش ماركت</a>
     </div>
-    <div>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — المنصة الموثوقة لبيع وشراء حسابات سوبر سيل في السعودية والخليج العربي</div>
+    <div>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — متجر حسابات كلاش أوف كلانس وكلاش رويال الموثوق للبيع في السعودية والكويت والإمارات والخليج العربي</div>
   </footer>
 </body>
 </html>`;

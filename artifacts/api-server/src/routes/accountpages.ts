@@ -96,19 +96,53 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
       const introHtml = isCoc
         ? `<p style="margin-bottom: 24px; color: #94a3b8; font-size: 1.05rem;">
             أكبر متجر حسابات كلاش أوف كلانس (Clash of Clans) لشراء وبيع القرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس جاهزة للحروب ودوري القبائل مع نقل ملكية Supercell ID وتسليم فوري وآمن.
-          </p>`
+          </p>
+          <h2 style="font-size: 1.3rem; margin-bottom: 16px;">قريات كلاش تاون 17 و18 ماكس للبيع</h2>`
         : `<p style="margin-bottom: 24px; color: #94a3b8; font-size: 1.05rem;">
             أفضل متجر حسابات وتشكيلات كلاش رويال للبيع في السعودية والخليج. كروت ماكس، تطورات بطاقات (Evolutions)، رانكات وأرينا عالية مع ضمان وسيط كلاش ماركت.
-          </p>`;
+          </p>
+          <h2 style="font-size: 1.3rem; margin-bottom: 16px;">حسابات كلاش رويال كروت ماكس وساحة الأساطير</h2>`;
 
-      const headingHtml = isCoc ? "متجر حسابات كلاش أوف كلانس للبيع" : "متجر حسابات كلاش رويال للبيع";
+      const headingHtml = isCoc ? "متجر حسابات كلاش أوف كلانس للبيع" : "حسابات كلاش رويال للبيع — كروت ماكس وساحة الأساطير";
+
+      const faqItems = isCoc
+        ? [
+            { q: "كيف أشتري حساب كلاش أوف كلانس من كلاش ماركت؟", a: "اختر القرية المناسبة من القائمة، اضغط على زر الواتساب، ويتواصل معك الوسيط المعتمد لإتمام نقل ملكية Supercell ID وتغيير البريد الإلكتروني خلال 5 إلى 15 دقيقة بأمان تام." },
+            { q: "هل حسابات كلاش أوف كلانس مضمونة ضد السحب؟", a: "نعم، جميع الحسابات مفحوصة ومربوطة بسوبر سيل آيدي جديد باسمك مع ضمان كامل ضد الاسترجاع ووساطة رسمية تحمي حقوق المشتري." },
+            { q: "هل يوجد حسابات كلاش رخيصة؟", a: "نعم، نوفر قريات وحسابات بمختلف الأسعار تبدأ من تاون 12 وحتى تاون 18 فل ماكس لتناسب جميع الميزانيات مع تسليم فوري عبر الواتساب." },
+          ]
+        : [
+            { q: "كيف أشتري حساب كلاش رويال من كلاش ماركت؟", a: "اختر الحساب المناسب، تواصل عبر الواتساب، ويتم نقل الملكية وتغيير البريد الإلكتروني خلال دقائق بأمان تام." },
+            { q: "هل حسابات كلاش رويال فيها تطورات بطاقات (Evolutions)؟", a: "نعم، نوفر حسابات بتطورات بطاقات كاملة وكروت ماكس ليفل 15 وساحات عالية مع ضمان كامل." },
+          ];
+
+      const faqHtml = `
+        <section style="margin-top: 48px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
+          <h2 style="margin-bottom: 16px;">الأسئلة الشائعة حول شراء ${isCoc ? "حسابات كلاش أوف كلانس" : "حسابات كلاش رويال"}</h2>
+          ${faqItems.map((f) => `
+            <div style="margin-top: 12px; border-bottom: 1px solid #334155; padding-bottom: 12px;">
+              <h3 style="font-size: 1.1rem; color: #f59e0b; margin-bottom: 6px;">س: ${escapeHtml(f.q)}</h3>
+              <p style="color: #cbd5e1; margin: 0;">${escapeHtml(f.a)}</p>
+            </div>
+          `).join("")}
+        </section>`;
+
+      const faqJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      };
 
       const html = pageShell({
         title,
         description,
         canonicalPath: req.path,
-        bodyHtml: `${breadcrumbHtml(breadcrumbItems)}<h1>${escapeHtml(headingHtml)}</h1>${introHtml}${listHtml}`,
-        jsonLd: [itemListJsonLd, breadcrumbJsonLd(breadcrumbItems)],
+        bodyHtml: `${breadcrumbHtml(breadcrumbItems)}<h1>${escapeHtml(headingHtml)}</h1>${introHtml}${listHtml}${faqHtml}`,
+        jsonLd: [itemListJsonLd, breadcrumbJsonLd(breadcrumbItems), faqJsonLd],
       });
 
       res.set("Content-Type", "text/html; charset=utf-8");
@@ -155,6 +189,7 @@ router.get("/account/:slug", async (req, res) => {
     const relatedFiltered = related.filter((r) => r.slug !== slug).slice(0, 4);
 
     const gameLabel = GAME_LABEL[account.game] || account.game;
+    const isCoc = account.game === "clash-of-clans";
     const statusLabel = STATUS_LABEL[account.status] || account.status;
 
     const specs: Array<[string, string | number | null]> = [
@@ -286,7 +321,9 @@ router.get("/account/:slug", async (req, res) => {
     `;
 
     const html = pageShell({
-      title: `${account.title} - ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س | ${SITE_NAME}`,
+      title: isCoc && account.townHall
+        ? `${account.title} - قرية كلاش تاون ${account.townHall} للبيع بسعر ${formatPrice(account.price)} ر.س | ${SITE_NAME}`
+        : `${account.title} - ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س | ${SITE_NAME}`,
       description,
       canonicalPath: `/account/${account.slug}`,
       ogImage: formattedImages[0] || null,

@@ -4,6 +4,34 @@ import { useListAccounts } from "@workspace/api-client-react";
 import { AccountCard } from "@/components/AccountCard";
 import { SEO } from "@/components/SEO";
 
+const cocFaqItems = [
+  {
+    question: "كيف أشتري حساب كلاش أوف كلانس من كلاش ماركت؟",
+    answer: "اختر القرية المناسبة من القائمة، اضغط على زر الواتساب، ويتواصل معك الوسيط المعتمد لإتمام نقل ملكية Supercell ID وتغيير البريد الإلكتروني خلال 5 إلى 15 دقيقة بأمان تام.",
+  },
+  {
+    question: "هل حسابات كلاش أوف كلانس مضمونة ضد السحب؟",
+    answer: "نعم، جميع الحسابات مفحوصة ومربوطة بسوبر سيل آيدي جديد باسمك مع ضمان كامل ضد الاسترجاع ووساطة رسمية تحمي حقوق المشتري.",
+  },
+  {
+    question: "هل يوجد حسابات كلاش رخيصة؟",
+    answer: "نعم، نوفر قريات وحسابات بمختلف الأسعار تبدأ من تاون 12 وحتى تاون 18 فل ماكس لتناسب جميع الميزانيات مع تسليم فوري عبر الواتساب.",
+  },
+];
+
+const cocFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: cocFaqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+
 export default function ClashOfClans() {
   const { data: accounts, isLoading } = useListAccounts({ game: "clash-of-clans" });
 
@@ -19,13 +47,15 @@ export default function ClashOfClans() {
     })),
   } : undefined;
 
+  const jsonLdArray = [itemListJsonLd, cocFaqJsonLd].filter(Boolean);
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
         title="متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس) | كلاش ماركت"
         description="متجر حسابات كلاش أوف كلانس الموثوق لبيع وشراء قريات كلاش تاون 15 و16 و17 و18 ماكس بأسعار رخيصة وضمان كامل وتسليم فوري عبر الواتساب في السعودية والخليج."
         url="https://www.clashmarket.online/clash-of-clans"
-        jsonLd={itemListJsonLd}
+        jsonLd={jsonLdArray}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
@@ -33,6 +63,8 @@ export default function ClashOfClans() {
         <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
           أكبر متجر حسابات كلاش أوف كلانس (Clash of Clans) لشراء وبيع القرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس جاهزة للحروب ودوري القبائل مع نقل ملكية Supercell ID وتسليم فوري وآمن.
         </p>
+
+        <h2 className="text-2xl font-bold mb-6 text-primary/90">قريات كلاش تاون 17 و18 ماكس للبيع</h2>
         
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -49,6 +81,27 @@ export default function ClashOfClans() {
             لا توجد حسابات متاحة حالياً.
           </div>
         )}
+
+        {/* FAQ Section */}
+        <section className="mt-16 max-w-3xl">
+          <h2 className="text-2xl font-bold mb-6">الأسئلة الشائعة حول شراء حسابات كلاش أوف كلانس</h2>
+          <div className="space-y-4">
+            {cocFaqItems.map((item, i) => (
+              <details
+                key={i}
+                className="group border border-border rounded-lg bg-card/50 backdrop-blur-sm"
+              >
+                <summary className="flex items-center justify-between cursor-pointer p-4 font-semibold text-foreground hover:text-primary transition-colors">
+                  <span>{item.question}</span>
+                  <span className="text-primary text-xl group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <p className="px-4 pb-4 text-muted-foreground leading-relaxed">
+                  {item.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
