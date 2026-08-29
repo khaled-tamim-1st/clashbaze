@@ -23,6 +23,7 @@ async function buildAll() {
       path.resolve(artifactDir, "src/seed-ban-guide.ts"),
       path.resolve(artifactDir, "src/refactor-blogs.ts"),
       path.resolve(artifactDir, "src/format-gamer-html.ts"),
+      path.resolve(artifactDir, "src/format-saudi-clean.ts"),
     ],
     platform: "node",
     bundle: true,
