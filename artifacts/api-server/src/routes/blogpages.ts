@@ -115,6 +115,25 @@ router.get("/blog/:slug", async (req, res) => {
       mainEntityOfPage: SITE_URL ? `${SITE_URL}/blog/${post.slug}` : `/blog/${post.slug}`,
     };
 
+    const relatedPosts = await db
+      .select({
+        slug: blogTable.slug,
+        title: blogTable.title,
+      })
+      .from(blogTable)
+      .orderBy(desc(blogTable.createdAt))
+      .limit(4);
+
+    const relatedFiltered = relatedPosts.filter((p) => p.slug !== slug).slice(0, 3);
+    const relatedHtml = relatedFiltered.length
+      ? `<div style="margin-top: 40px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px;">
+          <h3 style="color: #f59e0b; margin-bottom: 12px; font-size: 1.15rem;">مقالات أخرى قد تهمك:</h3>
+          <ul style="padding-right: 20px; line-height: 2; margin: 0;">
+            ${relatedFiltered.map((r) => `<li><a href="/blog/${escapeHtml(r.slug)}" style="color: #60a5fa; font-weight: 500;">${escapeHtml(r.title)}</a></li>`).join("")}
+          </ul>
+        </div>`
+      : "";
+
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       <a class="back-link" href="/blog" style="margin-top:0; margin-bottom:16px;">→ رجوع للمدونة</a>
@@ -126,6 +145,7 @@ router.get("/blog/:slug", async (req, res) => {
       <article class="content" style="color: #e2e8f0; line-height: 2; font-size: 1.1rem;">
         ${post.content}
       </article>
+      ${relatedHtml}
       <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #334155;">
         <a class="cta" href="/clash-of-clans" style="margin-left: 12px;">تصفح حسابات كلاش أوف كلانس</a>
         <a class="cta" href="/clash-royale" style="background: #2563eb; color: #fff;">تصفح حسابات كلاش رويال</a>

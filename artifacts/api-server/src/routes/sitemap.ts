@@ -47,7 +47,12 @@ function urlEntry(
 // artifacts/worker always proxies "/robots.txt" and "/sitemap.xml" to this
 // VPS (see artifacts/worker/index.ts), so a static file in the frontend's
 // public/ folder is never actually reached in production. Without this
-// route, bots requesting /robots.txt hit the 404 handler in app.ts instead.
+// IndexNow verification key route
+router.get("/c7e2b04f18394982a5c317b960b72fa1.txt", (_req, res) => {
+  res.set("Content-Type", "text/plain; charset=utf-8");
+  res.send("c7e2b04f18394982a5c317b960b72fa1\n");
+});
+
 router.get("/robots.txt", (req, res) => {
   const sitemapUrl = SITE_URL ? `${SITE_URL}/sitemap.xml` : "/sitemap.xml";
   const body = [
