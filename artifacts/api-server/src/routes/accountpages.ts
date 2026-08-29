@@ -68,12 +68,12 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
 
       const isCoc = game === "clash-of-clans";
       const title = isCoc
-        ? `متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس) | ${SITE_NAME}`
-        : `متجر حسابات كلاش رويال للبيع (تشكيلات وكروت ماكس) | ${SITE_NAME}`;
+        ? `متجر حسابات كلاش أوف كلانس للبيع (تاون ماكس) | ${SITE_NAME}`
+        : `حسابات كلاش رويال للبيع - كروت ماكس وإيفو | ${SITE_NAME}`;
       
       const description = isCoc
-        ? `متجر حسابات كلاش أوف كلانس الموثوق لبيع وشراء قريات كلاش تاون 15 و16 و17 و18 ماكس بأسعار رخيصة وضمان كامل وتسليم فوري عبر الواتساب في السعودية والخليج.`
-        : `متجر حسابات كلاش رويال الموثوق لبيع وشراء حسابات كلاش رويال كروت ماكس ليفل، ساحات عالية، وتطورات بطاقات مع ضمان كامل وتسليم فوري من ${SITE_NAME}.`;
+        ? `متجر حسابات كلاش أوف كلانس الموثوق في السعودية والخليج. قريات تاون 16 و17 و18 ماكس بأسعار رخيصة وتسليم فوري وضمان كامل مع ${SITE_NAME}.`
+        : `حسابات كلاش رويال للبيع في السعودية والخليج. كروت ماكس ليفل 15 وتطورات إيفو بأسعار رخيصة وتسليم فوري وضمان كامل مع ${SITE_NAME}.`;
 
       const breadcrumbItems = [
         { name: SITE_NAME, path: "/" },
@@ -219,8 +219,8 @@ router.get("/account/:slug", async (req, res) => {
       .join("\n");
 
     const description = account.description
-      ? `${account.description.slice(0, 120)} - شراء ${account.title} للبيع بسعر ${formatPrice(account.price)} ر.س مع كلاش ماركت في السعودية والخليج.`
-      : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س في السعودية والخليج. مواصفات كاملة، تسليم فوري، ونقل إيميل Supercell ID بأمان مع ${SITE_NAME}.`;
+      ? `${account.description.slice(0, 90)} - شراء ${account.title} بسعر ${formatPrice(account.price)} ر.س مع ${SITE_NAME}.`
+      : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س في السعودية والخليج مع تسليم فوري وضمان ${SITE_NAME}.`;
 
     const jsonLd = {
       "@context": "https://schema.org",

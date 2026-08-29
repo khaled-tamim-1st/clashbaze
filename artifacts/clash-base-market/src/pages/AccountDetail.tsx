@@ -49,8 +49,8 @@ export default function AccountDetail() {
   const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const isCoc = account.game === "clash-of-clans";
   const seoDescription = account.description
-    ? `${account.description.slice(0, 120)} - شراء ${account.title} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س مع كلاش ماركت في السعودية والخليج.`
-    : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س في السعودية والخليج. مواصفات كاملة، تسليم فوري، ونقل إيميل Supercell ID بأمان مع كلاش ماركت.`;
+    ? `${account.description.slice(0, 90)} - شراء ${account.title} بسعر ${account.price.toLocaleString("ar-SA")} ر.س مع كلاش ماركت.`
+    : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س في السعودية والخليج مع تسليم فوري وضمان كلاش ماركت.`;
 
   const productJsonLd = {
     "@context": "https://schema.org",

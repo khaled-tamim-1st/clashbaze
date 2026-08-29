@@ -48,8 +48,8 @@ export default function ClashRoyale() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="حسابات كلاش رويال للبيع - كروت ماكس وتطورات بطاقات (Evolutions) | كلاش ماركت"
-        description="حسابات كلاش رويال للبيع في السعودية والخليج. كروت ماكس ليفل 15، تطورات بطاقات (Evolutions)، ساحة الأساطير، وأسعار رخيصة مع تسليم فوري وضمان كامل من كلاش ماركت."
+        title="حسابات كلاش رويال للبيع - كروت ماكس وإيفو | كلاش ماركت"
+        description="حسابات كلاش رويال للبيع في السعودية والخليج. كروت ماكس ليفل 15 وتطورات إيفو بأسعار رخيصة وتسليم فوري وضمان كامل مع كلاش ماركت."
         url="https://www.clashmarket.online/clash-royale"
         jsonLd={jsonLdArray}
       />
