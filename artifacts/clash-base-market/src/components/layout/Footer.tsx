@@ -20,6 +20,10 @@ export function Footer() {
               <li><Link href="/" className="hover:text-primary">الرئيسية</Link></li>
               <li><Link href="/clash-of-clans" className="hover:text-primary">حسابات كلاش أوف كلانس</Link></li>
               <li><Link href="/clash-royale" className="hover:text-primary">حسابات كلاش رويال</Link></li>
+              <li><Link href="/blog" className="hover:text-primary">مدونة كلاش ماركت</Link></li>
+              <li><Link href="/blog/buy-clash-of-clans-account-installments-tabby-tamara-saudi" className="hover:text-primary">تقسيط الحسابات عبر تابي وتمارا</Link></li>
+              <li><Link href="/blog/how-to-change-supercell-id-email-guide" className="hover:text-primary">طريقة تغيير إيميل Supercell ID</Link></li>
+              <li><Link href="/blog/clash-of-clans-account-ban-reasons-protection-guide" className="hover:text-primary">طرق حماية القرية وتجنب الحظر</Link></li>
             </ul>
           </div>
           <div>
