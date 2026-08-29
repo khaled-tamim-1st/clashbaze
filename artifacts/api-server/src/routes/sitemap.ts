@@ -94,25 +94,25 @@ router.get("/sitemap.xml", async (req, res) => {
         priority: "1.0",
         changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "كلاش ماركت | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال",
+        imageTitle: "كلاش ماركت | حسابات كلاش للبيع - قريات كلاش أوف كلانس وكلاش رويال",
       }),
       urlEntry("/clash-of-clans", {
         priority: "0.9",
         changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "حسابات كلاش أوف كلانس للبيع",
+        imageTitle: "متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس)",
       }),
       urlEntry("/clash-royale", {
         priority: "0.9",
         changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "حسابات كلاش رويال للبيع",
+        imageTitle: "حسابات كلاش رويال للبيع - كروت ماكس وتطورات بطاقات",
       }),
       urlEntry("/blog", {
         priority: "0.8",
         changefreq: "weekly",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "مدونة كلاش ماركت",
+        imageTitle: "مدونة كلاش ماركت | شروحات واستراتيجيات ألعاب سوبر سيل",
       }),
     ];
 
@@ -141,8 +141,8 @@ function formatCloudinaryUrl(url: string | undefined | null): string {
     const blogUrls = posts.map((p) =>
       urlEntry(`/blog/${p.slug}`, {
         lastmod: p.createdAt,
-        priority: "0.6",
-        changefreq: "monthly",
+        priority: "0.8",
+        changefreq: "weekly",
         imageUrl: p.coverImage ? formatCloudinaryUrl(p.coverImage) : `${SITE_URL}/thumbnail.png`,
         imageTitle: p.title,
       }),
