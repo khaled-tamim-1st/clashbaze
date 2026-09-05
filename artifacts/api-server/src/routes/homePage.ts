@@ -62,16 +62,16 @@ router.get("/", async (req, res) => {
 
     const allAccounts = [...cocAccounts, ...royaleAccounts];
 
-    const title = `حسابات كلاش للبيع وقريات تاون ماكس | كلاش ماركت`;
+    const title = `متجر كلاش | حسابات كلاش اوف كلانس وكلاش رويال للبيع`;
     const description =
-      "حسابات كلاش للبيع وقريات تاون 16 و17 و18 ماكس وحسابات كلاش رويال كروت ماكس. متجر كلاش ماركت الموثوق في السعودية والخليج - تسليم فوري وضمان شامل.";
+      "متجر كلاش ماركت الأول لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. متجر كلاش موثوق بتسليم فوري وضمان شامل.";
 
     const jsonLd = [
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: SITE_NAME,
-        alternateName: ["Clash Market", "كلاش ماركت أونلاين", "clashmarket.online"],
+        alternateName: ["Clash Market", "متجر كلاش", "clashmarket.online"],
         url: SITE_URL || "https://www.clashmarket.online/",
         inLanguage: "ar-SA",
       },
@@ -151,18 +151,18 @@ router.get("/", async (req, res) => {
     ];
 
     const bodyHtml = `
-      <h1>${escapeHtml(SITE_NAME)} | حسابات كلاش للبيع في السعودية والخليج</h1>
+      <h1>متجر كلاش | بيع وشراء حسابات كلاش اوف كلانس وكلاش رويال</h1>
       <p>${description}</p>
 
       <section style="margin: 32px 0;">
-        <h2>قريات وحسابات كلاش أوف كلانس للبيع (تاون 16 و17 و18 ماكس)</h2>
+        <h2>متجر كلاش اوف كلانس — حسابات كلاش للبيع</h2>
         <p>تصفح أقوى قريات كلاش تاون هول 15، 16، 17، و18 ماكس ليفل، أبطال ماكس، ودفاعات قوية جاهزة للحروب والدوريات في السعودية والخليج.</p>
         ${cocHtml}
         <p><a href="/clash-of-clans" class="cta">استعراض كافة حسابات كلاش أوف كلانس ←</a></p>
       </section>
 
       <section style="margin: 48px 0;">
-        <h2>حسابات كلاش رويال للبيع (كروت ماكس وتطورات بطاقات)</h2>
+        <h2>متجر كلاش رويال — حسابات كلاش رويال للبيع</h2>
         <p>تشكيلات ماكس، ساحات دوري الأبطال، إيموتات نادرة، وتطويرات بطاقات كاملة (Evolutions) مع تسليم فوري وضمان كامل.</p>
         ${royaleHtml}
         <p><a href="/clash-royale" class="cta">استعراض كافة حسابات كلاش رويال ←</a></p>

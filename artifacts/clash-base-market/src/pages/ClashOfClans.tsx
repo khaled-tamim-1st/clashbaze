@@ -52,19 +52,19 @@ export default function ClashOfClans() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس) | كلاش ماركت"
-        description="متجر حسابات كلاش أوف كلانس الموثوق لبيع وشراء قريات كلاش تاون 15 و16 و17 و18 ماكس بأسعار رخيصة وضمان كامل وتسليم فوري عبر الواتساب في السعودية والخليج."
+        title="متجر كلاش اوف كلانس | حسابات كلاش للبيع (تاون ماكس)"
+        description="أفضل متجر كلاش اوف كلانس لشراء حسابات كلاش اوف كلانس وقريات تاون 16 و17 و18 ماكس بأسعار رخيصة وتسليم فوري وضمان كامل مع متجر كلاش ماركت."
         url="https://www.clashmarket.online/clash-of-clans"
         jsonLd={jsonLdArray}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-4">متجر حسابات كلاش أوف كلانس للبيع</h1>
+        <h1 className="text-4xl font-bold mb-4">متجر كلاش اوف كلانس — حسابات كلاش اوف كلانس للبيع</h1>
         <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
-          أكبر متجر حسابات كلاش أوف كلانس (Clash of Clans) لشراء وبيع القرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس جاهزة للحروب ودوري القبائل مع نقل ملكية Supercell ID وتسليم فوري وآمن.
+          أفضل متجر كلاش اوف كلانس لشراء وبيع حسابات كلاش اوف كلانس والقرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس مع تسليم فوري وضمان شامل.
         </p>
 
-        <h2 className="text-2xl font-bold mb-6 text-primary/90">قريات كلاش تاون 17 و18 ماكس للبيع</h2>
+        <h2 className="text-2xl font-bold mb-6 text-primary/90">حسابات كلاش اوف كلانس وقريات تاون ماكس للبيع</h2>
         
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

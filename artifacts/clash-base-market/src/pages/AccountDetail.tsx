@@ -48,9 +48,13 @@ export default function AccountDetail() {
 
   const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const isCoc = account.game === "clash-of-clans";
-  const seoDescription = account.description
-    ? `${account.description.slice(0, 90)} - شراء ${account.title} بسعر ${account.price.toLocaleString("ar-SA")} ر.س مع كلاش ماركت.`
-    : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${account.price.toLocaleString("ar-SA")} ر.س في السعودية والخليج مع تسليم فوري وضمان كلاش ماركت.`;
+  const seoDescription = isCoc
+    ? (account.description
+        ? `شراء قرية كلاش ${account.title} بسعر ${account.price.toLocaleString("ar-SA")} ر.س من متجر كلاش. ${account.description.slice(0, 70)} - تسليم فوري وضمان شامل.`
+        : `شراء قرية كلاش ${account.title} بسعر ${account.price.toLocaleString("ar-SA")} ر.س من متجر كلاش في السعودية والخليج مع تسليم فوري وضمان شامل.`)
+    : (account.description
+        ? `شراء حساب كلاش رويال ${account.title} بسعر ${account.price.toLocaleString("ar-SA")} ر.س من متجر كلاش. ${account.description.slice(0, 70)} - تسليم فوري وضمان شامل.`
+        : `شراء حساب كلاش رويال ${account.title} بسعر ${account.price.toLocaleString("ar-SA")} ر.س من متجر كلاش في السعودية والخليج مع تسليم فوري وضمان شامل.`);
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -107,9 +111,9 @@ export default function AccountDetail() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title={isCoc && account.townHall
-          ? `${account.title} - تاون ${account.townHall} | كلاش ماركت`
-          : `${account.title} | كلاش ماركت`}
+        title={isCoc
+          ? (account.townHall ? `قرية كلاش ${account.title} - تاون ${account.townHall} | متجر كلاش` : `قرية كلاش ${account.title} | متجر كلاش`)
+          : `حساب كلاش رويال ${account.title} | متجر كلاش`}
         description={seoDescription}
         url={`https://www.clashmarket.online/account/${account.slug}`}
         image={account.images?.[0] || undefined}

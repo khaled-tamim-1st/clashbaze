@@ -141,25 +141,25 @@ router.get("/sitemap.xml", async (req, res) => {
         priority: "1.0",
         changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "كلاش ماركت | حسابات كلاش للبيع - قريات كلاش أوف كلانس وكلاش رويال",
+        imageTitle: "متجر كلاش | حسابات كلاش اوف كلانس وكلاش رويال للبيع",
       }),
       urlEntry("/clash-of-clans", {
         priority: "0.9",
         changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "متجر حسابات كلاش أوف كلانس للبيع (قريات تاون ماكس)",
+        imageTitle: "متجر كلاش اوف كلانس | حسابات كلاش للبيع (تاون ماكس)",
       }),
       urlEntry("/clash-royale", {
         priority: "0.9",
         changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "حسابات كلاش رويال للبيع - كروت ماكس وتطورات بطاقات",
+        imageTitle: "متجر كلاش رويال | حسابات كلاش رويال للبيع (كروت ماكس)",
       }),
       urlEntry("/blog", {
         priority: "0.8",
         changefreq: "weekly",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "مدونة كلاش ماركت | شروحات واستراتيجيات ألعاب سوبر سيل",
+        imageTitle: "مدونة متجر كلاش | شروحات واستراتيجيات ألعاب سوبر سيل",
       }),
     ];
 

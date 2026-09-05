@@ -68,12 +68,12 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
 
       const isCoc = game === "clash-of-clans";
       const title = isCoc
-        ? `متجر حسابات كلاش أوف كلانس للبيع (تاون ماكس) | ${SITE_NAME}`
-        : `حسابات كلاش رويال للبيع - كروت ماكس وإيفو | ${SITE_NAME}`;
+        ? `متجر كلاش اوف كلانس | حسابات كلاش للبيع (تاون ماكس)`
+        : `متجر كلاش رويال | حسابات كلاش رويال للبيع (كروت ماكس)`;
       
       const description = isCoc
-        ? `متجر حسابات كلاش أوف كلانس الموثوق في السعودية والخليج. قريات تاون 16 و17 و18 ماكس بأسعار رخيصة وتسليم فوري وضمان كامل مع ${SITE_NAME}.`
-        : `حسابات كلاش رويال للبيع في السعودية والخليج. كروت ماكس ليفل 15 وتطورات إيفو بأسعار رخيصة وتسليم فوري وضمان كامل مع ${SITE_NAME}.`;
+        ? `أفضل متجر كلاش اوف كلانس لشراء حسابات كلاش اوف كلانس وقريات تاون 16 و17 و18 ماكس بأسعار رخيصة وتسليم فوري وضمان كامل مع ${SITE_NAME}.`
+        : `أفضل متجر كلاش رويال لبيع وشراء حسابات كلاش رويال كروت لفل 15 وتطورات إيفو بأسعار رخيصة وتسليم فوري وضمان كامل مع ${SITE_NAME}.`;
 
       const breadcrumbItems = [
         { name: SITE_NAME, path: "/" },
@@ -95,15 +95,15 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
 
       const introHtml = isCoc
         ? `<p style="margin-bottom: 24px; color: #94a3b8; font-size: 1.05rem;">
-            أكبر متجر حسابات كلاش أوف كلانس (Clash of Clans) لشراء وبيع القرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس جاهزة للحروب ودوري القبائل مع نقل ملكية Supercell ID وتسليم فوري وآمن.
+            أفضل متجر كلاش اوف كلانس لشراء وبيع حسابات كلاش اوف كلانس والقرى المضمونة في السعودية ودول الخليج العربي. قريات تاون هول ماكس مع تسليم فوري وضمان شامل.
           </p>
-          <h2 style="font-size: 1.3rem; margin-bottom: 16px;">قريات كلاش تاون 17 و18 ماكس للبيع</h2>`
+          <h2 style="font-size: 1.3rem; margin-bottom: 16px;">حسابات كلاش اوف كلانس وقريات تاون ماكس للبيع</h2>`
         : `<p style="margin-bottom: 24px; color: #94a3b8; font-size: 1.05rem;">
-            أفضل متجر حسابات وتشكيلات كلاش رويال للبيع في السعودية والخليج. كروت ماكس، تطورات بطاقات (Evolutions)، رانكات وأرينا عالية مع ضمان وسيط كلاش ماركت.
+            أفضل متجر كلاش رويال لشراء تشكيلات وحسابات كلاش رويال كروت ماكس لفل 14 و15 وتطورات إيفو بضمان كامل في السعودية والخليج.
           </p>
-          <h2 style="font-size: 1.3rem; margin-bottom: 16px;">حسابات كلاش رويال كروت ماكس وساحة الأساطير</h2>`;
+          <h2 style="font-size: 1.3rem; margin-bottom: 16px;">حسابات كلاش رويال كروت ماكس وإيفو للبيع</h2>`;
 
-      const headingHtml = isCoc ? "متجر حسابات كلاش أوف كلانس للبيع" : "حسابات كلاش رويال للبيع — كروت ماكس وساحة الأساطير";
+      const headingHtml = isCoc ? "متجر كلاش اوف كلانس — حسابات كلاش اوف كلانس للبيع" : "متجر كلاش رويال — حسابات كلاش رويال للبيع";
 
       const faqItems = isCoc
         ? [
@@ -218,9 +218,13 @@ router.get("/account/:slug", async (req, res) => {
       .map((img) => `<img src="${escapeHtml(img)}" alt="${escapeHtml(account.title)}" loading="lazy" />`)
       .join("\n");
 
-    const description = account.description
-      ? `${account.description.slice(0, 90)} - شراء ${account.title} بسعر ${formatPrice(account.price)} ر.س مع ${SITE_NAME}.`
-      : `شراء ${account.title} - حساب ${gameLabel} للبيع بسعر ${formatPrice(account.price)} ر.س في السعودية والخليج مع تسليم فوري وضمان ${SITE_NAME}.`;
+    const description = isCoc
+      ? (account.description
+          ? `شراء قرية كلاش ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش. ${account.description.slice(0, 70)} - تسليم فوري وضمان شامل.`
+          : `شراء قرية كلاش ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش في السعودية والخليج مع تسليم فوري وضمان شامل.`)
+      : (account.description
+          ? `شراء حساب كلاش رويال ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش. ${account.description.slice(0, 70)} - تسليم فوري وضمان شامل.`
+          : `شراء حساب كلاش رويال ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش في السعودية والخليج مع تسليم فوري وضمان شامل.`);
 
     const jsonLd = {
       "@context": "https://schema.org",
@@ -321,9 +325,9 @@ router.get("/account/:slug", async (req, res) => {
     `;
 
     const html = pageShell({
-      title: isCoc && account.townHall
-        ? `${account.title} - تاون ${account.townHall} | ${SITE_NAME}`
-        : `${account.title} | ${SITE_NAME}`,
+      title: isCoc
+        ? (account.townHall ? `قرية كلاش ${account.title} - تاون ${account.townHall} | متجر كلاش` : `قرية كلاش ${account.title} | متجر كلاش`)
+        : `حساب كلاش رويال ${account.title} | متجر كلاش`,
       description,
       canonicalPath: `/account/${account.slug}`,
       ogImage: formattedImages[0] || null,

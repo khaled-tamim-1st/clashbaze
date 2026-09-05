@@ -48,19 +48,19 @@ export default function ClashRoyale() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="حسابات كلاش رويال للبيع - كروت ماكس وإيفو | كلاش ماركت"
-        description="حسابات كلاش رويال للبيع في السعودية والخليج. كروت ماكس ليفل 15 وتطورات إيفو بأسعار رخيصة وتسليم فوري وضمان كامل مع كلاش ماركت."
+        title="متجر كلاش رويال | حسابات كلاش رويال للبيع (كروت ماكس)"
+        description="أفضل متجر كلاش رويال لبيع وشراء حسابات كلاش رويال كروت لفل 15 وتطورات إيفو بأسعار رخيصة وتسليم فوري وضمان كامل مع متجر كلاش ماركت."
         url="https://www.clashmarket.online/clash-royale"
         jsonLd={jsonLdArray}
       />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-4">حسابات كلاش رويال للبيع — كروت ماكس وساحة الأساطير</h1>
+        <h1 className="text-4xl font-bold mb-4">متجر كلاش رويال — حسابات كلاش رويال للبيع</h1>
         <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
-          تشكيلات وحسابات كلاش رويال قوية جاهزة لدوري الأبطال مع كروت ليفل 14 و15 ماكس وتطويرات حديثة في السعودية والخليج العربي.
+          أفضل متجر كلاش رويال لشراء تشكيلات وحسابات كلاش رويال كروت ماكس لفل 14 و15 وتطورات إيفو بضمان كامل في السعودية والخليج.
         </p>
 
-        <h2 className="text-2xl font-bold mb-6 text-primary/90">حسابات كلاش رويال كروت ماكس وساحة الأساطير</h2>
+        <h2 className="text-2xl font-bold mb-6 text-primary/90">حسابات كلاش رويال كروت ماكس وإيفو للبيع</h2>
         
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
