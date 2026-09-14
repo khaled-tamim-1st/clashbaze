@@ -21,13 +21,11 @@ function urlEntry(
   path: string,
   opts: {
     lastmod?: Date;
-    priority?: string;
-    changefreq?: string;
     imageUrl?: string | null;
     imageTitle?: string;
   } = {},
 ) {
-  const { lastmod, priority = "0.7", changefreq = "weekly", imageUrl, imageTitle } = opts;
+  const { lastmod, imageUrl, imageTitle } = opts;
   const imageXml = imageUrl
     ? `\n    <image:image>
       <image:loc>${escapeXml(imageUrl.startsWith("http") ? imageUrl : `${SITE_URL}${imageUrl}`)}</image:loc>
@@ -37,9 +35,7 @@ function urlEntry(
 
   return `  <url>
     <loc>${escapeXml(SITE_URL + path)}</loc>
-    ${lastmod ? `<lastmod>${lastmod.toISOString().split("T")[0]}</lastmod>` : ""}
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>${imageXml}
+    ${lastmod ? `<lastmod>${lastmod.toISOString().split("T")[0]}</lastmod>` : ""}${imageXml}
   </url>`;
 }
 
@@ -138,46 +134,32 @@ router.get("/sitemap.xml", async (req, res) => {
 
     const staticUrls = [
       urlEntry("/", {
-        priority: "1.0",
-        changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "متجر كلاش | حسابات كلاش اوف كلانس وكلاش رويال للبيع",
+        imageTitle: "متجر كلاش | حسابات كلاش اوف كلانس وكلاش رويال",
       }),
       urlEntry("/clash-of-clans", {
-        priority: "0.9",
-        changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "متجر كلاش اوف كلانس | حسابات كلاش للبيع (تاون ماكس)",
+        imageTitle: "حسابات كلاش أوف كلانس للبيع",
       }),
       urlEntry("/clash-royale", {
-        priority: "0.9",
-        changefreq: "daily",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "متجر كلاش رويال | حسابات كلاش رويال للبيع (كروت ماكس)",
+        imageTitle: "حسابات كلاش رويال للبيع",
       }),
       urlEntry("/blog", {
-        priority: "0.8",
-        changefreq: "weekly",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "مدونة متجر كلاش | شروحات واستراتيجيات ألعاب سوبر سيل",
+        imageTitle: "مدونة كلاش ماركت",
       }),
       urlEntry("/guarantee", {
-        priority: "0.7",
-        changefreq: "monthly",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "الضمان الذهبي وحماية المشتري | متجر كلاش ماركت",
+        imageTitle: "سياسة الضمان وحماية المشتري",
       }),
       urlEntry("/how-it-works", {
-        priority: "0.7",
-        changefreq: "monthly",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "طريقة الشراء والتسليم اليدوي المباشر | متجر كلاش ماركت",
+        imageTitle: "طريقة الشراء والتسليم",
       }),
       urlEntry("/about", {
-        priority: "0.6",
-        changefreq: "monthly",
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "من نحن | متجر كلاش ماركت لتداول حسابات كلاش",
+        imageTitle: "كلاش ماركت — من نحن",
       }),
     ];
 
@@ -196,8 +178,6 @@ function formatCloudinaryUrl(url: string | undefined | null): string {
     const accountUrls = accounts.map((a) =>
       urlEntry(`/account/${a.slug}`, {
         lastmod: a.createdAt,
-        priority: a.status === "reserved" ? "0.7" : "0.8",
-        changefreq: "daily",
         imageUrl: a.images && a.images.length > 0 ? formatCloudinaryUrl(a.images[0]) : `${SITE_URL}/thumbnail.png`,
         imageTitle: a.title,
       }),
@@ -206,8 +186,6 @@ function formatCloudinaryUrl(url: string | undefined | null): string {
     const blogUrls = posts.map((p) =>
       urlEntry(`/blog/${p.slug}`, {
         lastmod: p.createdAt,
-        priority: "0.8",
-        changefreq: "weekly",
         imageUrl: p.coverImage ? formatCloudinaryUrl(p.coverImage) : `${SITE_URL}/thumbnail.png`,
         imageTitle: p.title,
       }),

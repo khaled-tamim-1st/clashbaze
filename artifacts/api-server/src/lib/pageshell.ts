@@ -349,17 +349,15 @@ export function pageShell(opts: {
   </main>
   <footer>
     <div class="footer-links" style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:16px;">
-      <a href="/">الرئيسية</a>
       <a href="/clash-of-clans">حسابات كلاش أوف كلانس</a>
       <a href="/clash-royale">حسابات كلاش رويال</a>
-      <a href="/guarantee">الضمان الذهبي</a>
-      <a href="/how-it-works">طريقة الشراء والتسليم</a>
-      <a href="/about">من نحن</a>
-      <a href="/blog/buy-clash-of-clans-account-installments-tabby-tamara-saudi">تقسيط الحسابات عبر تابي وتمارا</a>
-      <a href="/blog/how-to-change-supercell-id-email-guide">طريقة تغيير إيميل Supercell ID</a>
-      <a href="/blog/clash-of-clans-account-ban-reasons-protection-guide">طرق حماية القرية وتجنب الحظر</a>
+      <a href="/blog">المدونة</a>
+      <a href="/about">كلاش ماركت / من نحن</a>
+      <span style="color:#334155;">|</span>
+      <a href="/guarantee">سياسة الضمان</a>
+      <a href="/how-it-works">طريقة الشراء</a>
     </div>
-    <div>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — متجر حسابات كلاش أوف كلانس وكلاش رويال الموثوق للبيع في السعودية والكويت والإمارات والخليج العربي</div>
+    <div>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — متجر حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي</div>
   </footer>
 </body>
 </html>`;

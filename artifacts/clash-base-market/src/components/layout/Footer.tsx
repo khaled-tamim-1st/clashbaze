@@ -7,26 +7,27 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="container px-4 py-8 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-bold text-primary mb-4">كلاش ماركت</h3>
             <p className="text-sm text-muted-foreground">
-              المتجر الأول المتخصص في بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج.
+              المتجر المتخصص في بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج.
             </p>
           </div>
           <div>
             <h3 className="text-lg font-bold mb-4 text-foreground">روابط سريعة</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/" className="hover:text-primary">الرئيسية</Link></li>
               <li><Link href="/clash-of-clans" className="hover:text-primary">حسابات كلاش أوف كلانس</Link></li>
               <li><Link href="/clash-royale" className="hover:text-primary">حسابات كلاش رويال</Link></li>
               <li><Link href="/blog" className="hover:text-primary">مدونة كلاش ماركت</Link></li>
-              <li><Link href="/guarantee" className="hover:text-primary">الضمان الذهبي وحماية المشتري</Link></li>
-              <li><Link href="/how-it-works" className="hover:text-primary">طريقة الشراء والتسليم اليدوي</Link></li>
-              <li><Link href="/about" className="hover:text-primary">من نحن في كلاش ماركت</Link></li>
-              <li><Link href="/blog/buy-clash-of-clans-account-installments-tabby-tamara-saudi" className="hover:text-primary">تقسيط الحسابات عبر تابي وتمارا</Link></li>
-              <li><Link href="/blog/how-to-change-supercell-id-email-guide" className="hover:text-primary">طريقة تغيير إيميل Supercell ID</Link></li>
-              <li><Link href="/blog/clash-of-clans-account-ban-reasons-protection-guide" className="hover:text-primary">طرق حماية القرية وتجنب الحظر</Link></li>
+              <li><Link href="/about" className="hover:text-primary">كلاش ماركت / من نحن</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-4 text-foreground">معلومات مهمة</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><Link href="/guarantee" className="hover:text-primary">سياسة الضمان وحماية المشتري</Link></li>
+              <li><Link href="/how-it-works" className="hover:text-primary">طريقة الشراء والتسليم</Link></li>
             </ul>
           </div>
           <div>
@@ -51,3 +52,4 @@ export function Footer() {
     </footer>
   );
 }
+

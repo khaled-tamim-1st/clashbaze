@@ -286,13 +286,32 @@ router.get("/how-it-works", (req, res) => {
 
 // 3. صفحة من نحن (/about)
 router.get("/about", (req, res) => {
-  const title = `من نحن | متجر ${SITE_NAME} لتداول حسابات كلاش`;
+  const title = `كلاش ماركت – متجر حسابات كلاش أوف كلانس وكلاش رويال | من نحن`;
   const description =
-    "تعرف على كلاش ماركت، المنصة المتخصصة لبيع وشراء حسابات وقريات كلاش أوف كلانس وكلاش رويال المضمونة في السعودية ودول الخليج العربي.";
+    "تعرف على كلاش ماركت، المتجر المتخصص في بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال بتسليم يدوي مباشر وضمان وفق سياسة المتجر في السعودية والخليج.";
 
   const breadcrumbs = [
     { name: "الرئيسية", path: "/" },
     { name: "من نحن", path: "/about" },
+  ];
+
+  const aboutFaq = [
+    {
+      q: "هل كلاش ماركت متجر رسمي معتمد من Supercell؟",
+      a: "لا. كلاش ماركت متجر مستقل يعمل في سوق تداول حسابات الألعاب. ليس له أي ارتباط أو اعتماد رسمي من شركة Supercell.",
+    },
+    {
+      q: "كيف أتواصل مع المتجر؟",
+      a: "التواصل يتم عبر الواتساب مباشرة للتحدث مع إدارة المتجر وإتمام خطوات الشراء والاستلام خطوة بخطوة.",
+    },
+    {
+      q: "هل يمكنني بيع حسابي لكلاش ماركت؟",
+      a: "نعم، يمكنك التواصل مع إدارة المتجر عبر الواتساب وعرض تفاصيل حسابك. إذا استوفى الحساب معايير الفحص يتم الاتفاق والشراء مباشرة.",
+    },
+    {
+      q: "ما طرق الدفع المتاحة؟",
+      a: "تحويل بنكي مباشر على حسابات سعودية وخليجية، أو ترتيب الدفع عبر تابي أو تمارا بالتنسيق المباشر مع إدارة المتجر.",
+    },
   ];
 
   const jsonLd = [
@@ -307,12 +326,43 @@ router.get("/about", (req, res) => {
       mainEntity: {
         "@type": "Organization",
         name: SITE_NAME,
+        alternateName: ["Clash Market", "متجر كلاش", "كلاش ماركت حسابات"],
         url: SITE_URL,
         logo: `${SITE_URL}/thumbnail.png`,
         description,
+        areaServed: [
+          { "@type": "Country", name: "المملكة العربية السعودية" },
+          { "@type": "Country", name: "الإمارات العربية المتحدة" },
+          { "@type": "Country", name: "الكويت" },
+          { "@type": "Country", name: "قطر" },
+          { "@type": "Country", name: "البحرين" },
+          { "@type": "Country", name: "سلطنة عمان" },
+        ],
       },
     },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: aboutFaq.map(f => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: f.a,
+        },
+      })),
+    },
   ];
+
+  const faqHtml = aboutFaq
+    .map(
+      f => `
+      <details style="border: 1px solid #334155; border-radius: 8px; margin-bottom: 8px;">
+        <summary style="padding: 12px; cursor: pointer; font-weight: 600; color: #f8fafc;">${escapeHtml(f.q)}</summary>
+        <p style="padding: 0 12px 12px; color: #94a3b8; line-height: 1.8; margin: 0;">${escapeHtml(f.a)}</p>
+      </details>`
+    )
+    .join("");
 
   const bodyHtml = `
     ${breadcrumbHtml(breadcrumbs)}
@@ -320,47 +370,61 @@ router.get("/about", (req, res) => {
     <article class="prose" style="max-width: 850px; margin: 0 auto; line-height: 1.8;">
       <header style="text-align: center; margin-bottom: 36px;">
         <span style="display:inline-block; padding: 4px 14px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 9999px; font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;">
-          منصة الجيمرز في الخليج
+          متجر حسابات كلاش في الخليج
         </span>
         <h1 style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin-bottom: 16px;">
-          من نحن في كلاش ماركت
+          كلاش ماركت – متجر وسوق حسابات كلاش أوف كلانس وكلاش رويال
         </h1>
         <p style="color: #94a3b8; font-size: 1.05rem; max-width: 680px; margin: 0 auto;">
-          متجر تجاري متخصص في شراء وبيع قريات كلاش أوف كلانس وحسابات كلاش رويال المضمونة في المملكة العربية السعودية ودول الخليج العربي.
+          متجر تجاري متخصص في شراء وبيع حسابات كلاش أوف كلانس وكلاش رويال، يخدم اللاعبين في المملكة العربية السعودية ودول الخليج العربي.
         </p>
       </header>
 
       <section style="background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 28px; margin-bottom: 28px;">
-        <h2 style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; margin-bottom: 12px;">هدفنا وأسلوب عملنا</h2>
+        <h2 style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; margin-bottom: 12px;">من هو كلاش ماركت؟</h2>
         <p style="color: #cbd5e1; font-size: 1rem; margin-bottom: 16px;">
-          بدأ <strong>كلاش ماركت</strong> لتوفير وجهة آمنة وموثوقة للاعبين. نحن تجار متخصصون نقوم بشراء أفضل الحسابات، وفحص ملكيتها بدقة، وتسليمها للمشتري يدوياً ومباشرة، مع التأكد التام من استقرار البريد وسجل القرية قبل وبعد إتمام البيع.
+          كلاش ماركت هو متجر مستقل بدأ بهدف توفير مكان واحد يمكن للاعبين من خلاله شراء حسابات كلاش أوف كلانس وكلاش رويال بشكل مباشر وواضح. نحن نعمل كتجار متخصصين — نشتري الحسابات المتميزة من أصحابها، نفحصها يدوياً، ثم نعرضها للبيع مع ضمان وفق سياسة المتجر.
         </p>
         <p style="color: #cbd5e1; font-size: 1rem; margin: 0;">
-          هدفنا أن يحصل اللاعب على قرية ماكس أو حساب متقدم جاهز للمنافسة في حروب القبائل ودوري الأساطير دون إضاعة سنوات طويلة في التطوير، وضمن بيئة تعامل واضحة ومضمونة.
+          بدلاً من المخاطرة مع بائعين مجهولين على شبكات التواصل، يتعامل اللاعب مع متجر يقدم فحصاً مسبقاً، تسليماً يدوياً مباشراً، وإشرافاً دقيقاً على نقل ملكية Supercell ID وتأمين الحساب.
         </p>
+      </section>
+
+      <section style="background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 28px; margin-bottom: 28px;">
+        <h2 style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; margin-bottom: 12px;">ما الذي يقدمه المتجر؟</h2>
+        <ul style="color: #cbd5e1; line-height: 2; padding-right: 20px;">
+          <li><strong>حسابات كلاش أوف كلانس:</strong> قريات تاون هول 14 إلى 18 بمستويات تطوير وأبطال متنوعة. (<a href="/clash-of-clans" style="color: #f59e0b;">تصفح حسابات كلاش أوف كلانس</a>)</li>
+          <li><strong>حسابات كلاش رويال:</strong> تشكيلات بطاقات Level 16 وتطورات Evolutions وأبطال. (<a href="/clash-royale" style="color: #60a5fa;">تصفح حسابات كلاش رويال</a>)</li>
+          <li><strong>تسليم يدوي مباشر:</strong> متابعة شخصية خطوة بخطوة عبر الواتساب لتغيير البريد وتأمين الحساب برقمك.</li>
+          <li><strong>طرق دفع مرنة:</strong> تحويل بنكي محلي أو تقسيط ميسر عبر تابي وتمارا بالتنسيق المباشر.</li>
+        </ul>
       </section>
 
       <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 36px;">
         <div style="background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px;">
-          <div style="font-size: 2rem; margin-bottom: 10px;">👥</div>
-          <h3 style="font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">تعامل مباشر وإنساني</h3>
-          <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">
-            لا نستخدم روبوتات تسليم آلية قد تقع في أخطاء أو تعرض الحساب للحظر. كل عملية بيع وشراء تتم بمحادثة حقيقية مباشرة عبر الواتساب خطوة بخطوة.
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">🔍 كيف نفحص الحسابات؟</h3>
+          <p style="color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.8;">
+            نتحقق يدوياً من استقلالية البريد الأساسي، خلو الحساب من أي نزاعات ملكية، سلامة سجل الشحنات والجواهر، وعدم وجود أي مخالفات سابقة.
           </p>
         </div>
 
         <div style="background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px;">
-          <div style="font-size: 2rem; margin-bottom: 10px;">✅</div>
-          <h3 style="font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">فحص دقيق قبل التسليم</h3>
-          <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">
-            نتأكد من استقلالية البريد الإلكتروني وخلو الحساب من أي نزاعات ملكية، ونساعد المشتري في تأمين الحساب ببياناته الشخصية.
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px;">🛡️ الضمان وحماية المشتري</h3>
+          <p style="color: #94a3b8; font-size: 0.95rem; margin: 0; line-height: 1.8;">
+            نلتزم بتسليم الإيميل الأساسي وتفعيل حماية الحساب (Account Protection) على رقم المشتري مع تقديم الدعم وفق <a href="/guarantee" style="color: #f59e0b;">سياسة الضمان</a> و<a href="/how-it-works" style="color: #f59e0b;">طريقة الشراء والتسليم</a>.
           </p>
         </div>
       </section>
 
+      <section style="margin-bottom: 36px;">
+        <h2 style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; margin-bottom: 16px;">أسئلة شائعة عن كلاش ماركت</h2>
+        ${faqHtml}
+      </section>
+
       <div style="text-align: center; margin-top: 36px;">
         <a class="cta" href="/clash-of-clans" style="margin-left: 12px;">قريات كلاش أوف كلانس</a>
-        <a class="cta" href="/clash-royale" style="background: #2563eb;">حسابات كلاش رويال</a>
+        <a class="cta" href="/clash-royale" style="background: #2563eb; color: #fff; margin-left: 12px;">حسابات كلاش رويال</a>
+        <a class="cta" href="/blog" style="background: #334155; color: #f8fafc;">مدونة كلاش ماركت</a>
       </div>
     </article>
   `;
