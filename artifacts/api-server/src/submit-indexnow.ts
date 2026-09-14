@@ -11,6 +11,7 @@ async function submitIndexNow() {
     `https://${host}/how-it-works`,
     `https://${host}/about`,
     `https://${host}/blog`,
+    `https://${host}/blog/buy-clash-of-clans-account-installments-tabby-tamara-saudi`,
     `https://${host}/blog/how-to-change-supercell-id-email-guide`,
     `https://${host}/blog/clash-of-clans-account-ban-reasons-protection-guide`,
     `https://${host}/blog/clash-of-clans-town-hall-levels-buying-guide`,

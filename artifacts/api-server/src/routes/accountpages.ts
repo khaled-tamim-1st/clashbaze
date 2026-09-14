@@ -107,8 +107,8 @@ function renderGameListPage(game: "clash-of-clans" | "clash-royale") {
 
       const faqItems = isCoc
         ? [
-            { q: "كيف أشتري حساب كلاش أوف كلانس من كلاش ماركت؟", a: "اختر القرية المناسبة من القائمة، اضغط على زر الواتساب، ويتواصل معك الوسيط المعتمد لإتمام نقل ملكية Supercell ID وتغيير البريد الإلكتروني خلال 5 إلى 15 دقيقة بأمان تام." },
-            { q: "هل حسابات كلاش أوف كلانس مضمونة ضد السحب؟", a: "نعم، جميع الحسابات مفحوصة ومربوطة بسوبر سيل آيدي جديد باسمك مع ضمان كامل ضد الاسترجاع ووساطة رسمية تحمي حقوق المشتري." },
+            { q: "كيف أشتري حساب كلاش أوف كلانس من كلاش ماركت؟", a: "اختر القرية المناسبة من القائمة، اضغط على زر الواتساب، ونتواصل معك مباشرة من إدارة المتجر لإتمام نقل ملكية Supercell ID وتغيير البريد الإلكتروني وتأمين الحساب برقمك خلال دقائق بأمان تام." },
+            { q: "هل حسابات كلاش أوف كلانس مضمونة ضد السحب؟", a: "نعم، جميع الحسابات مملوكة ومفحوصة يدوياً ومشمولة بالضمان الذهبي الكامل ضد السحب والاسترجاع مدى الحياة، مع تسليم الإيميل الأساسي." },
             { q: "هل يوجد حسابات كلاش رخيصة؟", a: "نعم، نوفر قريات وحسابات بمختلف الأسعار تبدأ من تاون 12 وحتى تاون 18 فل ماكس لتناسب جميع الميزانيات مع تسليم فوري عبر الواتساب." },
           ]
         : [
@@ -299,7 +299,7 @@ router.get("/account/:slug", async (req, res) => {
       </div>
       <h1>${escapeHtml(account.title)}</h1>
       <div class="meta" style="margin-bottom: 16px;">
-        الحالة: <span class="status ${escapeHtml(account.status)}" style="color: ${account.status === 'available' ? '#10b981' : '#f59e0b'}; font-weight: 700;">${escapeHtml(statusLabel)}</span> | وسيط معتمد | تسليم فوري في السعودية ودول الخليج
+        الحالة: <span class="status ${escapeHtml(account.status)}" style="color: ${account.status === 'available' ? '#10b981' : '#f59e0b'}; font-weight: 700;">${escapeHtml(statusLabel)}</span> | متجر موثوق | تسليم فوري في السعودية ودول الخليج
       </div>
       ${account.images?.length ? `<div class="gallery">${galleryHtml}</div>` : ""}
       <div class="price-row">
@@ -312,7 +312,7 @@ router.get("/account/:slug", async (req, res) => {
       ${specsHtml ? `<div class="specs">${specsHtml}</div>` : ""}
       ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1; line-height: 1.9;">${escapeHtml(account.description)}</div>` : ""}
       
-      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم يدوي بإشراف وسيط)</a>
+      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)</a>
       <div style="text-align: center; margin-top: 10px; font-size: 0.85rem;">
         <a href="/guarantee" style="color: #94a3b8; text-decoration: underline;">🛡️ مشمول بالضمان الذهبي وحماية المشتري (اضغط للتفاصيل)</a>
       </div>
@@ -320,9 +320,9 @@ router.get("/account/:slug", async (req, res) => {
       <section style="margin: 36px 0; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
         <h2 style="font-size: 1.25rem; color: #f59e0b; margin-top: 0; margin-bottom: 12px;">🛡️ ضمان وأمان شراء الحسابات مع ${escapeHtml(SITE_NAME)}</h2>
         <ul style="color: #cbd5e1; padding-right: 20px; line-height: 2; margin: 0;">
-          <li><strong>فحص يدوي شامل:</strong> فحص دقيق للقرية وسجلها ونقل ملكية البريد الأساسي وسوبر سيل آيدي بالكامل تحت إشراف الوسيط.</li>
+          <li><strong>فحص يدوي شامل:</strong> فحص دقيق للقرية وتأكيد سلامة البريد الأساسي وسوبر سيل آيدي بالكامل قبل التسليم.</li>
           <li><strong>تسليم يدوي مباشر:</strong> يتم التواصل معك فوراً عبر الواتساب وتأمين القرية على جهازك خطوة بخطوة.</li>
-          <li><strong>تحويل مباشر بالاتفاق:</strong> يتم الاتفاق على وسيلة التحويل مباشرة مع الوسيط عبر الواتساب (مثل التحويل البنكي المباشر).</li>
+          <li><strong>طرق دفع متعددة:</strong> تحويل بنكي مباشر لحسابات سعودية وخليجية، مع إمكانية الدفع والتقسيط عبر تابي وتمارا بالاتفاق المباشر عبر الواتساب.</li>
           <li><strong>الضمان الذهبي:</strong> حماية كاملة للمشتري وضمان عدم الاسترجاع مدى الحياة. <a href="/guarantee" style="color:#f59e0b; text-decoration:underline;">تعرف على سياسة الضمان</a></li>
         </ul>
       </section>

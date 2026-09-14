@@ -355,6 +355,7 @@ export function pageShell(opts: {
       <a href="/guarantee">الضمان الذهبي</a>
       <a href="/how-it-works">طريقة الشراء والتسليم</a>
       <a href="/about">من نحن</a>
+      <a href="/blog/buy-clash-of-clans-account-installments-tabby-tamara-saudi">تقسيط الحسابات عبر تابي وتمارا</a>
       <a href="/blog/how-to-change-supercell-id-email-guide">طريقة تغيير إيميل Supercell ID</a>
       <a href="/blog/clash-of-clans-account-ban-reasons-protection-guide">طرق حماية القرية وتجنب الحظر</a>
     </div>

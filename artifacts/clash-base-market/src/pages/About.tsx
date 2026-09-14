@@ -27,7 +27,7 @@ export default function About() {
               من نحن في كلاش ماركت
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
-              متجر متخصص في توفير وساطة آمنة وموثوقة لبيع وشراء قريات كلاش أوف كلانس وحسابات كلاش رويال في المملكة العربية السعودية ودول الخليج العربي.
+              متجر تجاري متخصص في شراء وبيع قريات كلاش أوف كلانس وحسابات كلاش رويال المضمونة في المملكة العربية السعودية ودول الخليج العربي.
             </p>
           </div>
 
@@ -38,7 +38,7 @@ export default function About() {
                 هدفنا وأسلوب عملنا
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                بدأ <strong>كلاش ماركت</strong> لتوفير بديل آمن للاعبين بدلاً من التعامل مع أطراف مجهولة في منصات التواصل. نعتمد أسلوب البيع اليدوي المباشر؛ حيث يقوم وسيط المتجر بفحص كل حساب بنفسه، والتأكد من أمان البريد الإلكتروني وسجل القرية قبل عرضها أو تسليمها للمشتري.
+                بدأ <strong>كلاش ماركت</strong> لتوفير وجهة آمنة وموثوقة للاعبين. نحن تجار متخصصون نقوم بشراء أفضل الحسابات، وفحص ملكيتها بدقة، وتسليمها للمشتري يدوياً ومباشرة، مع التأكد التام من استقرار البريد وسجل القرية قبل وبعد إتمام البيع.
               </p>
               <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                 هدفنا أن يحصل اللاعب على قرية ماكس أو حساب متقدم جاهز للمنافسة في حروب القبائل ودوري الأساطير دون إضاعة سنوات طويلة في التطوير، وضمن بيئة تعامل واضحة ومضمونة.
@@ -66,7 +66,7 @@ export default function About() {
             <div className="bg-card border border-border rounded-2xl p-6 md:p-8 text-center space-y-4 shadow-sm">
               <h3 className="text-xl font-bold">جاهز لاختيار حسابك أو لديك استفسار؟</h3>
               <p className="text-muted-foreground text-sm max-w-lg mx-auto">
-                فريق وساطة كلاش ماركت متاح عبر الواتساب للإجابة عن أي سؤال حول الحسابات وطريقة الاستلام.
+                فريق وإدارة كلاش ماركت متاح عبر الواتساب للإجابة عن أي سؤال حول الحسابات وطريقة الاستلام والشراء.
               </p>
               <div className="flex flex-wrap justify-center gap-4 pt-2">
                 <Link href="/clash-of-clans" className="px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-xl text-sm transition-colors">
@@ -79,7 +79,7 @@ export default function About() {
                   className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-colors shadow"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  مراسلة الوسيط على الواتساب
+                  مراسلة إدارة المتجر على الواتساب
                 </a>
               </div>
             </div>

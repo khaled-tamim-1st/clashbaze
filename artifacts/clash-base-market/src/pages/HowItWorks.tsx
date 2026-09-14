@@ -11,7 +11,7 @@ export default function HowItWorks() {
     <>
       <SEO
         title="طريقة الشراء والتسليم اليدوي | متجر كلاش ماركت"
-        description="تعرف على خطوات شراء واستلام حسابات كلاش أوف كلانس وكلاش رويال في كلاش ماركت. تسليم يدوي مباشر بإشراف وسيط معتمد عبر الواتساب."
+        description="تعرف على خطوات شراء واستلام حسابات كلاش أوف كلانس وكلاش رويال في كلاش ماركت. تسليم يدوي مباشر ومضمون من إدارة المتجر عبر الواتساب."
         url="https://www.clashmarket.online/how-it-works"
       />
 
@@ -21,13 +21,13 @@ export default function HowItWorks() {
         <main className="flex-1 container mx-auto px-4 py-12 max-w-5xl">
           <div className="text-center mb-12">
             <span className="inline-block px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold mb-3">
-              وساطة يدوية معتمدة
+              متجر موثوق — بيع وشراء مباشر
             </span>
             <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
               كيف تتم عملية الشراء والتسليم في كلاش ماركت؟
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
-              نعتمد في كلاش ماركت على نظام التسليم اليدوي المباشر عبر الواتساب لضمان أمان كل خطوة، والتحقق من نقل الحساب والإيميل لجهازك بدقة وتحت إشراف الوسيط.
+              نعتمد في كلاش ماركت على نظام التسليم اليدوي المباشر عبر الواتساب لضمان أمان كل خطوة، والتحقق من نقل الحساب والإيميل لجهازك بدقة وتحت إشرافنا المباشر.
             </p>
           </div>
 
@@ -57,7 +57,7 @@ export default function HowItWorks() {
                   التواصل المباشر عبر الواتساب
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  اضغط على زر <strong>"شراء عبر الواتساب"</strong> الموجود في صفحة الحساب. سيتم توجيهك مباشرة لمحادثة الوسيط مع إرفاق تفاصيل الحساب المطلوب لتأكيد توفره فوراً والاتفاق على وسيلة الدفع المناسبة لك.
+                  اضغط على زر <strong>"شراء عبر الواتساب"</strong> الموجود في صفحة الحساب. سيتم توجيهك مباشرة لمحادثتنا في المتجر لتأكيد توفر الحساب فوراً والاتفاق على طريقة الدفع المناسبة لك (تحويل بنكي أو تابي وتمارا بالاتفاق المباشر).
                 </p>
               </div>
             </div>
@@ -69,10 +69,10 @@ export default function HowItWorks() {
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl font-bold">
-                  تحويل المبلغ بالاتفاق مع الوسيط
+                  الدفع والتحويل بالاتفاق المباشر
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  يتم تحويل قيمة الحساب بالوسيلة المتفق عليها مباشرة مع الوسيط في محادثة الواتساب (مثل التحويل البنكي المباشر للحسابات البنكية السعودية أو الخليجية).
+                  يتم سداد قيمة الحساب بالطريقة التي تناسبك بعد الاتفاق في محادثة الواتساب، سواء عبر التحويل البنكي المباشر لحساباتنا السعودية والخليجية، أو التنسيق للدفع والتقسيط عبر تابي وتمارا يدوياً وبكل سهولة.
                 </p>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function HowItWorks() {
                   نقل الحساب وتأمينه خطوة بخطوة
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  يقوم الوسيط معك في نفس اللحظة بتسليمك بيانات الإيميل الأساسي أو تغيير بريد Supercell ID إلى بريدك الشخصي، ومساعدتك في تفعيل التحقق برقم هاتفك لضمان دخولك للقرية وخروج المالك السابق نهائياً.
+                  نقوم معك في نفس اللحظة بتسليمك بيانات الإيميل الأساسي وتأكيد ربط Supercell ID ببريدك الشخصي ورقم هاتفك لضمان امتلاكك الكامل والنهائي للقرية بأعلى معايير الأمان.
                 </p>
               </div>
             </div>
@@ -98,7 +98,7 @@ export default function HowItWorks() {
             <ShieldCheck className="w-12 h-12 text-primary mx-auto" />
             <h3 className="text-2xl font-bold">كل عملية بيع مشمولة بالضمان الذهبي</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              لأننا نبيع يدوياً، فإننا نقوم بفحص وتجربة كل حساب قبل تسليمه لك للتأكد من نظافة سجله وخلوه من أي مشاكل.
+              لأننا تجار متخصصون ونفحص كل حساب بدقة قبل عرضه، نضمن لك سلامة الحساب واستقراره التام وخلوه من أي مشاكل.
             </p>
             <div className="pt-2">
               <a
@@ -108,7 +108,7 @@ export default function HowItWorks() {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-colors shadow"
               >
                 <MessageCircle className="w-5 h-5" />
-                تواصل مع الوسيط للاستفسار
+                تواصل مع إدارة المتجر للاستفسار
               </a>
             </div>
           </div>
