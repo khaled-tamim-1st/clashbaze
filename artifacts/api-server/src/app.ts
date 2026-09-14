@@ -5,6 +5,7 @@ import router from "./routes";
 import homePageRouter from "./routes/homePage";
 import blogPagesRouter from "./routes/blogpages";
 import accountPagesRouter from "./routes/accountpages";
+import policyPagesRouter from "./routes/policyPages";
 
 import sitemapRouter from "./routes/sitemap";
 import { logger } from "./lib/logger";
@@ -50,6 +51,7 @@ app.use("/api", router);
 app.use(homePageRouter);
 app.use(blogPagesRouter);
 app.use(accountPagesRouter);
+app.use(policyPagesRouter);
 
 app.use(sitemapRouter);
 

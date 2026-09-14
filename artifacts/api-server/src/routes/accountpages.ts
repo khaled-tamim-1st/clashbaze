@@ -306,18 +306,24 @@ router.get("/account/:slug", async (req, res) => {
         <span class="price">${formatPrice(account.price)} ر.س</span>
         ${account.oldPrice ? `<span class="old-price">${formatPrice(account.oldPrice)} ر.س</span>` : ""}
       </div>
+      <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px 14px; margin: 12px 0 18px 0; color: #fcd34d; font-size: 0.92rem; font-weight: 600;">
+        🛡️ فحص يدوي للحساب + تسليم الإيميل الأساسي + ضمان كامل ضد السحب
+      </div>
       ${specsHtml ? `<div class="specs">${specsHtml}</div>` : ""}
       ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1; line-height: 1.9;">${escapeHtml(account.description)}</div>` : ""}
       
-      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم فوري وآمن)</a>
+      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم يدوي بإشراف وسيط)</a>
+      <div style="text-align: center; margin-top: 10px; font-size: 0.85rem;">
+        <a href="/guarantee" style="color: #94a3b8; text-decoration: underline;">🛡️ مشمول بالضمان الذهبي وحماية المشتري (اضغط للتفاصيل)</a>
+      </div>
 
       <section style="margin: 36px 0; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
         <h2 style="font-size: 1.25rem; color: #f59e0b; margin-top: 0; margin-bottom: 12px;">🛡️ ضمان وأمان شراء الحسابات مع ${escapeHtml(SITE_NAME)}</h2>
         <ul style="color: #cbd5e1; padding-right: 20px; line-height: 2; margin: 0;">
-          <li><strong>أمان 100%:</strong> فحص دقيق للحساب ونقل ملكية البريد الإلكتروني وسوبر سيل آيدي بالكامل.</li>
-          <li><strong>تسليم فوري:</strong> يتم إتمام عملية النقل والتسليم خلال 5 إلى 15 دقيقة عبر الواتساب.</li>
-          <li><strong>طرق دفع محلية متعددة:</strong> ندعم مدى، تابي، تمارا، Apple Pay، والتحويل البنكي المباشر.</li>
-          <li><strong>ضمان شامل:</strong> حماية كاملة للمشتري وضمان عدم الاسترجاع.</li>
+          <li><strong>فحص يدوي شامل:</strong> فحص دقيق للقرية وسجلها ونقل ملكية البريد الأساسي وسوبر سيل آيدي بالكامل تحت إشراف الوسيط.</li>
+          <li><strong>تسليم يدوي مباشر:</strong> يتم التواصل معك فوراً عبر الواتساب وتأمين القرية على جهازك خطوة بخطوة.</li>
+          <li><strong>تحويل مباشر بالاتفاق:</strong> يتم الاتفاق على وسيلة التحويل مباشرة مع الوسيط عبر الواتساب (مثل التحويل البنكي المباشر).</li>
+          <li><strong>الضمان الذهبي:</strong> حماية كاملة للمشتري وضمان عدم الاسترجاع مدى الحياة. <a href="/guarantee" style="color:#f59e0b; text-decoration:underline;">تعرف على سياسة الضمان</a></li>
         </ul>
       </section>
 

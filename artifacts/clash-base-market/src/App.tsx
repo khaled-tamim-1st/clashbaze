@@ -11,6 +11,9 @@ import ClashRoyale from "@/pages/ClashRoyale";
 import AccountDetail from "@/pages/AccountDetail";
 import Blog from "@/pages/Blog";
 import BlogDetail from "@/pages/BlogDetail";
+import Guarantee from "@/pages/Guarantee";
+import HowItWorks from "@/pages/HowItWorks";
+import About from "@/pages/About";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import AdminAccounts from "@/pages/admin/AdminAccounts";
@@ -34,6 +37,9 @@ function Router() {
       <Route path="/account/:slug" component={AccountDetail} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogDetail} />
+      <Route path="/guarantee" component={Guarantee} />
+      <Route path="/how-it-works" component={HowItWorks} />
+      <Route path="/about" component={About} />
       <Route path="/login" component={Login} />
 
       <Route path="/admin" component={Dashboard} />

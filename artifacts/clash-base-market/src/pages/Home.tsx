@@ -26,21 +26,6 @@ export default function Home() {
       <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
         <Navbar />
         <main className="flex-1">
-          {/* Promo Banners */}
-          <section className="w-full border-b border-border">
-            <img
-              src="/banners/payment-banner-methods.jpg"
-              alt="طرق دفع متنوعة تناسب احتياجك - Google Pay وتابي وباي بال وآبل باي وفيزا وتمارا وتحويل بنكي وماستركارد"
-              className="w-full h-auto object-cover block"
-              loading="lazy"
-            />
-            <img
-              src="/banners/payment-banner-tabby.jpg"
-              alt="قسط قريتك مع كلاش ماركت - تابي وتمارا"
-              className="w-full h-auto object-cover block"
-              loading="eager"
-            />
-          </section>
 
           <section className="w-full border-b border-border">
             <Link href="/clash-of-clans">

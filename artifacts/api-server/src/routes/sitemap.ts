@@ -161,6 +161,24 @@ router.get("/sitemap.xml", async (req, res) => {
         imageUrl: `${SITE_URL}/thumbnail.png`,
         imageTitle: "مدونة متجر كلاش | شروحات واستراتيجيات ألعاب سوبر سيل",
       }),
+      urlEntry("/guarantee", {
+        priority: "0.7",
+        changefreq: "monthly",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "الضمان الذهبي وحماية المشتري | متجر كلاش ماركت",
+      }),
+      urlEntry("/how-it-works", {
+        priority: "0.7",
+        changefreq: "monthly",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "طريقة الشراء والتسليم اليدوي المباشر | متجر كلاش ماركت",
+      }),
+      urlEntry("/about", {
+        priority: "0.6",
+        changefreq: "monthly",
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "من نحن | متجر كلاش ماركت لتداول حسابات كلاش",
+      }),
     ];
 
 function formatCloudinaryUrl(url: string | undefined | null): string {

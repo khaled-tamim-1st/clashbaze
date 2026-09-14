@@ -21,7 +21,9 @@ export function Footer() {
               <li><Link href="/clash-of-clans" className="hover:text-primary">حسابات كلاش أوف كلانس</Link></li>
               <li><Link href="/clash-royale" className="hover:text-primary">حسابات كلاش رويال</Link></li>
               <li><Link href="/blog" className="hover:text-primary">مدونة كلاش ماركت</Link></li>
-              <li><Link href="/blog/buy-clash-of-clans-account-installments-tabby-tamara-saudi" className="hover:text-primary">تقسيط الحسابات عبر تابي وتمارا</Link></li>
+              <li><Link href="/guarantee" className="hover:text-primary">الضمان الذهبي وحماية المشتري</Link></li>
+              <li><Link href="/how-it-works" className="hover:text-primary">طريقة الشراء والتسليم اليدوي</Link></li>
+              <li><Link href="/about" className="hover:text-primary">من نحن في كلاش ماركت</Link></li>
               <li><Link href="/blog/how-to-change-supercell-id-email-guide" className="hover:text-primary">طريقة تغيير إيميل Supercell ID</Link></li>
               <li><Link href="/blog/clash-of-clans-account-ban-reasons-protection-guide" className="hover:text-primary">طرق حماية القرية وتجنب الحظر</Link></li>
             </ul>

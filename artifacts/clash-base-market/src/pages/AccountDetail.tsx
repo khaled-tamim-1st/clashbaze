@@ -1,4 +1,4 @@
-import { useRoute } from "wouter";
+import { useRoute, Link } from "wouter";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useGetAccount, useGetRelatedAccounts } from "@workspace/api-client-react";
@@ -133,11 +133,16 @@ export default function AccountDetail() {
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{account.title}</h1>
             
-            <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center gap-4 mb-4">
               <span className="text-3xl font-extrabold text-primary">{formatPrice(account.price)}</span>
               {account.oldPrice && (
                 <span className="text-xl text-muted-foreground line-through">{formatPrice(account.oldPrice)}</span>
               )}
+            </div>
+
+            <div className="p-3 mb-8 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center gap-2 text-sm text-amber-300 font-medium">
+              <span>🛡️</span>
+              <span>فحص يدوي للحساب + تسليم الإيميل الأساسي + ضمان كامل ضد السحب</span>
             </div>
 
             <div className="bg-card border border-border rounded-xl p-6 mb-8">
@@ -198,6 +203,13 @@ export default function AccountDetail() {
             <Button asChild size="lg" className="w-full text-lg h-14 bg-primary text-primary-foreground hover:bg-primary/90">
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب</a>
             </Button>
+
+            <div className="mt-3 text-center">
+              <Link href="/guarantee" className="text-xs text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1">
+                <span>🛡️ مشمول بالضمان الذهبي وحماية المشتري</span>
+                <span className="underline font-semibold">تعرف على التفاصيل</span>
+              </Link>
+            </div>
           </div>
         </div>
 
