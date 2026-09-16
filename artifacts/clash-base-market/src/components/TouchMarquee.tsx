@@ -1,84 +1,100 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface TouchMarqueeProps {
   children: React.ReactNode;
-  speed?: number;
+  speed?: number; // pixels per frame, e.g. 1.0
   className?: string;
   pauseOnHover?: boolean;
 }
 
 export function TouchMarquee({
   children,
-  speed = 0.85,
+  speed = 1.0,
   className = "",
-  pauseOnHover = true,
+  pauseOnHover = false,
 }: TouchMarqueeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [isInteracting, setIsInteracting] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
-  const startScrollLeftRef = useRef(0);
+  const startScrollPosRef = useRef(0);
   const dragDistanceRef = useRef(0);
-  const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const animFrameRef = useRef<number | undefined>(undefined);
+  const scrollPosRef = useRef(0);
 
-  // Resume auto-scroll after inactivity
-  const scheduleResume = useCallback(() => {
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-    resumeTimeoutRef.current = setTimeout(() => {
-      setIsInteracting(false);
-      setIsDragging(false);
-      isDraggingRef.current = false;
-    }, 1800);
-  }, []);
-
-  // Seamless wrap-around check
-  const checkWrap = useCallback(() => {
-    const el = containerRef.current;
-    const content = contentRef.current;
-    if (!el || !content) return;
-
-    const halfWidth = content.scrollWidth / 2;
-    if (halfWidth <= 0) return;
-
-    if (el.scrollLeft >= halfWidth) {
-      el.scrollLeft -= halfWidth;
-    } else if (el.scrollLeft <= 0) {
-      el.scrollLeft += halfWidth;
+  // Sync initial scroll pos
+  useEffect(() => {
+    if (containerRef.current) {
+      scrollPosRef.current = containerRef.current.scrollLeft;
     }
   }, []);
 
-  // Continuous auto-scroll loop
+  // Continuous auto-scroll animation loop
   useEffect(() => {
-    const step = () => {
+    let animId: number;
+    let lastTime = performance.now();
+
+    const step = (now: number) => {
+      const delta = Math.min((now - lastTime) / 16.67, 2.5); // normalized for 60fps
+      lastTime = now;
+
       const el = containerRef.current;
-      if (el && !isInteracting && !isHovered && !isDraggingRef.current) {
-        el.scrollLeft += speed;
-        checkWrap();
+      const content = contentRef.current;
+
+      if (el && content && !isDraggingRef.current) {
+        scrollPosRef.current += speed * delta;
+
+        const halfWidth = content.scrollWidth / 2;
+        if (halfWidth > 0) {
+          if (scrollPosRef.current >= halfWidth) {
+            scrollPosRef.current -= halfWidth;
+          } else if (scrollPosRef.current < 0) {
+            scrollPosRef.current += halfWidth;
+          }
+        }
+
+        el.scrollLeft = Math.round(scrollPosRef.current);
       }
-      animFrameRef.current = requestAnimationFrame(step);
+
+      animId = requestAnimationFrame(step);
     };
 
-    animFrameRef.current = requestAnimationFrame(step);
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-    };
-  }, [isInteracting, isHovered, speed, checkWrap]);
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [speed]);
 
   // Touch handlers for mobile
-  const handleTouchStart = () => {
-    setIsInteracting(true);
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!containerRef.current) return;
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    startXRef.current = e.touches[0].clientX;
+    startScrollPosRef.current = containerRef.current.scrollLeft;
+    dragDistanceRef.current = 0;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDraggingRef.current || !containerRef.current || !contentRef.current) return;
+    const deltaX = e.touches[0].clientX - startXRef.current;
+    dragDistanceRef.current += Math.abs(deltaX);
+    scrollPosRef.current = startScrollPosRef.current - deltaX;
+
+    const halfWidth = contentRef.current.scrollWidth / 2;
+    if (halfWidth > 0) {
+      if (scrollPosRef.current >= halfWidth) scrollPosRef.current -= halfWidth;
+      else if (scrollPosRef.current < 0) scrollPosRef.current += halfWidth;
+    }
+
+    containerRef.current.scrollLeft = Math.round(scrollPosRef.current);
   };
 
   const handleTouchEnd = () => {
-    scheduleResume();
+    isDraggingRef.current = false;
+    setIsDragging(false);
+    if (containerRef.current) {
+      scrollPosRef.current = containerRef.current.scrollLeft;
+    }
   };
 
   // Mouse drag handlers for desktop
@@ -86,40 +102,55 @@ export function TouchMarquee({
     if (!containerRef.current) return;
     isDraggingRef.current = true;
     setIsDragging(true);
-    setIsInteracting(true);
+    startXRef.current = e.clientX;
+    startScrollPosRef.current = containerRef.current.scrollLeft;
     dragDistanceRef.current = 0;
-    startXRef.current = e.pageX - containerRef.current.offsetLeft;
-    startScrollLeftRef.current = containerRef.current.scrollLeft;
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDraggingRef.current || !containerRef.current) return;
-    const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startXRef.current) * 1.2;
-    dragDistanceRef.current += Math.abs(walk);
-    containerRef.current.scrollLeft = startScrollLeftRef.current - walk;
-    checkWrap();
+    if (!isDraggingRef.current || !containerRef.current || !contentRef.current) return;
+    const deltaX = e.clientX - startXRef.current;
+    dragDistanceRef.current += Math.abs(deltaX);
+    scrollPosRef.current = startScrollPosRef.current - deltaX;
+
+    const halfWidth = contentRef.current.scrollWidth / 2;
+    if (halfWidth > 0) {
+      if (scrollPosRef.current >= halfWidth) scrollPosRef.current -= halfWidth;
+      else if (scrollPosRef.current < 0) scrollPosRef.current += halfWidth;
+    }
+
+    containerRef.current.scrollLeft = Math.round(scrollPosRef.current);
   };
 
   const handleMouseUp = () => {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
     setIsDragging(false);
-    scheduleResume();
+    if (containerRef.current) {
+      scrollPosRef.current = containerRef.current.scrollLeft;
+    }
   };
 
   const handleClickCapture = (e: React.MouseEvent) => {
+    // If user dragged more than 8px, cancel card navigation click
     if (dragDistanceRef.current > 8) {
       e.preventDefault();
       e.stopPropagation();
     }
   };
 
-  const handleWheel = () => {
-    setIsInteracting(true);
-    checkWrap();
-    scheduleResume();
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!containerRef.current || !contentRef.current) return;
+    const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+    scrollPosRef.current += delta;
+
+    const halfWidth = contentRef.current.scrollWidth / 2;
+    if (halfWidth > 0) {
+      if (scrollPosRef.current >= halfWidth) scrollPosRef.current -= halfWidth;
+      else if (scrollPosRef.current < 0) scrollPosRef.current += halfWidth;
+    }
+
+    containerRef.current.scrollLeft = Math.round(scrollPosRef.current);
   };
 
   return (
@@ -129,15 +160,13 @@ export function TouchMarquee({
         maskImage: "linear-gradient(to right, transparent, black 3%, black 97%, transparent)",
         WebkitMaskImage: "linear-gradient(to right, transparent, black 3%, black 97%, transparent)",
       }}
-      onMouseEnter={() => pauseOnHover && setIsHovered(true)}
       onMouseLeave={() => {
-        if (pauseOnHover) setIsHovered(false);
         if (isDraggingRef.current) handleMouseUp();
       }}
     >
       <div
         ref={containerRef}
-        className={`w-full overflow-x-auto flex no-scrollbar ${
+        className={`w-full overflow-x-hidden flex no-scrollbar ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{
@@ -145,15 +174,16 @@ export function TouchMarquee({
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           WebkitOverflowScrolling: "touch",
+          touchAction: "pan-y",
         }}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onClickCapture={handleClickCapture}
         onWheel={handleWheel}
-        onScroll={checkWrap}
       >
         <div ref={contentRef} className="flex flex-nowrap shrink-0">
           <div className="flex flex-nowrap gap-6 shrink-0 px-3" style={{ direction: "rtl" }}>

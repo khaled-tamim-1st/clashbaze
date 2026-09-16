@@ -112,15 +112,9 @@ export default function Home() {
       <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
         <Navbar />
         <main className="flex-1">
-          {/* Main Hero Header */}
-          <section className="container mx-auto px-4 py-8 md:py-10 text-center md:text-start">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 text-foreground tracking-tight break-words">
-              متجر كلاش | بيع وشراء حسابات كلاش اوف كلانس وكلاش رويال
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground max-w-3xl leading-relaxed">
-              متجر كلاش ماركت الأول لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. متجر كلاش موثوق بتسليم فوري وضمان شامل.
-            </p>
-          </section>
+          <h1 className="sr-only">
+            متجر كلاش | بيع وشراء حسابات كلاش اوف كلانس وكلاش رويال
+          </h1>
 
           {/* Promo Banners */}
           <section className="w-full border-b border-border">
