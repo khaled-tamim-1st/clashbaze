@@ -94,63 +94,57 @@ export default function ClashOfClans() {
         jsonLd={jsonLdArray}
       />
       <Navbar />
-      <main className="flex-1 container mx-auto px-4 py-12 md:py-16 max-w-6xl">
+      <main className="flex-1">
         {/* Intro Section */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-foreground tracking-tight break-words">حسابات كلاش أوف كلانس للبيع</h1>
-        <div className="max-w-4xl mb-12 space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8">
-          <p>
-            يوفر كلاش ماركت قريات وحسابات كلاش أوف كلانس جاهزة للمنافسة، بمستويات تاون هول تبدأ من 14 وحتى 18. سواء كنت تبحث عن قرية ماكس لدخول حروب القبائل (CWL) مباشرة، أو حساب متقدم بسعر مناسب لميزانيتك — ستجد خيارات متنوعة تناسب مختلف الاحتياجات.
-          </p>
-          <p>
-            جميع الحسابات المعروضة تم فحصها يدوياً قبل طرحها، ويتم التسليم بشكل مباشر عبر الواتساب مع نقل ملكية Supercell ID وتأمين الحساب على جهاز المشتري. المتجر يخدم اللاعبين في السعودية ودول الخليج العربي بالدرجة الأولى.
-          </p>
-        </div>
-
-        {/* Town Hall Visual Navigation Cards */}
-        <section className="mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">تصفح قريات كلاش حسب مستوى التاون هول</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link
-              href="/clash-of-clans/town-hall-18"
-              className="group block rounded-2xl overflow-hidden border border-border/80 hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-primary/10 hover:-translate-y-1 bg-card/40"
-            >
-              <img
-                src="/banners/th18-banner.png"
-                alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع"
-                width={1024}
-                height={393}
-                loading="eager"
-                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-105 transition-transform duration-500"
-              />
-            </Link>
-            <Link
-              href="/clash-of-clans/town-hall-17"
-              className="group block rounded-2xl overflow-hidden border border-border/80 hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-primary/10 hover:-translate-y-1 bg-card/40"
-            >
-              <img
-                src="/banners/th17-banner.png"
-                alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع"
-                width={1024}
-                height={393}
-                loading="eager"
-                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-105 transition-transform duration-500"
-              />
-            </Link>
-            <Link
-              href="/clash-of-clans/town-hall-16"
-              className="group block rounded-2xl overflow-hidden border border-border/80 hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-primary/10 hover:-translate-y-1 bg-card/40"
-            >
-              <img
-                src="/banners/th16-banner.png"
-                alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع"
-                width={1024}
-                height={393}
-                loading="lazy"
-                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-105 transition-transform duration-500"
-              />
-            </Link>
+        <section className="container mx-auto px-4 py-8 md:py-10 max-w-6xl">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 text-foreground tracking-tight break-words">
+            حسابات كلاش أوف كلانس للبيع
+          </h1>
+          <div className="max-w-4xl space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8">
+            <p>
+              يوفر كلاش ماركت قريات وحسابات كلاش أوف كلانس جاهزة للمنافسة، بمستويات تاون هول تبدأ من 14 وحتى 18. سواء كنت تبحث عن قرية ماكس لدخول حروب القبائل (CWL) مباشرة، أو حساب متقدم بسعر مناسب لميزانيتك — ستجد خيارات متنوعة تناسب مختلف الاحتياجات.
+            </p>
+            <p>
+              جميع الحسابات المعروضة تم فحصها يدوياً قبل طرحها، ويتم التسليم بشكل مباشر عبر الواتساب مع نقل ملكية Supercell ID وتأمين الحساب على جهاز المشتري. المتجر يخدم اللاعبين في السعودية ودول الخليج العربي بالدرجة الأولى.
+            </p>
           </div>
         </section>
+
+        {/* Full-width Responsive Town Hall Banners (Like Homepage) */}
+        <section className="w-full border-b border-border">
+          <Link href="/clash-of-clans/town-hall-18" className="block w-full">
+            <img
+              src="/banners/th18-banner.png"
+              alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع"
+              width={1024}
+              height={393}
+              loading="eager"
+              className="w-full h-auto object-cover block aspect-[1024/393] hover:opacity-95 transition-opacity"
+            />
+          </Link>
+          <Link href="/clash-of-clans/town-hall-17" className="block w-full border-t border-border">
+            <img
+              src="/banners/th17-banner.png"
+              alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع"
+              width={1024}
+              height={393}
+              loading="eager"
+              className="w-full h-auto object-cover block aspect-[1024/393] hover:opacity-95 transition-opacity"
+            />
+          </Link>
+          <Link href="/clash-of-clans/town-hall-16" className="block w-full border-t border-border">
+            <img
+              src="/banners/th16-banner.png"
+              alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع"
+              width={1024}
+              height={393}
+              loading="lazy"
+              className="w-full h-auto object-cover block aspect-[1024/393] hover:opacity-95 transition-opacity"
+            />
+          </Link>
+        </section>
+
+        <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
 
         {/* Featured Section */}
         {featuredAccounts && featuredAccounts.length > 0 && (
@@ -325,8 +319,9 @@ export default function ClashOfClans() {
             </Link>
           </div>
         </section>
-      </main>
-      <Footer />
+      </div>
+    </main>
+    <Footer />
     </div>
   );
 }

@@ -162,25 +162,9 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
       />
       <Navbar />
 
-      <main className="flex-1 container mx-auto px-4 py-8 md:py-12 max-w-6xl">
-        {/* Breadcrumb Navigation */}
-        <nav aria-label="breadcrumb" className="text-sm text-muted-foreground mb-6 flex flex-wrap items-center gap-2">
-          {breadcrumbItems.map((item, index) => (
-            <span key={item.path} className="flex items-center gap-2">
-              {index > 0 && <span className="text-border">/</span>}
-              {index === breadcrumbItems.length - 1 ? (
-                <span className="text-foreground font-semibold">{item.name}</span>
-              ) : (
-                <Link href={item.path} className="hover:text-primary transition-colors">
-                  {item.name}
-                </Link>
-              )}
-            </span>
-          ))}
-        </nav>
-
-        {/* Hero Visual Banner Card */}
-        <div className="mb-8 rounded-2xl overflow-hidden border border-border/70 shadow-lg bg-card/50">
+      <main className="flex-1">
+        {/* Full-width Responsive Banner (Like Homepage) */}
+        <section className="w-full border-b border-border">
           <img
             src={config.banner}
             alt={config.bannerAlt}
@@ -189,7 +173,24 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
             loading="eager"
             className="w-full h-auto object-cover block aspect-[1024/393]"
           />
-        </div>
+        </section>
+
+        <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="breadcrumb" className="text-sm text-muted-foreground mb-6 flex flex-wrap items-center gap-2">
+            {breadcrumbItems.map((item, index) => (
+              <span key={item.path} className="flex items-center gap-2">
+                {index > 0 && <span className="text-border">/</span>}
+                {index === breadcrumbItems.length - 1 ? (
+                  <span className="text-foreground font-semibold">{item.name}</span>
+                ) : (
+                  <Link href={item.path} className="hover:text-primary transition-colors">
+                    {item.name}
+                  </Link>
+                )}
+              </span>
+            ))}
+          </nav>
 
         {/* H1 & Intro Description */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-foreground tracking-tight break-words">
@@ -293,7 +294,8 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
             <span>العودة لقسم كلاش أوف كلانس الرئيسي</span>
           </Link>
         </div>
-      </main>
+      </div>
+    </main>
 
       <Footer />
     </div>
