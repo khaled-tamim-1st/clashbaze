@@ -223,6 +223,45 @@ export function pageShell(opts: {
       gap: 24px;
       margin: 24px 0;
     }
+    .banner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 24px 0 36px;
+    }
+    .banner-card {
+      display: block;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #334155;
+      background: #1e293b;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .banner-card:hover {
+      border-color: #f59e0b;
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .banner-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 1024 / 393;
+      object-fit: cover;
+    }
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
     .card {
       background: #1e293b;
       border: 1px solid #334155;

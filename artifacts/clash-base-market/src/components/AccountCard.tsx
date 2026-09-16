@@ -95,22 +95,24 @@ export function AccountCard({ account }: { account: Account }) {
     className={
       account.game === "clash-of-clans"
         ? `
-          bg-blue-500/15
+          bg-blue-600/30
           backdrop-blur-md
-          text-black
+          text-blue-200
           border border-blue-400/40
           shadow-[0_0_12px_rgba(59,130,246,0.35)]
-          hover:bg-blue-500/25
+          hover:bg-blue-600/40
           transition-all duration-300
+          font-semibold
         `
         : `
-          bg-purple-500/15
+          bg-purple-600/30
           backdrop-blur-md
-          text-gray-800
+          text-purple-200
           border border-purple-400/40
           shadow-[0_0_12px_rgba(168,85,247,0.4)]
-          hover:bg-purple-500/25
+          hover:bg-purple-600/40
           transition-all duration-300
+          font-semibold
         `
     }
   >

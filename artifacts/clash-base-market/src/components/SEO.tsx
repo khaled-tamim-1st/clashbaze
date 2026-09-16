@@ -16,7 +16,7 @@ export function SEO({
   type = 'website',
   jsonLd,
 }: SEOProps) {
-  const fullTitle = title.includes('كلاش ماركت') ? title : `${title} | كلاش ماركت`;
+  const fullTitle = title.includes('كلاش ماركت') || title.includes('متجر كلاش') ? title : `${title} | كلاش ماركت`;
   const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   return (

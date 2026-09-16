@@ -43,6 +43,7 @@ const crFaqJsonLd = {
 
 export default function ClashRoyale() {
   const { data: accounts, isLoading } = useListAccounts({ game: "clash-royale" });
+  const { data: featuredAccounts, isLoading: loadingFeatured } = useListAccounts({ game: "clash-royale", featured: "true" });
 
   const itemListJsonLd = accounts && accounts.length > 0 ? {
     "@context": "https://schema.org",
@@ -78,7 +79,7 @@ export default function ClashRoyale() {
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-12 md:py-16 max-w-6xl">
         {/* Intro */}
-        <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-foreground tracking-tight">حسابات كلاش رويال للبيع</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-foreground tracking-tight break-words">حسابات كلاش رويال للبيع</h1>
         <div className="max-w-4xl mb-12 space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8">
           <p>
             يوفر كلاش ماركت حسابات كلاش رويال جاهزة للمنافسة في السلم التنافسي وRanked Mode. سواء كنت تبحث عن حساب بكروت Level 16 وتطورات مكتملة، أو حساب متقدم بسعر مناسب — ستجد خيارات متنوعة تلبي أهدافك في اللعبة.
@@ -88,10 +89,27 @@ export default function ClashRoyale() {
           </p>
         </div>
 
+        {/* Featured Section */}
+        {featuredAccounts && featuredAccounts.length > 0 && (
+          <section className="mb-12 p-6 rounded-2xl bg-card/50 border border-border/80">
+            <div className="flex items-center justify-between mb-6 pb-2 border-b border-border/60">
+              <h2 className="text-xl md:text-2xl font-bold text-foreground flex items-center gap-2">
+                <span>⭐ حسابات كلاش رويال المميزة</span>
+              </h2>
+              <span className="text-xs md:text-sm text-red-500 font-semibold">كروت وإيفو ماكس</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredAccounts.map(account => (
+                <AccountCard key={account.id} account={account} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Accounts Grid */}
-        <div className="flex items-center justify-between mb-8 border-b border-border/60 pb-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-primary">حسابات كلاش رويال المتاحة الآن</h2>
-          <span className="text-sm md:text-base text-muted-foreground">تسليم يدوي فوري وضمان شامل</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8 border-b border-border/60 pb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">حسابات كلاش رويال المتاحة الآن</h2>
+          <span className="text-xs sm:text-sm md:text-base text-muted-foreground">تسليم يدوي فوري وضمان شامل</span>
         </div>
 
         {isLoading ? (

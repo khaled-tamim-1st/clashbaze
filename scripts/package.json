@@ -6,6 +6,7 @@
   "scripts": {
     "hello": "tsx ./src/hello.ts",
     "update-descriptions": "tsx ./src/update-descriptions.ts",
+    "seo-audit": "node ./seo-audit.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

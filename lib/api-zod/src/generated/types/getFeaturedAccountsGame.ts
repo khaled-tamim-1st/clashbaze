@@ -6,10 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type AccountGame = typeof AccountGame[keyof typeof AccountGame];
+export type GetFeaturedAccountsGame = typeof GetFeaturedAccountsGame[keyof typeof GetFeaturedAccountsGame];
 
 
-export const AccountGame = {
+export const GetFeaturedAccountsGame = {
   'clash-of-clans': 'clash-of-clans',
   'clash-royale': 'clash-royale',
 } as const;

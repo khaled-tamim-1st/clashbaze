@@ -51,6 +51,10 @@ paths:
           schema:
             type: string
             enum: ["true", "false"]
+        - name: townHall
+          in: query
+          schema:
+            type: integer
         - name: limit
           in: query
           schema:
@@ -92,6 +96,12 @@ paths:
       operationId: getFeaturedAccounts
       tags: [accounts]
       summary: Get featured accounts
+      parameters:
+        - name: game
+          in: query
+          schema:
+            type: string
+            enum: [clash-of-clans, clash-royale]
       responses:
         "200":
           description: Featured accounts

@@ -133,28 +133,6 @@ router.get("/account/:slug", async (req, res) => {
         name: "Supercell",
       },
       category: gameLabel,
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.9",
-        reviewCount: "42",
-        bestRating: "5",
-        worstRating: "1",
-      },
-      review: [
-        {
-          "@type": "Review",
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: "5",
-            bestRating: "5",
-          },
-          author: {
-            "@type": "Person",
-            name: "عميل موثق",
-          },
-          reviewBody: "تم استلام الحساب وتغيير إيميل سوبر سيل آيدي فورياً بأمان واحترافية.",
-        },
-      ],
       offers: {
         "@type": "Offer",
         price: account.price,
@@ -177,8 +155,16 @@ router.get("/account/:slug", async (req, res) => {
     const breadcrumbItems = [
       { name: SITE_NAME, path: "/" },
       { name: gameLabel, path: `/${account.game}` },
-      { name: account.title, path: `/account/${account.slug}` },
     ];
+
+    if (account.game === "clash-of-clans" && account.townHall && ["16", "17", "18"].includes(String(account.townHall).trim())) {
+      breadcrumbItems.push({
+        name: `تاون هول ${account.townHall}`,
+        path: `/clash-of-clans/town-hall-${account.townHall}`,
+      });
+    }
+
+    breadcrumbItems.push({ name: account.title, path: `/account/${account.slug}` });
 
     const relatedHtml = relatedFiltered.length
       ? `<section style="margin-top:48px; padding-top:32px; border-top:1px solid #334155;">

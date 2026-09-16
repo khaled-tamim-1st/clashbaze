@@ -141,6 +141,18 @@ router.get("/sitemap.xml", async (req, res) => {
         imageUrl: `${SITE_URL}/thumbnail.png`,
         imageTitle: "حسابات كلاش أوف كلانس للبيع",
       }),
+      urlEntry("/clash-of-clans/town-hall-18", {
+        imageUrl: `${SITE_URL}/banners/th18-banner.png`,
+        imageTitle: "حسابات كلاش أوف كلانس تاون هول 18 للبيع",
+      }),
+      urlEntry("/clash-of-clans/town-hall-17", {
+        imageUrl: `${SITE_URL}/banners/th17-banner.png`,
+        imageTitle: "حسابات كلاش أوف كلانس تاون هول 17 للبيع",
+      }),
+      urlEntry("/clash-of-clans/town-hall-16", {
+        imageUrl: `${SITE_URL}/banners/th16-banner.png`,
+        imageTitle: "حسابات كلاش أوف كلانس تاون هول 16 للبيع",
+      }),
       urlEntry("/clash-royale", {
         imageUrl: `${SITE_URL}/thumbnail.png`,
         imageTitle: "حسابات كلاش رويال للبيع",

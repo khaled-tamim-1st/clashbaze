@@ -3,7 +3,8 @@ import { Footer } from "@/components/layout/Footer";
 import { useListAccounts } from "@workspace/api-client-react";
 import { AccountCard } from "@/components/AccountCard";
 import { SEO } from "@/components/SEO";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
+import { useEffect } from "react";
 
 const cocFaqItems = [
   {
@@ -46,7 +47,20 @@ const cocFaqJsonLd = {
 };
 
 export default function ClashOfClans() {
+  const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      const th = searchParams.get("townHall");
+      if (th && ["16", "17", "18"].includes(th.trim())) {
+        setLocation(`/clash-of-clans/town-hall-${th.trim()}`, { replace: true });
+      }
+    }
+  }, [setLocation]);
+
   const { data: accounts, isLoading } = useListAccounts({ game: "clash-of-clans" });
+  const { data: featuredAccounts, isLoading: loadingFeatured } = useListAccounts({ game: "clash-of-clans", featured: "true" });
 
   const itemListJsonLd = accounts && accounts.length > 0 ? {
     "@context": "https://schema.org",
@@ -82,7 +96,7 @@ export default function ClashOfClans() {
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-12 md:py-16 max-w-6xl">
         {/* Intro Section */}
-        <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-foreground tracking-tight">حسابات كلاش أوف كلانس للبيع</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-foreground tracking-tight break-words">حسابات كلاش أوف كلانس للبيع</h1>
         <div className="max-w-4xl mb-12 space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8">
           <p>
             يوفر كلاش ماركت قريات وحسابات كلاش أوف كلانس جاهزة للمنافسة، بمستويات تاون هول تبدأ من 14 وحتى 18. سواء كنت تبحث عن قرية ماكس لدخول حروب القبائل (CWL) مباشرة، أو حساب متقدم بسعر مناسب لميزانيتك — ستجد خيارات متنوعة تناسب مختلف الاحتياجات.
@@ -92,10 +106,73 @@ export default function ClashOfClans() {
           </p>
         </div>
 
+        {/* Town Hall Visual Navigation Cards */}
+        <section className="mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">تصفح قريات كلاش حسب مستوى التاون هول</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link
+              href="/clash-of-clans/town-hall-18"
+              className="group block rounded-2xl overflow-hidden border border-border/80 hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-primary/10 hover:-translate-y-1 bg-card/40"
+            >
+              <img
+                src="/banners/th18-banner.png"
+                alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع"
+                width={1024}
+                height={393}
+                loading="eager"
+                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-105 transition-transform duration-500"
+              />
+            </Link>
+            <Link
+              href="/clash-of-clans/town-hall-17"
+              className="group block rounded-2xl overflow-hidden border border-border/80 hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-primary/10 hover:-translate-y-1 bg-card/40"
+            >
+              <img
+                src="/banners/th17-banner.png"
+                alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع"
+                width={1024}
+                height={393}
+                loading="eager"
+                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-105 transition-transform duration-500"
+              />
+            </Link>
+            <Link
+              href="/clash-of-clans/town-hall-16"
+              className="group block rounded-2xl overflow-hidden border border-border/80 hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-primary/10 hover:-translate-y-1 bg-card/40"
+            >
+              <img
+                src="/banners/th16-banner.png"
+                alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع"
+                width={1024}
+                height={393}
+                loading="lazy"
+                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-105 transition-transform duration-500"
+              />
+            </Link>
+          </div>
+        </section>
+
+        {/* Featured Section */}
+        {featuredAccounts && featuredAccounts.length > 0 && (
+          <section className="mb-12 p-6 rounded-2xl bg-card/50 border border-border/80">
+            <div className="flex items-center justify-between mb-6 pb-2 border-b border-border/60">
+              <h2 className="text-xl md:text-2xl font-bold text-foreground flex items-center gap-2">
+                <span>⭐ حسابات كلاش أوف كلانس المميزة</span>
+              </h2>
+              <span className="text-xs md:text-sm text-amber-500 font-semibold">مختارة بعناية ومضمونة</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredAccounts.map(account => (
+                <AccountCard key={account.id} account={account} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Accounts Grid */}
-        <div className="flex items-center justify-between mb-8 border-b border-border/60 pb-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-primary">قريات وحسابات كلاش المتاحة الآن</h2>
-          <span className="text-sm md:text-base text-muted-foreground">تسليم يدوي فوري وضمان شامل</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8 border-b border-border/60 pb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">قريات وحسابات كلاش المتاحة الآن</h2>
+          <span className="text-xs sm:text-sm md:text-base text-muted-foreground">تسليم يدوي فوري وضمان شامل</span>
         </div>
 
         {isLoading ? (

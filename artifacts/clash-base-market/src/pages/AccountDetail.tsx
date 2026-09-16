@@ -67,28 +67,6 @@ export default function AccountDetail() {
       name: "Supercell",
     },
     category: gameLabel,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "42",
-      bestRating: "5",
-      worstRating: "1",
-    },
-    review: [
-      {
-        "@type": "Review",
-        reviewRating: {
-          "@type": "Rating",
-          ratingValue: "5",
-          bestRating: "5",
-        },
-        author: {
-          "@type": "Person",
-          name: "عميل موثق",
-        },
-        reviewBody: "تم استلام الحساب وتغيير إيميل سوبر سيل آيدي فورياً بأمان واحترافية.",
-      },
-    ],
     offers: {
       "@type": "Offer",
       price: account.price,
@@ -108,6 +86,31 @@ export default function AccountDetail() {
     },
   };
 
+  const breadcrumbItems = [
+    { name: "كلاش ماركت", path: "/" },
+    { name: gameLabel, path: isCoc ? "/clash-of-clans" : "/clash-royale" },
+  ];
+
+  if (isCoc && account.townHall && ["16", "17", "18"].includes(String(account.townHall).trim())) {
+    breadcrumbItems.push({
+      name: `تاون هول ${account.townHall}`,
+      path: `/clash-of-clans/town-hall-${account.townHall}`,
+    });
+  }
+
+  breadcrumbItems.push({ name: account.title, path: `/account/${account.slug}` });
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `https://www.clashmarket.online${item.path}`,
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
@@ -117,10 +120,25 @@ export default function AccountDetail() {
         description={seoDescription}
         url={`https://www.clashmarket.online/account/${account.slug}`}
         image={account.images?.[0] || undefined}
-        jsonLd={productJsonLd}
+        jsonLd={[productJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
-      <main className="flex-1 container mx-auto px-4 py-16">
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <nav aria-label="breadcrumb" className="text-sm text-muted-foreground mb-6 flex flex-wrap items-center gap-2">
+          {breadcrumbItems.map((item, index) => (
+            <span key={item.path} className="flex items-center gap-2">
+              {index > 0 && <span className="text-border">/</span>}
+              {index === breadcrumbItems.length - 1 ? (
+                <span className="text-foreground font-semibold">{item.name}</span>
+              ) : (
+                <Link href={item.path} className="hover:text-primary transition-colors">
+                  {item.name}
+                </Link>
+              )}
+            </span>
+          ))}
+        </nav>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
           <div>
             <AccountGallery images={account.images} />

@@ -4,6 +4,7 @@ import { accountsTable } from "@workspace/db";
 import { eq, desc, and } from "drizzle-orm";
 import {
   ListAccountsQueryParams,
+  GetFeaturedAccountsQueryParams,
   CreateAccountBody,
   UpdateAccountBody,
   GetAccountParams,
@@ -25,6 +26,7 @@ router.get("/accounts", async (req, res) => {
     if (query.status) conditions.push(eq(accountsTable.status, query.status));
     if (query.featured === "true") conditions.push(eq(accountsTable.featured, true));
     if (query.featured === "false") conditions.push(eq(accountsTable.featured, false));
+    if (query.townHall !== undefined) conditions.push(eq(accountsTable.townHall, query.townHall));
 
     const limit = query.limit ?? 50;
     const offset = query.offset ?? 0;
@@ -48,7 +50,11 @@ router.get("/accounts", async (req, res) => {
     }
 
     res.json(rows.map(serializeAccount));
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.name === "ZodError") {
+      res.status(400).json({ error: "Invalid query parameters", details: err.issues });
+      return;
+    }
     req.log.error({ err }, "Failed to list accounts");
     res.status(500).json({ error: "Internal server error" });
   }
@@ -78,14 +84,28 @@ router.post("/accounts", requireAdmin, async (req, res) => {
 // GET /accounts/featured
 router.get("/accounts/featured", async (req, res) => {
   try {
+    const query = GetFeaturedAccountsQueryParams.parse(req.query);
+    const conditions = [
+      eq(accountsTable.featured, true),
+      eq(accountsTable.status, "available"),
+    ];
+
+    if (query.game) {
+      conditions.push(eq(accountsTable.game, query.game));
+    }
+
     const rows = await db
       .select()
       .from(accountsTable)
-      .where(and(eq(accountsTable.featured, true), eq(accountsTable.status, "available")))
+      .where(and(...conditions))
       .orderBy(desc(accountsTable.createdAt))
       .limit(12);
     res.json(rows.map(serializeAccount));
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.name === "ZodError") {
+      res.status(400).json({ error: "Invalid query parameters", details: err.issues });
+      return;
+    }
     req.log.error({ err }, "Failed to get featured accounts");
     res.status(500).json({ error: "Internal server error" });
   }
