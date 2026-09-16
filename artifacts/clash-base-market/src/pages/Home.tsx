@@ -2,7 +2,6 @@ import { Link } from "wouter";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useGetFeaturedAccounts, useListAccounts, useListBlogPosts } from "@workspace/api-client-react";
-import { AccountCard } from "@/components/AccountCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Testimonials } from "@/components/Testimonials";
 import { SEO } from "../components/SEO";
@@ -172,112 +171,6 @@ export default function Home() {
               className="w-full h-auto object-cover block"
               loading="lazy"
             />
-          </section>
-
-          {/* Partitioned Featured Accounts: Clash of Clans */}
-          <section className="py-12 overflow-hidden border-b border-border/40">
-            <div className="container mx-auto px-4 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-600/20 text-blue-400 border border-blue-500/30">كلاش أوف كلانس</span>
-                  <span className="text-amber-400 text-sm font-semibold">⭐ حسابات مميزة ومضمونة</span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                  قريات كلاش أوف كلانس المميزة
-                </h2>
-              </div>
-              <Link
-                href="/clash-of-clans"
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-colors shadow-sm inline-flex items-center gap-2"
-              >
-                <span>تصفح جميع قريات كلاش أوف كلانس</span>
-                <span>←</span>
-              </Link>
-            </div>
-
-            {loadingCocFeatured ? (
-              <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-96 bg-muted animate-pulse rounded-lg" />
-                ))}
-              </div>
-            ) : !cocFeatured || cocFeatured.length === 0 ? (
-              <div className="container mx-auto px-4 text-center py-8 text-muted-foreground text-sm">
-                لا توجد قريات كلاش أوف كلانس مميزة حالياً
-              </div>
-            ) : (
-              <div className="marquee-container">
-                <div className="marquee-track flex flex-nowrap">
-                  <div className="flex flex-nowrap gap-6 shrink-0">
-                    {cocFeatured.map((account, i) => (
-                      <div key={`coc-first-${account.id}-${i}`} className="w-[300px] shrink-0">
-                        <AccountCard account={account} />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-nowrap gap-6 shrink-0" aria-hidden="true">
-                    {cocFeatured.map((account, i) => (
-                      <div key={`coc-second-${account.id}-${i}`} className="w-[300px] shrink-0">
-                        <AccountCard account={account} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </section>
-
-          {/* Partitioned Featured Accounts: Clash Royale */}
-          <section className="py-12 overflow-hidden border-b border-border/40 bg-card/20">
-            <div className="container mx-auto px-4 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600/20 text-red-400 border border-red-500/30">كلاش رويال</span>
-                  <span className="text-amber-400 text-sm font-semibold">⭐ حسابات مميزة وتطورات إيفو</span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                  حسابات كلاش رويال المميزة
-                </h2>
-              </div>
-              <Link
-                href="/clash-royale"
-                className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-sm transition-colors shadow-sm inline-flex items-center gap-2"
-              >
-                <span>تصفح جميع حسابات كلاش رويال</span>
-                <span>←</span>
-              </Link>
-            </div>
-
-            {loadingCrFeatured ? (
-              <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-96 bg-muted animate-pulse rounded-lg" />
-                ))}
-              </div>
-            ) : !crFeatured || crFeatured.length === 0 ? (
-              <div className="container mx-auto px-4 text-center py-8 text-muted-foreground text-sm">
-                لا توجد حسابات كلاش رويال مميزة حالياً
-              </div>
-            ) : (
-              <div className="marquee-container">
-                <div className="marquee-track flex flex-nowrap">
-                  <div className="flex flex-nowrap gap-6 shrink-0">
-                    {crFeatured.map((account, i) => (
-                      <div key={`cr-first-${account.id}-${i}`} className="w-[300px] shrink-0">
-                        <AccountCard account={account} />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-nowrap gap-6 shrink-0" aria-hidden="true">
-                    {crFeatured.map((account, i) => (
-                      <div key={`cr-second-${account.id}-${i}`} className="w-[300px] shrink-0">
-                        <AccountCard account={account} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
           </section>
 
           {/* Why Choose Us */}

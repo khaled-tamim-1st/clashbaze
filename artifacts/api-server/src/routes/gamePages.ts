@@ -27,16 +27,22 @@ function accountCardHtml(a: {
 // Visual banners helper for Town Hall categories
 function townHallBannersHtml() {
   return `
-    <div style="margin:24px 0 36px; border:1px solid #334155; border-radius:12px; overflow:hidden;">
-      <a href="/clash-of-clans/town-hall-18" style="display:block; border-bottom:1px solid #334155;">
-        <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
-      </a>
-      <a href="/clash-of-clans/town-hall-17" style="display:block; border-bottom:1px solid #334155;">
-        <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
-      </a>
-      <a href="/clash-of-clans/town-hall-16" style="display:block;">
-        <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
-      </a>
+    <div style="margin:24px 0 36px; display:flex; flex-direction:column; gap:20px;">
+      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
+        <a href="/clash-of-clans/town-hall-18" style="display:block;">
+          <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
+        </a>
+      </div>
+      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
+        <a href="/clash-of-clans/town-hall-17" style="display:block;">
+          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
+        </a>
+      </div>
+      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
+        <a href="/clash-of-clans/town-hall-16" style="display:block;">
+          <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
+        </a>
+      </div>
     </div>
   `;
 }
@@ -425,10 +431,8 @@ router.get("/clash-of-clans", async (req, res) => {
       <h2>تصفح قريات كلاش حسب مستوى التاون هول</h2>
       ${townHallBannersHtml()}
 
-      ${featuredHtml}
-
-      <h2>جميع قريات وحسابات كلاش المتاحة الآن</h2>
-      ${accountsHtml}
+      <h2>حسابات كلاش أوف كلانس المميزة</h2>
+      ${featuredAccounts.length ? featuredHtml : accountsHtml}
 
       <h2>ما الذي يحدد قيمة حساب كلاش أوف كلانس؟</h2>
       <ul style="line-height:2;">
