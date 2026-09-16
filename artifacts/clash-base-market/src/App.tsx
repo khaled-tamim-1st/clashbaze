@@ -37,9 +37,11 @@ function Router() {
       <Route path="/clash-of-clans/town-hall-18">{() => <TownHallCategory level={18} />}</Route>
       <Route path="/clash-of-clans/town-hall-17">{() => <TownHallCategory level={17} />}</Route>
       <Route path="/clash-of-clans/town-hall-16">{() => <TownHallCategory level={16} />}</Route>
+      <Route path="/clash-of-clans/town-hall-15">{() => <TownHallCategory level={15} />}</Route>
       <Route path="/town-hall-18"><Redirect to="/clash-of-clans/town-hall-18" replace /></Route>
       <Route path="/town-hall-17"><Redirect to="/clash-of-clans/town-hall-17" replace /></Route>
       <Route path="/town-hall-16"><Redirect to="/clash-of-clans/town-hall-16" replace /></Route>
+      <Route path="/town-hall-15"><Redirect to="/clash-of-clans/town-hall-15" replace /></Route>
       <Route path="/clash-royale" component={ClashRoyale} />
       <Route path="/account/:slug" component={AccountDetail} />
       <Route path="/blog" component={Blog} />

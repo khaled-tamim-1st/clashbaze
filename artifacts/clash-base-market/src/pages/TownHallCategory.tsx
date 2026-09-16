@@ -5,7 +5,7 @@ import { AccountCard } from "@/components/AccountCard";
 import { SEO } from "@/components/SEO";
 import { Link, useRoute } from "wouter";
 
-export type TownHallLevel = 16 | 17 | 18;
+export type TownHallLevel = 15 | 16 | 17 | 18;
 
 interface TownHallConfig {
   level: TownHallLevel;
@@ -84,6 +84,27 @@ const TH_CONFIGS: Record<TownHallLevel, TownHallConfig> = {
       { question: "هل يمكنني بيع أو استبدال قريتي مع تاون 16؟", answer: "يمكنك التواصل مع إدارة المتجر عبر الواتساب لبحث خيارات البيع المباشر أو الترقية وفق سياسة المتجر." },
     ],
   },
+  15: {
+    level: 15,
+    title: "حسابات كلاش أوف كلانس تاون هول 15 للبيع | قريات مميزة بأسعار اقتصادية — كلاش ماركت",
+    heading: "حسابات كلاش أوف كلانس تاون هول 15 للبيع (TH15)",
+    description: "تصفح واشترِ حسابات وقريات كلاش أوف كلانس تاون هول 15 (TH15) ماكس وشبه ماكس بأسعار اقتصادية ممتازة وتسليم فوري مع ضمان كلاش ماركت.",
+    banner: "/banners/th15-banner.png",
+    bannerAlt: "حسابات كلاش أوف كلانس تاون هول 15 للبيع",
+    intro: "استكشف قريات وحسابات كلاش أوف كلانس تاون هول 15 (Town Hall 15). يمثل TH15 الخيار الاقتصادي الأكثر طلباً للاعبين الراغبين في دخول المستويات المتقدمة والاستمتاع بتطويرات السحر المتجمد وأبراج السم والأبطال الأربعة بأسعار في متناول الجميع.",
+    benefitsTitle: "لماذا تختار قرية كلاش أوف كلانس تاون 15؟",
+    benefits: [
+      { title: "أفضل سعر اقتصادي:", text: "الحصول على قرية متقدمة بتكلفة شراء منخفضة ومناسبة لجميع الميزانيات." },
+      { title: "دفاعات سحرية قوية:", text: "برج التعويذات والمونوليث (Monolith) وقوة دفاعية ممتازة في الحروب." },
+      { title: "أبطال وجيوش مطورة:", text: "قوة هجومية كافية للمنافسة بقوة في حروب القبائل وجمع الموارد بسهولة." },
+    ],
+    faqs: [
+      { question: "ما الذي يميز قريات تاون هول 15؟", answer: "تاون هول 15 يقدم تجربة لعب متقدمة بدفاعات أسطورية مثل المونوليث (Monolith) وبرج التعويذات (Spell Tower) مع سعر اقتصادي ومناسب جداً للمبتدئين في المستويات العليا." },
+      { question: "هل الحسابات تسلم بإيميل Supercell ID الأساسي؟", answer: "نعم، يتم نقل ملكية Supercell ID وتأمين الحساب برقمك وتسليم كافة رموز الأمان فور إتمام الطلب." },
+      { question: "هل تتوفر خيارات دفع بالتقسيط؟", answer: "نعم، متاح التقسيط الميسر عبر تابي وتمارا بالتنسيق عبر الواتساب بالإضافة إلى التحويل البنكي المباشر." },
+      { question: "ما هو الضمان المقدم على حسابات تاون 15؟", answer: "جميع الحسابات مشمولة بالضمان الذهبي الشامل لحماية المشتري ضد السحب أو الاسترجاع." },
+    ],
+  },
 };
 
 interface TownHallCategoryProps {
@@ -95,7 +116,7 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
   const [, paramsDirect] = useRoute("/town-hall-:level");
 
   const parsedParam = Number(paramsCoc?.level || paramsDirect?.level);
-  const resolvedLevel: TownHallLevel = (propLevel || (parsedParam === 16 || parsedParam === 17 || parsedParam === 18 ? parsedParam : 18)) as TownHallLevel;
+  const resolvedLevel: TownHallLevel = (propLevel || (parsedParam === 15 || parsedParam === 16 || parsedParam === 17 || parsedParam === 18 ? parsedParam : 18)) as TownHallLevel;
 
   const config = TH_CONFIGS[resolvedLevel] || TH_CONFIGS[18];
 
@@ -242,9 +263,9 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
 
         {/* Browse Other Town Halls */}
         <section className="mt-12">
-          <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground">تصفح مستويات تاون هول أخرى</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground">قريات كلاش أوف كلانس بمستويات تاون هول أخرى</h2>
           <div className="flex flex-wrap gap-3">
-            {([18, 17, 16] as TownHallLevel[])
+            {([18, 17, 16, 15] as TownHallLevel[])
               .filter((lvl) => lvl !== config.level)
               .map((lvl) => (
                 <Link

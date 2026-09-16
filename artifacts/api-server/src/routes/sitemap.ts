@@ -158,6 +158,10 @@ router.get("/sitemap.xml", async (req, res) => {
         imageUrl: `${SITE_URL}/banners/th16-banner.png`,
         imageTitle: "حسابات كلاش أوف كلانس تاون هول 16 للبيع",
       }),
+      urlEntry("/clash-of-clans/town-hall-15", {
+        imageUrl: `${SITE_URL}/banners/th15-banner.png`,
+        imageTitle: "حسابات كلاش أوف كلانس تاون هول 15 للبيع",
+      }),
       urlEntry("/clash-royale", {
         imageUrl: `${SITE_URL}/thumbnail.png`,
         imageTitle: "حسابات كلاش رويال للبيع",

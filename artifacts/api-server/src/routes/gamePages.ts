@@ -43,6 +43,11 @@ function townHallBannersHtml() {
           <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
         </a>
       </div>
+      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
+        <a href="/clash-of-clans/town-hall-15" style="display:block;">
+          <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
+        </a>
+      </div>
     </div>
   `;
 }
@@ -131,6 +136,7 @@ router.get("/clash-of-clans/town-hall-18", async (req, res) => {
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
+        <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 15</a>
         <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">جميع قريات كلاش أوف كلانس</a>
       </div>
 
@@ -226,6 +232,7 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
+        <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 15</a>
         <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">جميع قريات كلاش أوف كلانس</a>
       </div>
 
@@ -321,6 +328,7 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
+        <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 15</a>
         <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">جميع قريات كلاش أوف كلانس</a>
       </div>
 
@@ -348,13 +356,109 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
 });
 
 // -------------------------------------------------------------
+// Subcategory: Town Hall 15 (/clash-of-clans/town-hall-15)
+// -------------------------------------------------------------
+router.get("/clash-of-clans/town-hall-15", async (req, res) => {
+  try {
+    const accounts = await db
+      .select()
+      .from(accountsTable)
+      .where(and(
+        eq(accountsTable.game, "clash-of-clans"),
+        eq(accountsTable.townHall, 15),
+        eq(accountsTable.status, "available")
+      ))
+      .orderBy(desc(accountsTable.id));
+
+    const accountsHtml = accounts.length
+      ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
+      : `<p style="padding:24px; background:#1e293b; border-radius:12px; border:1px solid #334155; text-align:center;">لا توجد حسابات تاون هول 15 معروضة حالياً. يمكنك مراسلتنا عبر الواتساب للاستفسار عن القريات القادمة قريباً.</p>`;
+
+    const title = "حسابات كلاش أوف كلانس تاون هول 15 للبيع | قريات مميزة بأسعار اقتصادية — كلاش ماركت";
+    const description = "تصفح واشترِ حسابات وقريات كلاش أوف كلانس تاون هول 15 (TH15) ماكس وشبه ماكس بأسعار اقتصادية ممتازة وتسليم فوري مع ضمان كلاش ماركت.";
+
+    const breadcrumbItems = [
+      { name: SITE_NAME, path: "/" },
+      { name: "حسابات كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "تاون هول 15", path: "/clash-of-clans/town-hall-15" },
+    ];
+
+    const faqItems = [
+      { q: "ما الذي يميز قريات تاون هول 15؟", a: "تاون هول 15 يقدم تجربة لعب متقدمة بدفاعات أسطورية مثل المونوليث (Monolith) وبرج التعويذات (Spell Tower) مع سعر اقتصادي ومناسب جداً للمبتدئين في المستويات العليا." },
+      { q: "هل الحسابات تسلم بإيميل Supercell ID الأساسي؟", a: "نعم، يتم نقل ملكية Supercell ID وتأمين الحساب برقمك وتسليم كافة رموز الأمان فور إتمام الطلب." },
+      { q: "هل تتوفر خيارات دفع بالتقسيط؟", a: "نعم، متاح التقسيط الميسر عبر تابي وتمارا بالتنسيق عبر الواتساب بالإضافة إلى التحويل البنكي المباشر." },
+      { q: "ما هو الضمان المقدم على حسابات تاون 15؟", a: "جميع الحسابات مشمولة بالضمان الذهبي الشامل لحماية المشتري ضد السحب أو الاسترجاع." },
+    ];
+
+    const faqHtml = faqItems.map(f => `<details style="border:1px solid #334155; border-radius:8px; margin-bottom:8px;"><summary style="padding:12px; cursor:pointer; font-weight:600; color:#f8fafc;">${escapeHtml(f.q)}</summary><p style="padding:0 12px 12px; color:#94a3b8; line-height:1.8;">${escapeHtml(f.a)}</p></details>`).join("");
+
+    const faqJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqItems.map(f => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    };
+
+    const bodyHtml = `
+      ${breadcrumbHtml(breadcrumbItems)}
+      <div style="margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid #334155;">
+        <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" />
+      </div>
+      <h1>حسابات كلاش أوف كلانس تاون هول 15 للبيع (TH15)</h1>
+      <p>استكشف قريات وحسابات كلاش أوف كلانس تاون هول 15 (Town Hall 15). يمثل TH15 الخيار الاقتصادي الأكثر طلباً للاعبين الراغبين في دخول المستويات المتقدمة والاستمتاع بتطويرات السحر المتجمد وأبراج السم والأبطال الأربعة بأسعار في متناول الجميع.</p>
+
+      <h2>قريات تاون هول 15 المتاحة للشراء الآن</h2>
+      ${accountsHtml}
+
+      <h2>لماذا تختار قرية كلاش أوف كلانس تاون 15؟</h2>
+      <ul style="line-height:2;">
+        <li><strong>أفضل سعر اقتصادي:</strong> الحصول على قرية متقدمة بتكلفة شراء منخفضة ومناسبة لجميع الميزانيات.</li>
+        <li><strong>دفاعات سحرية قوية:</strong> برج التعويذات والمونوليث (Monolith) وقوة دفاعية ممتازة في الحروب.</li>
+        <li><strong>أبطال وجيوش مطورة:</strong> قوة هجومية كافية للمنافسة بقوة في حروب القبائل وجمع الموارد بسهولة.</li>
+      </ul>
+
+      <h2>قريات كلاش أوف كلانس بمستويات تاون هول أخرى</h2>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
+        <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
+        <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
+        <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
+        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">جميع قريات كلاش أوف كلانس</a>
+      </div>
+
+      <h2>أسئلة شائعة حول حسابات تاون هول 15</h2>
+      ${faqHtml}
+
+      <p style="margin-top:32px;"><a class="back-link" href="/clash-of-clans">← العودة لقسم كلاش أوف كلانس الرئيسي</a></p>
+    `;
+
+    const html = pageShell({
+      title,
+      description,
+      canonicalPath: "/clash-of-clans/town-hall-15",
+      ogImage: `${SITE_URL}/banners/th15-banner.png`,
+      bodyHtml,
+      jsonLd: [breadcrumbJsonLd(breadcrumbItems), faqJsonLd, accountItemListJsonLd(title, accounts)].filter(Boolean) as object[],
+    });
+
+    res.set("Content-Type", "text/html; charset=utf-8");
+    res.send(html);
+  } catch (err) {
+    req.log.error({ err }, "Failed to render TH15 page");
+    res.status(500).send("Internal server error");
+  }
+});
+
+// -------------------------------------------------------------
 // 1. صفحة قسم كلاش أوف كلانس الرئيسية (/clash-of-clans)
 // -------------------------------------------------------------
 router.get("/clash-of-clans", async (req, res) => {
   try {
     // 301 Permanent Redirect for legacy query URLs like /clash-of-clans?townHall=18
     const thQuery = req.query.townHall;
-    if (typeof thQuery === "string" && ["16", "17", "18"].includes(thQuery.trim())) {
+    if (typeof thQuery === "string" && ["15", "16", "17", "18"].includes(thQuery.trim())) {
       return res.redirect(301, `/clash-of-clans/town-hall-${thQuery.trim()}`);
     }
 
@@ -445,6 +549,7 @@ router.get("/clash-of-clans", async (req, res) => {
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 17</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 16</a>
+        <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 15</a>
       </div>
 
       <h2>الفحص والتسليم وإجراءات الأمان</h2>
@@ -611,10 +716,11 @@ router.get("/clash-royale", async (req, res) => {
 // /town-hall-18 -> /clash-of-clans/town-hall-18
 // /town-hall-17 -> /clash-of-clans/town-hall-17
 // /town-hall-16 -> /clash-of-clans/town-hall-16
+// /town-hall-15 -> /clash-of-clans/town-hall-15
 // -------------------------------------------------------------
 router.get("/town-hall-:level", (req, res) => {
   const level = req.params.level;
-  if (["16", "17", "18"].includes(level)) {
+  if (["15", "16", "17", "18"].includes(level)) {
     return res.redirect(301, `/clash-of-clans/town-hall-${level}`);
   }
   res.status(404).send("الصفحة غير موجودة");

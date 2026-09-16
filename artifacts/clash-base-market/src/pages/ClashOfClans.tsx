@@ -89,7 +89,7 @@ export default function ClashOfClans() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="حسابات كلاش أوف كلانس للبيع | متجر كلاش ماركت"
+        title="متجر كلاش أوف كلانس | بيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج"
         description="اشترِ حسابات وقرى كلاش أوف كلانس (تاون هول 14 إلى 18) بتسليم يدوي مباشر وضمان وفق سياسة المتجر. كلاش ماركت — متجر حسابات كلاش في السعودية والخليج."
         url="https://www.clashmarket.online/clash-of-clans"
         jsonLd={jsonLdArray}
@@ -129,6 +129,18 @@ export default function ClashOfClans() {
               <img
                 src="/banners/th16-banner.png"
                 alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع"
+                width={1024}
+                height={393}
+                loading="lazy"
+                className="w-full h-auto object-cover block aspect-[1024/393] group-hover:scale-[1.005] group-hover:opacity-95 transition-all duration-300"
+              />
+            </Link>
+          </div>
+          <div className="w-full border-y border-border/80 shadow-md hover:shadow-primary/10 transition-shadow">
+            <Link href="/clash-of-clans/town-hall-15" className="block w-full overflow-hidden group">
+              <img
+                src="/banners/th15-banner.png"
+                alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع"
                 width={1024}
                 height={393}
                 loading="lazy"

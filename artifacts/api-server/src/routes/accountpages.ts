@@ -153,7 +153,7 @@ router.get("/account/:slug", async (req, res) => {
       { name: gameLabel, path: `/${account.game}` },
     ];
 
-    if (account.game === "clash-of-clans" && account.townHall && ["16", "17", "18"].includes(String(account.townHall).trim())) {
+    if (account.game === "clash-of-clans" && account.townHall && ["15", "16", "17", "18"].includes(String(account.townHall).trim())) {
       breadcrumbItems.push({
         name: `تاون هول ${account.townHall}`,
         path: `/clash-of-clans/town-hall-${account.townHall}`,

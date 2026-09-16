@@ -56,3 +56,4 @@ Thumbs.db
 # Database backup
 backup.dump
 service-account.json
+.agents/

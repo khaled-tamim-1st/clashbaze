@@ -25,6 +25,7 @@ async function submitIndexNow() {
       `https://${host}/clash-of-clans/town-hall-18`,
       `https://${host}/clash-of-clans/town-hall-17`,
       `https://${host}/clash-of-clans/town-hall-16`,
+      `https://${host}/clash-of-clans/town-hall-15`,
       `https://${host}/clash-royale`,
       `https://${host}/guarantee`,
       `https://${host}/how-it-works`,
