@@ -49,6 +49,11 @@ router.get("/c7e2b04f18394982a5c317b960b72fa1.txt", (_req, res) => {
   res.send("c7e2b04f18394982a5c317b960b72fa1\n");
 });
 
+router.get("/8f961b38ae5b4a9588de60fb674bab1c.txt", (_req, res) => {
+  res.set("Content-Type", "text/plain; charset=utf-8");
+  res.send("8f961b38ae5b4a9588de60fb674bab1c\n");
+});
+
 router.get("/robots.txt", (req, res) => {
   const sitemapUrl = SITE_URL ? `${SITE_URL}/sitemap.xml` : "/sitemap.xml";
   const body = [
