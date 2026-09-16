@@ -114,13 +114,9 @@ router.get("/account/:slug", async (req, res) => {
       .map((img) => `<img src="${escapeHtml(img)}" alt="${escapeHtml(account.title)}" loading="lazy" />`)
       .join("\n");
 
-    const description = isCoc
-      ? (account.description
-          ? `شراء قرية كلاش ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش. ${account.description.slice(0, 70)} - تسليم فوري وضمان شامل.`
-          : `شراء قرية كلاش ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش في السعودية والخليج مع تسليم فوري وضمان شامل.`)
-      : (account.description
-          ? `شراء حساب كلاش رويال ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش. ${account.description.slice(0, 70)} - تسليم فوري وضمان شامل.`
-          : `شراء حساب كلاش رويال ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش في السعودية والخليج مع تسليم فوري وضمان شامل.`);
+    const description = account.description
+      ? `شراء ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش ماركت. ${account.description.slice(0, 70)}... تسليم فوري وضمان شامل.`
+      : `شراء ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش ماركت في السعودية والخليج مع تسليم فوري وضمان شامل.`;
 
     const jsonLd = {
       "@context": "https://schema.org",
@@ -212,10 +208,12 @@ router.get("/account/:slug", async (req, res) => {
       ${relatedHtml}
     `;
 
+    const pageTitle = account.title.includes("متجر كلاش")
+      ? account.title
+      : `${account.title} | متجر كلاش ماركت`;
+
     const html = pageShell({
-      title: isCoc
-        ? (account.townHall ? `قرية كلاش ${account.title} - تاون ${account.townHall} | متجر كلاش` : `قرية كلاش ${account.title} | متجر كلاش`)
-        : `حساب كلاش رويال ${account.title} | متجر كلاش`,
+      title: pageTitle,
       description,
       canonicalPath: `/account/${account.slug}`,
       ogImage: formattedImages[0] || null,
