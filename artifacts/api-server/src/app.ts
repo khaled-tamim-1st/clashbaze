@@ -4,6 +4,7 @@ import pinoHttp from "pino-http";
 import router from "./routes";
 import homePageRouter from "./routes/homePage";
 import blogPagesRouter from "./routes/blogpages";
+import gamePagesRouter from "./routes/gamePages";
 import accountPagesRouter from "./routes/accountpages";
 import policyPagesRouter from "./routes/policyPages";
 
@@ -49,6 +50,7 @@ app.use("/api", router);
 
 // 4. تقديم صفحات الـ HTML المباشرة فوراً
 app.use(homePageRouter);
+app.use(gamePagesRouter);
 app.use(blogPagesRouter);
 app.use(accountPagesRouter);
 app.use(policyPagesRouter);
