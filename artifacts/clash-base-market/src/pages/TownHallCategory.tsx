@@ -184,16 +184,20 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
       <Navbar />
 
       <main className="flex-1">
-        {/* Full-width Responsive Banner (Like Homepage) */}
-        <section className="w-full border-b border-border">
-          <img
-            src={config.banner}
-            alt={config.bannerAlt}
-            width={1024}
-            height={393}
-            loading="eager"
-            className="w-full h-auto object-cover block aspect-[1024/393]"
-          />
+        {/* Responsive Header Banner */}
+        <section className="w-full py-4 md:py-8 bg-card/20 border-b border-border">
+          <div className="container mx-auto px-3 sm:px-4 max-w-5xl">
+            <div className="rounded-2xl overflow-hidden border border-border/80 shadow-lg">
+              <img
+                src={config.banner}
+                alt={config.bannerAlt}
+                width={1024}
+                height={528}
+                loading="eager"
+                className="w-full h-auto block aspect-[1024/528] object-contain"
+              />
+            </div>
+          </div>
         </section>
 
         <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">

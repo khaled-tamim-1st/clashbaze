@@ -275,7 +275,7 @@ const bannersInCoc =
   cocPageCode.includes("/banners/th18-banner.png") &&
   cocPageCode.includes("/banners/th17-banner.png") &&
   cocPageCode.includes("/banners/th16-banner.png") &&
-  cocPageCode.includes("aspect-[1024/393]");
+  cocPageCode.includes("aspect-[1024/");
 
 const bannersInSsr =
   gamePagesCode.includes("/banners/th18-banner.png") &&
