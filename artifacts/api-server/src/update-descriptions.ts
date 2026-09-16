@@ -1,61 +1,100 @@
 import { db, accountsTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
-async function updateAllAccountDescriptions() {
-  console.log("🔄 جاري الاتصال بقاعدة بيانات Supabase...");
+const accountUpdates = [
+  {
+    id: 12,
+    slug: "coc-th18-l217",
+    title: "قرية كلاش أوف كلانس تاون 18 ليفل 217 — TH18",
+    whatsappMessage: "قرية كلاش تاون 18 ليفل 217 سعر 300",
+    description: `قرية كلاش أوف كلانس تاون هول 18 (TH18) ليفل 217 للبيع بسعر اقتصادي ممتاز عبر متجر كلاش ماركت. قرية متقدمة بدفاعات تاون 18 وجاهزة للمنافسة في حروب الكلانات وCWL.
+🔹 المواصفات: تاون هول 18 | مستوى الحساب: 217 | دفاعات قوية وجيش متكامل.
+🔹 الأمان والضمان: فحص يدوي شامل ونقل ملكية Supercell ID بالكامل وتغيير الإيميل الأساسي وتفعيل الحماية برقمك مع الضمان الذهبي ضد السحب.
+🔹 التسليم وطرق الدفع: تسليم يدوي وفوري ومباشر عبر الواتساب (5-15 دقيقة)، مع إمكانية التحويل البنكي أو التقسيط عبر تابي وتمارا.`
+  },
+  {
+    id: 11,
+    slug: "coc-th18-l259",
+    title: "قرية كلاش أوف كلانس تاون هول 18 فل ماكس ليفل 259 — TH18 Max",
+    whatsappMessage: "قرية كلاش تاون 18 فل ماكس ليفل 259 سعر 840",
+    description: `قرية كلاش أوف كلانس تاون هول 18 ماكس بالكامل (TH18 Full Max) ليفل 259 للبيع عبر متجر كلاش ماركت. حساب أسطوري بأعلى مستويات الدفاعات والأبطال والمعدات القتالية للمنافسة في قمة دوري الأساطير (Legend League) وحروب القبائل الكبرى.
+🔹 المواصفات: تاون هول 18 فل ماكس | مستوى الحساب: 259 | أبطال ماكس ودفاعات قصوى وجاهزية تامة.
+🔹 الأمان والضمان: فحص يدوي وتأمين كامل للحساب بنقل إيميل Supercell ID الرسمي مع وثيقة الضمان الذهبي الشاملة مدى الحياة.
+🔹 التسليم والدفع: تسليم فوري مباشر عبر الواتساب، والدفع متاح عبر التحويل البنكي أو التقسيط عبر تابي وتمارا.`
+  },
+  {
+    id: 10,
+    slug: "coc-th18-l281",
+    title: "قرية كلاش أوف كلانس تاون هول 18 شبه ماكس ليفل 281 — TH18",
+    whatsappMessage: "قرية كلاش تاون 18 شبه ماكس ليفل 281 سعر 620",
+    description: `قرية كلاش أوف كلانس تاون هول 18 شبه ماكس (TH18 Semi-Max) ليفل عالي 281 للبيع عبر متجر كلاش ماركت. فرصة مميزة للحصول على قرية ذات مستوى رفيع جداً بتكلفة مناسبة مع قوة هجومية ودفاعية ضاربة للحروب والتصنيف.
+🔹 المواصفات: تاون هول 18 شبه ماكس | ليفل الحساب: 281 | دفاعات وأبطال بمستويات متقدمة جداً.
+🔹 الأمان والضمان: فحص يدوي دقيق ونقل ملكية Supercell ID وتفعيل حماية الحساب برقمك مع الضمان الذهبي ضد الاسترجاع.
+🔹 التسليم والدفع: تسليم يدوي فوري عبر الواتساب، متاح تحويل بنكي والتقسيط الميسر عبر تابي وتمارا.`
+  },
+  {
+    id: 9,
+    slug: "coc-th18-l249",
+    title: "قرية كلاش أوف كلانس تاون هول 18 ماكس ليفل 249 — TH18 Max",
+    whatsappMessage: "قرية كلاش تاون 18 ماكس ليفل 249 سعر 700",
+    description: `قرية كلاش أوف كلانس تاون هول 18 ماكس (TH18 Max) ليفل 249 للبيع عبر متجر كلاش ماركت. حساب منافس بأقوى تشكيلات الهجوم ودفاعات تاون 18 المتطورة، جاهز لخوض غمار بطولات CWL ودوري الأساطير فوراً.
+🔹 المواصفات: تاون هول 18 ماكس | مستوى الحساب: 249 | تطويرات أبطال عالية ومعدات ملحمية.
+🔹 الأمان والضمان: نقل ملكية Supercell ID وتغيير البريد الأساسي وتفعيل الحماية بخطوتين مع الضمان الذهبي المعتمد.
+🔹 التسليم والدفع: تسليم مباشر وسريع عبر الواتساب، مع خيارات الدفع البنكي والتقسيط عبر تابي وتمارا.`
+  },
+  {
+    id: 8,
+    slug: "coc-th18-251",
+    title: "قرية كلاش أوف كلانس تاون هول 18 ليفل 251 للبيع — TH18",
+    whatsappMessage: "قرية كلاش تاون 18 ليفل 251 سعر 480",
+    description: `قرية كلاش أوف كلانس تاون هول 18 (TH18) ليفل 251 مميزة للبيع عبر متجر كلاش ماركت في السعودية ودول الخليج. توفر توازناً مثالياً بين قوة تاون هول 18 وسعر الشراء المناسب للميزانية المتوسطة.
+🔹 المواصفات: تاون هول 18 | ليفل القرية: 251 | جاهزة للانضمام لكلانات الحروب والدوريات.
+🔹 الأمان والضمان: فحص يدوي شامل ونقل بريد Supercell ID الرسمي إلى حسابك مع وثيقة الضمان الذهبي ضد السحب.
+🔹 التسليم والدفع: تسليم يدوي وفوري عبر الواتساب خطوة بخطوة، مع إتاحة التقسيط عبر تابي وتمارا والتحويل البنكي.`
+  },
+  {
+    id: 7,
+    slug: "coc-th16-l190",
+    title: "قرية كلاش أوف كلانس تاون هول 16 ليفل 190 للبيع — TH16",
+    whatsappMessage: "قرية كلاش تاون 16 ليفل 190 سعر 170",
+    description: `قرية كلاش أوف كلانس تاون هول 16 (TH16) ليفل 190 مميزة للبيع عبر متجر كلاش ماركت. الخيار الاقتصادي الأفضل لمن يبحث عن قرية متقدمة بدفاعات مدمجة حديثة وسعر اقتصادي في متناول اليد.
+🔹 المواصفات: تاون هول 16 | ليفل القرية: 190 | دفاعات مدمجة ومعدات أبطال جاهزة للحروب.
+🔹 الأمان والضمان: فحص الحساب ونقل ملكية Supercell ID بالكامل وتأمين القرية مع الضمان الذهبي الشامل.
+🔹 التسليم والدفع: تسليم فوري ومباشر عبر الواتساب خلال دقائق، مع إمكانية التحويل البنكي والدفع بالتقسيط عبر تابي وتمارا.`
+  },
+  {
+    id: 3,
+    slug: "coc-th18-l260",
+    title: "قرية كلاش أوف كلانس تاون هول 18 ماكس ليفل 260 — TH18 Max",
+    whatsappMessage: "قرية كلاش تاون 18 ماكس ليفل 260 سعر 720",
+    description: `قرية كلاش أوف كلانس تاون هول 18 ماكس (TH18 Max) ليفل 260 للبيع عبر متجر كلاش ماركت. تتميز بمستويات أبطال ودفاعات فائقة التطور تمنحك تفوقاً حاسماً في حروب CWL ودوري الأساطير التنافسي.
+🔹 المواصفات: تاون هول 18 ماكس | ليفل الحساب: 260 | جاهزية حربية كاملة ومعدات ملحمية مطورة.
+🔹 الأمان والضمان: نقل ملكية Supercell ID الأساسي وتأمين الحساب برقمك مع الضمان الذهبي ضد السحب مدى الحياة.
+🔹 التسليم والدفع: تسليم يدوي سريع ومباشر عبر الواتساب، مع خيارات التحويل البنكي والتقسيط عبر تابي وتمارا.`
+  }
+];
 
-  const allAccounts = await db.select().from(accountsTable);
-  console.log(`📊 تم العثور على ${allAccounts.length} حساب في Supabase.`);
-
+async function updateAccounts() {
+  console.log("🔄 Starting SEO-friendly accounts database update...");
   let updatedCount = 0;
-
-  for (const account of allAccounts) {
-    const isCoc = account.game === "clash-of-clans";
-    
-    const extraDetails: string[] = [];
-    if (isCoc) {
-      if (account.townHall) extraDetails.push(`تاون هول ${account.townHall}`);
-      if (account.heroes) extraDetails.push(`الأبطال: ${account.heroes}`);
-      if (account.gems) extraDetails.push(`الجواهر: ${account.gems}`);
-      if (account.skins) extraDetails.push(`السكنات: ${account.skins}`);
-      if (account.league) extraDetails.push(`الدوري: ${account.league}`);
-    } else {
-      if (account.arena) extraDetails.push(`الساحة: ${account.arena}`);
-      if (account.evolutions) extraDetails.push(`التطويرات: ${account.evolutions}`);
-      if (account.maxCards) extraDetails.push(`الكروت ماكس: ${account.maxCards}`);
-      if (account.emotes) extraDetails.push(`الإيموتات: ${account.emotes}`);
-    }
-
-    const detailsLine = extraDetails.length > 0
-      ? `🔹 تفاصيل ومواصفات: ${extraDetails.join(" | ")}`
-      : `🔹 مواصفات الحساب: ${account.title} بكامل التطويرات والمميزات.`;
-
-    const newDescription = isCoc
-      ? `قرية كلاش أوف كلانس ${account.townHall ? `تاون هول ${account.townHall}` : "ماكس"} مميزة للبيع عبر متجر كلاش ماركت الموثوق في السعودية والخليج.
-${detailsLine}
-🔹 الأمان والضمان: نقل ملكية السوبر سيل آيدي (Supercell ID) وتغيير البريد الإلكتروني فورياً بأمان 100% مع ضمان شامل ضد السحب والاسترجاع.
-🔹 التسليم: تسليم فوري ومباشر خلال 5 إلى 15 دقيقة عبر الواتساب مع دعم فني مستمر.
-🔹 طرق الدفع: مدى، تابي، تمارا للتقسيط، Apple Pay، وتحويل بنكي سعودي وخليجي مباشر.`
-      : `حساب كلاش رويال ${account.arena ? `ساحة ${account.arena}` : "مميز"} للبيع عبر متجر كلاش ماركت في السعودية ودول الخليج.
-${detailsLine}
-🔹 الأمان والضمان: نقل رسمي لحساب سوبر سيل آيدي مع ضمان كامل لحقوق المشتري وسرية تامة.
-🔹 التسليم: تسليم فوري وسريع ومباشر عبر الواتساب.
-🔹 طرق الدفع: مدى، تابي، تمارا، وApple Pay.`;
-
+  for (const item of accountUpdates) {
+    console.log(`Updating account ID: ${item.id} (${item.slug})...`);
     await db
       .update(accountsTable)
-      .set({ description: newDescription })
-      .where(eq(accountsTable.id, account.id));
-
+      .set({
+        title: item.title,
+        description: item.description,
+        whatsappMessage: item.whatsappMessage,
+      })
+      .where(eq(accountsTable.id, item.id));
     updatedCount++;
-    console.log(`✅ [${updatedCount}/${allAccounts.length}] تم تحديث وصف: "${account.title}"`);
+    console.log(`✓ [${updatedCount}/${accountUpdates.length}] Account ${item.id} updated: "${item.title}"`);
   }
-
-  console.log(`\n🎉 اكتمل التحديث بنجاح! تم تحديث أوصاف ${updatedCount} حساب في Supabase.`);
+  console.log(`\n🎉 All ${updatedCount} accounts updated successfully in DB!`);
   process.exit(0);
 }
 
-updateAllAccountDescriptions().catch((err) => {
-  console.error("❌ حدث خطأ أثناء تحديث قاعدة البيانات:", err);
+updateAccounts().catch((err) => {
+  console.error("❌ Failed to update accounts:", err);
   process.exit(1);
 });
