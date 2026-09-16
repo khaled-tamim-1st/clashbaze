@@ -21,6 +21,7 @@ async function buildAll() {
       path.resolve(artifactDir, "src/seed-article.ts"),
       path.resolve(artifactDir, "src/seed-supercell-guide.ts"),
       path.resolve(artifactDir, "src/seed-ban-guide.ts"),
+      path.resolve(artifactDir, "src/seed-cluster-articles.ts"),
       path.resolve(artifactDir, "src/refactor-blogs.ts"),
       path.resolve(artifactDir, "src/format-gamer-html.ts"),
       path.resolve(artifactDir, "src/format-saudi-clean.ts"),
