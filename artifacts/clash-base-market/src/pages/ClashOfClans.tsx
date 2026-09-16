@@ -80,20 +80,24 @@ export default function ClashOfClans() {
         jsonLd={jsonLdArray}
       />
       <Navbar />
-      <main className="flex-1 container mx-auto px-4 py-16">
+      <main className="flex-1 container mx-auto px-4 py-12 md:py-16 max-w-6xl">
         {/* Intro Section */}
-        <h1 className="text-4xl font-bold mb-4">حسابات كلاش أوف كلانس للبيع</h1>
-        <div className="max-w-3xl mb-10 space-y-4">
-          <p className="text-muted-foreground leading-relaxed">
+        <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-foreground tracking-tight">حسابات كلاش أوف كلانس للبيع</h1>
+        <div className="max-w-4xl mb-12 space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8">
+          <p>
             يوفر كلاش ماركت قريات وحسابات كلاش أوف كلانس جاهزة للمنافسة، بمستويات تاون هول تبدأ من 14 وحتى 18. سواء كنت تبحث عن قرية ماكس لدخول حروب القبائل (CWL) مباشرة، أو حساب متقدم بسعر مناسب لميزانيتك — ستجد خيارات متنوعة تناسب مختلف الاحتياجات.
           </p>
-          <p className="text-muted-foreground leading-relaxed">
+          <p>
             جميع الحسابات المعروضة تم فحصها يدوياً قبل طرحها، ويتم التسليم بشكل مباشر عبر الواتساب مع نقل ملكية Supercell ID وتأمين الحساب على جهاز المشتري. المتجر يخدم اللاعبين في السعودية ودول الخليج العربي بالدرجة الأولى.
           </p>
         </div>
 
         {/* Accounts Grid */}
-        <h2 className="text-2xl font-bold mb-6 text-primary/90">قريات وحسابات كلاش المتاحة الآن</h2>
+        <div className="flex items-center justify-between mb-8 border-b border-border/60 pb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary">قريات وحسابات كلاش المتاحة الآن</h2>
+          <span className="text-sm md:text-base text-muted-foreground">تسليم يدوي فوري وضمان شامل</span>
+        </div>
+
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-96 bg-muted animate-pulse rounded-lg"></div>)}
@@ -111,83 +115,112 @@ export default function ClashOfClans() {
         )}
 
         {/* What determines account value */}
-        <section className="mt-16 max-w-3xl space-y-6">
-          <h2 className="text-2xl font-bold">ما الذي يحدد قيمة حساب كلاش أوف كلانس؟</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            ليس كل حساب بنفس تاون هول يحمل نفس القيمة. هناك عدة عوامل تؤثر على سعر وجودة القرية:
+        <section className="mt-20 space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">ما الذي يحدد قيمة حساب كلاش أوف كلانس؟</h2>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8 max-w-4xl">
+            ليس كل حساب بنفس تاون هول يحمل نفس القيمة. هناك عدة عوامل أساسية تؤثر على سعر وجودة القرية وأدائها في الحروب:
           </p>
-          <div className="space-y-4 text-muted-foreground">
-            <div className="bg-card border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground mb-1">مستوى التاون هول</h3>
-              <p className="text-sm leading-relaxed">أعلى تاون حالياً هو TH18 الذي صدر في نوفمبر 2025. كلما ارتفع المستوى، زادت القدرات الدفاعية والهجومية المتاحة، لكن أيضاً يرتفع السعر.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-muted-foreground">
+            <div className="bg-card border border-border/80 hover:border-primary/50 transition-colors rounded-xl p-5 md:p-6 shadow-sm">
+              <h3 className="font-bold text-lg md:text-xl text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">🏰</span> مستوى التاون هول
+              </h3>
+              <p className="text-sm md:text-base leading-relaxed">أعلى تاون حالياً هو TH18 الذي صدر في نوفمبر 2025. كلما ارتفع المستوى، زادت القدرات الدفاعية والهجومية المتاحة، وارتفعت القيمة التنافسية للقرية.</p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground mb-1">مستوى الأبطال</h3>
-              <p className="text-sm leading-relaxed">اللعبة تحتوي حالياً على 6 أبطال: الملك، الملكة، الحكيم الكبير، البطلة الملكية، أمير المينيون، ودوق التنين. مستوى الأبطال هو أحد أهم العوامل في حسم المعارك الثلاث نجوم.</p>
+            <div className="bg-card border border-border/80 hover:border-primary/50 transition-colors rounded-xl p-5 md:p-6 shadow-sm">
+              <h3 className="font-bold text-lg md:text-xl text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">👑</span> مستوى الأبطال الستة
+              </h3>
+              <p className="text-sm md:text-base leading-relaxed">اللعبة تحتوي حالياً على 6 أبطال: الملك، الملكة، الحكيم الكبير، البطلة الملكية، أمير المينيون، ودوق التنين. مستوياتهم القصوى تصنع الفارق الحاسم في الهجمات الثلاث نجوم.</p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground mb-1">معدات الأبطال (Hero Equipment)</h3>
-              <p className="text-sm leading-relaxed">نظام المعدات يتيح تخصيص قدرات كل بطل بتركيب قطعتين من المعدات. تتراوح بين معدات عادية (حتى لفل 18) ومعدات ملحمية (حتى لفل 27)، وتؤثر بشكل كبير على الأداء التنافسي.</p>
+            <div className="bg-card border border-border/80 hover:border-primary/50 transition-colors rounded-xl p-5 md:p-6 shadow-sm">
+              <h3 className="font-bold text-lg md:text-xl text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">⚔️</span> معدات الأبطال (Hero Equipment)
+              </h3>
+              <p className="text-sm md:text-base leading-relaxed">نظام المعدات يتيح تخصيص قدرات كل بطل بقطعتين. تتراوح بين معدات عادية (حتى لفل 18) ومعدات ملحمية (حتى لفل 27)، وتمنح القوة الضاربة في الدوري والحروب التنافسية.</p>
             </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground mb-1">التقدم التنافسي والموارد</h3>
-              <p className="text-sm leading-relaxed">عدد الجواهر، السكنات، التقدم في دوري الأساطير، ومستوى عاصمة الكلان — كلها عوامل إضافية ترفع من جاذبية الحساب.</p>
+            <div className="bg-card border border-border/80 hover:border-primary/50 transition-colors rounded-xl p-5 md:p-6 shadow-sm">
+              <h3 className="font-bold text-lg md:text-xl text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">💎</span> التقدم التنافسي والموارد
+              </h3>
+              <p className="text-sm md:text-base leading-relaxed">عدد الجواهر، السكنات الحصرية، مستوى عاصمة الكلان، وتصنيف دوري الأساطير — كلها ميزات إضافية تزيد من ثراء وجودة الحساب.</p>
             </div>
           </div>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            للاطلاع على تفاصيل كل مستوى تاون ومميزاته، يمكنك قراءة <Link href="/blog/clash-of-clans-town-hall-levels-buying-guide" className="text-primary hover:underline">دليل مستويات التاون هول وأفضل قرية للشراء</Link>.
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed pt-2">
+            للاطلاع على تفاصيل كل مستوى تاون ومميزاته، يمكنك قراءة <Link href="/blog/clash-of-clans-town-hall-levels-buying-guide" className="text-primary font-medium hover:underline">دليل مستويات التاون هول وأفضل قرية للشراء</Link>.
           </p>
         </section>
 
         {/* Choosing the right TH */}
-        <section className="mt-12 max-w-3xl space-y-4">
-          <h2 className="text-2xl font-bold">كيف تختار التاون هول المناسب؟</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            الاختيار يعتمد على هدفك من اللعبة وميزانيتك. إليك بعض النقاط العملية:
+        <section className="mt-16 bg-card/40 border border-border/70 rounded-2xl p-6 md:p-8 space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">كيف تختار التاون هول الأنسب لميزانيتك؟</h2>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8">
+            الاختيار يعتمد على هدفك التنافسي وخبرتك في الهجوم والميزانية المحددة:
           </p>
-          <ul className="space-y-3 text-muted-foreground text-sm">
-            <li className="flex gap-2"><span className="text-primary font-bold">•</span> <span><strong>TH14 أو TH15</strong> — خيار اقتصادي جيد للمبتدئين الراغبين في دخول حروب القبائل بتكلفة معقولة. القرية قادرة على المنافسة في الدوريات المتوسطة.</span></li>
-            <li className="flex gap-2"><span className="text-primary font-bold">•</span> <span><strong>TH16 أو TH17</strong> — يناسب اللاعب الذي يريد الوصول للمراحل المتقدمة من CWL ودوري الأساطير. غالباً ما يكون بسعر أقل من TH18 مع قدرات تنافسية عالية.</span></li>
-            <li className="flex gap-2"><span className="text-primary font-bold">•</span> <span><strong>TH18 ماكس</strong> — الخيار الأعلى حالياً. مناسب للاعب المحترف الذي يريد قرية مكتملة فوراً.</span></li>
-            <li className="flex gap-2"><span className="text-primary font-bold">•</span> <span><strong>TH17 ماكس أفضل من TH18 ناقص؟</strong> — في كثير من الحالات، نعم. قرية TH17 مكتملة التطوير أقوى فعلياً في المنافسة من TH18 بأبطال ومباني غير مكتملة، لأن التوازن بين الدفاع والهجوم أهم من رقم التاون.</span></li>
-          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground">
+            <div className="p-4 rounded-xl bg-background/60 border border-border/60">
+              <h3 className="font-bold text-foreground mb-1 text-base md:text-lg">TH14 و TH15 — بداية اقتصادية متوازنة</h3>
+              <p className="text-sm md:text-base leading-relaxed">خيار رائع للمبتدئين أو العائدين للعبة للدخول في حروب القبائل بتكلفة معقولة جداً.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-background/60 border border-border/60">
+              <h3 className="font-bold text-foreground mb-1 text-base md:text-lg">TH16 و TH17 — أداء تنافسي عالي</h3>
+              <p className="text-sm md:text-base leading-relaxed">يناسب اللاعبين الراغبين بالمنافسة في دوريات الأساطير وCWL المتقدم بسعر تنافسي وممتاز.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-background/60 border border-border/60">
+              <h3 className="font-bold text-foreground mb-1 text-base md:text-lg">TH18 ماكس — القمة المطلقة</h3>
+              <p className="text-sm md:text-base leading-relaxed">أعلى مستوى في كلاش أوف كلانس حالياً، مناسب للاعب الذي يبحث عن قرية مكتملة لا ينقصها شيء.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-background/60 border border-border/60">
+              <h3 className="font-bold text-foreground mb-1 text-base md:text-lg">هل TH17 ماكس أفضل من TH18 ناقص؟</h3>
+              <p className="text-sm md:text-base leading-relaxed">نعم تماماً، فالقرية ذات الدفاعات والأبطال المكتملة تقدم نتائج وثباتاً أعلى في الحروب من تاون متسرع ناقص التطوير.</p>
+            </div>
+          </div>
         </section>
 
         {/* Security & buying process */}
-        <section className="mt-12 max-w-3xl space-y-4">
-          <h2 className="text-2xl font-bold">الفحص والتسليم وإجراءات الأمان</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            عند شراء حساب من كلاش ماركت، تتم العملية على عدة خطوات لضمان سلامة الانتقال:
+        <section className="mt-16 space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">خطوات الفحص والتسليم والأمان</h2>
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed md:leading-8 max-w-4xl">
+            نعتمد في كلاش ماركت طريقة التسليم اليدوي المباشر لضمان راحة بالك وانتقال القرية لبريدك بأعلى معايير الأمان:
           </p>
-          <ol className="space-y-2 text-muted-foreground text-sm list-decimal list-inside">
-            <li>تختار القرية المناسبة وتتواصل مع إدارة المتجر عبر الواتساب.</li>
-            <li>يتم الاتفاق على طريقة الدفع (تحويل بنكي مباشر، أو ترتيب التقسيط عبر تابي/تمارا).</li>
-            <li>بعد إتمام الدفع، يتم نقل بريد Supercell ID إلى بريدك الشخصي.</li>
-            <li>يتم تغيير كلمة سر البريد وتفعيل حماية الحساب (Account Protection) برقم هاتفك.</li>
-            <li>تتسلم رموز الاسترداد (Recovery Codes) لضمان استمرار وصولك للحساب.</li>
-          </ol>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            لمزيد من التفاصيل حول نقل الإيميل وتأمين Supercell ID، راجع <Link href="/blog/how-to-change-supercell-id-email-guide" className="text-primary hover:underline">دليل تغيير إيميل Supercell ID وتأمين الحساب</Link>. ولمعرفة كيف تحافظ على استقرار القرية بعد الاستلام، اقرأ <Link href="/blog/clash-of-clans-account-ban-reasons-protection-guide" className="text-primary hover:underline">دليل حماية القرية وتجنب المخالفات</Link>.
-          </p>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            يمكنك أيضاً الاطلاع على <Link href="/guarantee" className="text-primary hover:underline">سياسة الضمان وحماية المشتري</Link> أو <Link href="/how-it-works" className="text-primary hover:underline">تفاصيل طريقة الشراء والتسليم</Link>.
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-card border border-border/80 rounded-xl p-5">
+              <div className="w-9 h-9 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mb-3">1</div>
+              <h3 className="font-bold text-foreground text-base md:text-lg mb-2">الاختيار والاتفاق</h3>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">تختار القرية المناسبة من الموقع وتتواصل مع إدارة المتجر عبر الواتساب، ويتم الاتفاق على طريقة الدفع (تحويل بنكي أو تقسيط تابي وتمارا).</p>
+            </div>
+            <div className="bg-card border border-border/80 rounded-xl p-5">
+              <div className="w-9 h-9 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mb-3">2</div>
+              <h3 className="font-bold text-foreground text-base md:text-lg mb-2">نقل وتحديث البريد</h3>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">يتم نقل بريد Supercell ID لبريدك الشخصي المباشر وتغيير كلمات السر لضمان ملكيتك الحصرية والكاملة للقرية.</p>
+            </div>
+            <div className="bg-card border border-border/80 rounded-xl p-5">
+              <div className="w-9 h-9 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mb-3">3</div>
+              <h3 className="font-bold text-foreground text-base md:text-lg mb-2">التأمين والضمان الذهبي</h3>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">تفعيل حماية الحساب (Account Protection) برقم هاتفك وتسليمك أكواد الاسترداد، مع سريان ضمان المتجر الشامل.</p>
+            </div>
+          </div>
+          <div className="pt-2 flex flex-wrap gap-x-6 gap-y-2 text-sm md:text-base text-muted-foreground">
+            <span>• راجع <Link href="/blog/how-to-change-supercell-id-email-guide" className="text-primary hover:underline">دليل تغيير إيميل Supercell ID</Link></span>
+            <span>• اقرأ <Link href="/blog/clash-of-clans-account-ban-reasons-protection-guide" className="text-primary hover:underline">دليل حماية القرى وتجنب المخالفات</Link></span>
+            <span>• اطلع على <Link href="/guarantee" className="text-primary hover:underline">سياسة الضمان وحماية المشتري</Link></span>
+          </div>
         </section>
 
         {/* FAQ Section */}
-        <section className="mt-16 max-w-3xl">
-          <h2 className="text-2xl font-bold mb-6">أسئلة شائعة حول شراء حسابات كلاش أوف كلانس</h2>
-          <div className="space-y-4">
+        <section className="mt-16">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">الأسئلة الشائعة حول شراء قريات كلاش أوف كلانس</h2>
+          <div className="space-y-4 max-w-4xl">
             {cocFaqItems.map((item, i) => (
               <details
                 key={i}
-                className="group border border-border rounded-lg bg-card/50 backdrop-blur-sm"
+                className="group border border-border/80 rounded-xl bg-card/60 backdrop-blur-sm transition-all"
               >
-                <summary className="flex items-center justify-between cursor-pointer p-4 font-semibold text-foreground hover:text-primary transition-colors">
+                <summary className="flex items-center justify-between cursor-pointer p-5 font-semibold text-foreground hover:text-primary transition-colors text-base md:text-lg">
                   <span>{item.question}</span>
-                  <span className="text-primary text-xl group-open:rotate-45 transition-transform">+</span>
+                  <span className="text-primary text-2xl group-open:rotate-45 transition-transform shrink-0 mr-4">+</span>
                 </summary>
-                <p className="px-4 pb-4 text-muted-foreground leading-relaxed">
+                <p className="px-5 pb-5 text-muted-foreground leading-relaxed md:leading-8 text-sm md:text-base border-t border-border/40 pt-3">
                   {item.answer}
                 </p>
               </details>
@@ -196,20 +229,22 @@ export default function ClashOfClans() {
         </section>
 
         {/* CTA */}
-        <section className="mt-12 max-w-3xl text-center bg-card border border-border rounded-2xl p-8">
-          <h2 className="text-xl font-bold mb-3">جاهز لاختيار قريتك؟</h2>
-          <p className="text-muted-foreground text-sm mb-4">تصفح الحسابات المتاحة أعلاه، أو تواصل مع إدارة المتجر عبر الواتساب للاستفسار عن حساب محدد أو طلب مواصفات معينة.</p>
+        <section className="mt-16 text-center bg-gradient-to-b from-card to-card/60 border border-border/80 rounded-3xl p-8 md:p-12 shadow-lg">
+          <h2 className="text-2xl md:text-3xl font-extrabold mb-3 text-foreground">جاهز لاختيار قريتك والبدء في الحروب؟</h2>
+          <p className="text-muted-foreground text-base md:text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
+            تصفح القريات المتاحة أعلاه، أو تواصل مباشرة مع فريق كلاش ماركت عبر الواتساب لطلب مواصفات معينة أو استفسار عن أي قرية.
+          </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER || ""}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-colors"
+              className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-base transition-all shadow-md hover:shadow-emerald-600/20"
             >
-              تواصل عبر الواتساب
+              تواصل معنا عبر الواتساب
             </a>
-            <Link href="/clash-royale" className="px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl text-sm transition-colors border border-primary/20">
-              أو تصفح حسابات كلاش رويال
+            <Link href="/clash-royale" className="px-8 py-4 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl text-base transition-all border border-primary/30">
+              تصفح حسابات كلاش رويال
             </Link>
           </div>
         </section>
