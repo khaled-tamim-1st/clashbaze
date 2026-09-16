@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { TouchMarquee } from "@/components/TouchMarquee";
 
 type Testimonial = {
   name: string;
@@ -45,8 +46,6 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 }
 
 export function Testimonials() {
-  const loopItems = [...testimonials, ...testimonials];
-
   return (
     <section className="py-16 bg-card border-y border-border overflow-hidden">
       <div className="container mx-auto px-4 mb-10 text-center">
@@ -56,13 +55,11 @@ export function Testimonials() {
         </p>
       </div>
 
-      <div className="marquee-container">
-        <div className="marquee-track flex flex-nowrap gap-6">
-          {loopItems.map((t, i) => (
-            <TestimonialCard key={i} testimonial={t} />
-          ))}
-        </div>
-      </div>
+      <TouchMarquee speed={0.7}>
+        {testimonials.map((t, i) => (
+          <TestimonialCard key={i} testimonial={t} />
+        ))}
+      </TouchMarquee>
     </section>
   );
 }

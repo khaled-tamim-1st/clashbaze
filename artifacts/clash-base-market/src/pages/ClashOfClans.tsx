@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { useListAccounts } from "@workspace/api-client-react";
 import { AccountCard } from "@/components/AccountCard";
+import { TouchMarquee } from "@/components/TouchMarquee";
 import { SEO } from "@/components/SEO";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
@@ -162,24 +163,13 @@ export default function ClashOfClans() {
               </div>
             </div>
 
-            <div className="marquee-container">
-              <div className="marquee-track flex flex-nowrap hover:[animation-play-state:paused]">
-                <div className="flex flex-nowrap gap-6 shrink-0 px-3">
-                  {featuredAccounts.map((account, i) => (
-                    <div key={`coc-first-${account.id}-${i}`} className="w-[300px] shrink-0">
-                      <AccountCard account={account} />
-                    </div>
-                  ))}
+            <TouchMarquee speed={0.85}>
+              {featuredAccounts.map((account, i) => (
+                <div key={`coc-${account.id}-${i}`} className="w-[300px] shrink-0">
+                  <AccountCard account={account} />
                 </div>
-                <div className="flex flex-nowrap gap-6 shrink-0 px-3" aria-hidden="true">
-                  {featuredAccounts.map((account, i) => (
-                    <div key={`coc-second-${account.id}-${i}`} className="w-[300px] shrink-0">
-                      <AccountCard account={account} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+              ))}
+            </TouchMarquee>
           </section>
         )}
 
