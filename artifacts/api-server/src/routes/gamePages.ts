@@ -127,7 +127,7 @@ router.get("/clash-of-clans/town-hall-18", async (req, res) => {
         <li><strong>دفاعات الجيل الأحدث:</strong> تصاميم دفاعية مدمجة تقاوم استراتيجيات الهجوم الأكثر شراسة في الساحة الدولية.</li>
       </ul>
 
-      <h2>تصفح مستويات تاون هول أخرى</h2>
+      <h2>قريات كلاش أوف كلانس بمستويات تاون هول أخرى</h2>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
@@ -222,7 +222,7 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
         <li><strong>قيمة مالية ممتازة:</strong> أسعار مدروسة تمنحك أفضل قيمة مقابل التطويرات المنجزة في القرية.</li>
       </ul>
 
-      <h2>تصفح مستويات تاون هول أخرى</h2>
+      <h2>قريات كلاش أوف كلانس بمستويات تاون هول أخرى</h2>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
@@ -317,7 +317,7 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
         <li><strong>نظام المعدات (Hero Equipment):</strong> فتح معظم المعدات الملحمية والعادية وتطويرها.</li>
       </ul>
 
-      <h2>تصفح مستويات تاون هول أخرى</h2>
+      <h2>قريات كلاش أوف كلانس بمستويات تاون هول أخرى</h2>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:20px 0;">
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
@@ -394,7 +394,7 @@ router.get("/clash-of-clans", async (req, res) => {
       ? `<div class="grid-list">${allAccounts.map(accountCardHtml).join("")}</div>`
       : `<p>لا توجد حسابات كلاش أوف كلانس متاحة حالياً.</p>`;
 
-    const title = "حسابات كلاش أوف كلانس للبيع | متجر كلاش ماركت";
+    const title = "متجر كلاش أوف كلانس | بيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج";
     const description = "اشترِ حسابات وقرى كلاش أوف كلانس (تاون هول 14 إلى 18) بتسليم يدوي مباشر وضمان وفق سياسة المتجر. كلاش ماركت — متجر حسابات كلاش في السعودية والخليج.";
 
     const breadcrumbItems = [
@@ -440,7 +440,7 @@ router.get("/clash-of-clans", async (req, res) => {
       </ul>
       <p>للتفاصيل: <a href="/blog/clash-of-clans-town-hall-levels-buying-guide" style="color:#f59e0b;">دليل مستويات التاون هول وأفضل قرية للشراء</a>.</p>
 
-      <h2>روابط سريعة لأقسام التاون هول:</h2>
+      <h2>قريات كلاش أوف كلانس — تصفح حسب تاون هول</h2>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin:16px 0 28px;">
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 17</a>
@@ -523,7 +523,7 @@ router.get("/clash-royale", async (req, res) => {
       ? `<div class="grid-list">${allAccounts.map(accountCardHtml).join("")}</div>`
       : `<p>لا توجد حسابات كلاش رويال متاحة حالياً.</p>`;
 
-    const title = "حسابات كلاش رويال للبيع | كروت ماكس وإيفو — كلاش ماركت";
+    const title = "متجر كلاش رويال | بيع وشراء حسابات كلاش رويال في السعودية والخليج";
     const description = "اشترِ حسابات كلاش رويال بكروت Level 16 وتطورات Evolutions بتسليم يدوي فوري وضمان وفق سياسة المتجر. كلاش ماركت — متجر حسابات كلاش رويال في السعودية والخليج.";
 
     const crBreadcrumbItems = [
@@ -577,7 +577,7 @@ router.get("/clash-royale", async (req, res) => {
         <li><strong>حالة Supercell ID</strong> — تأكد أن الحساب يأتي مع البريد الأساسي.</li>
       </ul>
 
-      <h2>الاستلام والأمان</h2>
+      <h2>كيف يتم تسليم حساب كلاش رويال؟</h2>
       <p>عملية شراء حساب كلاش رويال تتم بنفس آلية التسليم اليدوي المباشر — تتواصل مع إدارة المتجر عبر الواتساب، ويتم نقل بريد Supercell ID وتأمين الحساب على جهازك.</p>
       <p>للاطلاع على خطوات نقل الإيميل: <a href="/blog/how-to-change-supercell-id-email-guide" style="color:#f59e0b;">دليل تغيير إيميل Supercell ID</a>. ولتفاصيل سياسة المتجر: <a href="/guarantee" style="color:#f59e0b;">سياسة الضمان وحماية المشتري</a>.</p>
 
