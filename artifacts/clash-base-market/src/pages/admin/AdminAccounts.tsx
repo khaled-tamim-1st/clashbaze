@@ -91,9 +91,15 @@ export default function AdminAccounts() {
   const invalidateAccountQueries = (slug?: string) => {
     queryClient.invalidateQueries({ queryKey: ["/api/accounts"] });
     queryClient.invalidateQueries({ queryKey: ["/api/accounts/featured"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/accounts/stats"] });
     if (slug) {
       queryClient.invalidateQueries({ queryKey: [`/api/accounts/${slug}`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/accounts/${slug}/related`] });
     }
+    queryClient.invalidateQueries({
+      predicate: (query) =>
+        typeof query.queryKey[0] === "string" && query.queryKey[0].startsWith("/api/accounts"),
+    });
   };
 
   const createMut = useMutation({

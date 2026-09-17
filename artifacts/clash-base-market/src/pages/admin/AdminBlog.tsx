@@ -66,6 +66,10 @@ export default function AdminBlog() {
     if (slug) {
       queryClient.invalidateQueries({ queryKey: [`/api/blog/${slug}`] });
     }
+    queryClient.invalidateQueries({
+      predicate: (query) =>
+        typeof query.queryKey[0] === "string" && query.queryKey[0].startsWith("/api/blog"),
+    });
   };
 
   const createMut = useMutation({

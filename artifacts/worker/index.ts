@@ -153,6 +153,11 @@ async function proxyTo(
       cacheEverything: true,
       cacheTtl: 3600,
     };
+  } else {
+    init.cf = {
+      cacheEverything: false,
+      cacheTtl: 0,
+    };
   }
 
   try {
@@ -181,6 +186,10 @@ async function proxyTo(
       responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
       responseHeaders.set("Pragma", "no-cache");
       responseHeaders.set("Expires", "0");
+      responseHeaders.set("Surrogate-Control", "no-store");
+      responseHeaders.set("CDN-Cache-Control", "no-store");
+      responseHeaders.set("Cloudflare-CDN-Cache-Control", "no-store");
+      responseHeaders.delete("Age");
       const hasNoBody = [101, 204, 205, 304].includes(response.status);
       return new Response(hasNoBody ? null : response.body, {
         status: response.status,
