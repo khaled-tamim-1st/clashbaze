@@ -53,6 +53,11 @@ function accountCardHtml(a: typeof accountsTable.$inferSelect): string {
 
 
 
+// 301 Redirect for base /account or /account/ to accounts catalog
+router.get(["/account", "/account/"], (_req, res) => {
+  res.redirect(301, "/clash-of-clans");
+});
+
 // GET /account/:slug — server-rendered account detail page, fully readable with no JS required
 router.get("/account/:slug", async (req, res) => {
   try {
