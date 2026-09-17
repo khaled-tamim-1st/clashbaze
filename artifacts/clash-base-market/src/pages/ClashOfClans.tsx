@@ -159,7 +159,15 @@ export default function ClashOfClans() {
           <section className="mb-14 overflow-hidden rounded-2xl bg-card/40 border border-border/80 py-6">
             <div className="px-6 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-border/60 pb-4">
               <div className="flex items-center gap-3">
-                <span className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-lg">⭐</span>
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0 overflow-hidden shadow-inner p-1">
+                  <img
+                    src="/images/barbarian-king.png"
+                    alt="الملك البربري - حسابات كلاش أوف كلانس المميزة"
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-contain drop-shadow-md"
+                  />
+                </div>
                 <div>
                   <h2 className="text-xl md:text-2xl font-bold text-foreground">
                     حسابات كلاش أوف كلانس المميزة

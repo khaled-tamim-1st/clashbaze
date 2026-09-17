@@ -486,7 +486,7 @@ router.get("/clash-of-clans", async (req, res) => {
       ? `
         <div style="margin: 28px 0 40px; padding: 24px; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 16px;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
-            <h2 style="margin:0; font-size:1.4rem; color:#f8fafc;">⭐ حسابات كلاش أوف كلانس المميزة</h2>
+            <h2 style="margin:0; font-size:1.4rem; color:#f8fafc; display:flex; align-items:center; gap:10px;"><img src="/images/barbarian-king.png" alt="الملك البربري" width="36" height="36" style="width:36px; height:36px; object-fit:contain; vertical-align:middle;" /> حسابات كلاش أوف كلانس المميزة</h2>
             <span style="color:#f59e0b; font-size:0.9rem; font-weight:600;">مختارة بعناية ومضمونة</span>
           </div>
           <div class="grid-list" style="margin:0;">${featuredAccounts.map(accountCardHtml).join("")}</div>
