@@ -145,6 +145,12 @@ async function proxyTo(
     pathname.startsWith("/go") ||
     pathname.startsWith("/admin");
 
+  if (isDynamicOrBypass) {
+    targetUrl.searchParams.set("_cf_bypass", Date.now().toString());
+    headers.set("Cache-Control", "no-cache, no-store, must-revalidate");
+    headers.set("Pragma", "no-cache");
+  }
+
   // GET و HEAD لا يحتاجان body مع تفعيل الـ Cloudflare Edge Cache للـ Static و SSR فقط
   if (request.method !== "GET" && request.method !== "HEAD") {
     init.body = request.body;
@@ -156,7 +162,8 @@ async function proxyTo(
   } else {
     init.cf = {
       cacheEverything: false,
-      cacheTtl: 0,
+      cacheTtl: -1,
+      cacheMode: "no-store",
     };
   }
 
@@ -190,6 +197,8 @@ async function proxyTo(
       responseHeaders.set("CDN-Cache-Control", "no-store");
       responseHeaders.set("Cloudflare-CDN-Cache-Control", "no-store");
       responseHeaders.delete("Age");
+      responseHeaders.delete("CF-Cache-Status");
+      responseHeaders.delete("cf-cache-status");
       const hasNoBody = [101, 204, 205, 304].includes(response.status);
       return new Response(hasNoBody ? null : response.body, {
         status: response.status,
