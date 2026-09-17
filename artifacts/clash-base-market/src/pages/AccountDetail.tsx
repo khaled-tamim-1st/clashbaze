@@ -143,10 +143,25 @@ export default function AccountDetail() {
             <AccountGallery images={account.images} />
           </div>
           <div>
-            <div className="mb-4">
+            <div className="mb-4 flex items-center gap-2 flex-wrap">
               <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold text-white ${account.game === 'clash-of-clans' ? 'bg-blue-600' : 'bg-red-600'}`}>
                 {account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال"}
               </span>
+              {account.status === "available" && (
+                <span className="inline-block px-3 py-1 rounded-full text-sm font-bold bg-emerald-600 text-white shadow-md">
+                  متاح للشراء
+                </span>
+              )}
+              {account.status === "reserved" && (
+                <span className="inline-block px-3 py-1 rounded-full text-sm font-bold bg-amber-600 text-white shadow-md">
+                  محجوز
+                </span>
+              )}
+              {account.status === "sold" && (
+                <span className="inline-block px-3 py-1 rounded-full text-sm font-bold bg-red-600 text-white shadow-md">
+                  تم البيع
+                </span>
+              )}
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{account.title}</h1>
             
@@ -217,16 +232,16 @@ export default function AccountDetail() {
               )}
             </div>
 
-            <Button asChild size="lg" className="w-full text-lg h-14 bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button asChild size="lg" className={`w-full text-lg h-14 ${account.status === "sold" ? "bg-muted text-foreground hover:bg-muted/80" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
               <TrackedWhatsAppLink
                 cta="product_detail"
                 accountId={account.id}
                 accountSlug={account.slug}
-                text={message}
+                text={account.status === "sold" ? `مرحباً، أستفسر عن توفر حساب مشابه لـ ${account.whatsappMessage || account.title} (${priceFormatted})` : message}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                شراء الآن عبر الواتساب
+                {account.status === "sold" ? "الحساب مباع - طلب حساب مشابه عبر الواتساب" : "شراء الآن عبر الواتساب"}
               </TrackedWhatsAppLink>
             </Button>
 

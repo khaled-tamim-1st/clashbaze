@@ -4,6 +4,7 @@ import { useListAccounts } from "@workspace/api-client-react";
 import { AccountCard } from "@/components/AccountCard";
 import { SEO } from "@/components/SEO";
 import { Link, useRoute } from "wouter";
+import { useMemo } from "react";
 
 export type TownHallLevel = 15 | 16 | 17 | 18;
 
@@ -123,8 +124,22 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
   const { data: accounts, isLoading } = useListAccounts({
     game: "clash-of-clans",
     townHall: config.level,
-    status: "available",
   });
+
+  const sortedAccounts = useMemo(() => {
+    if (!accounts) return [];
+    const statusWeight: Record<string, number> = {
+      available: 1,
+      reserved: 2,
+      sold: 3,
+    };
+    return [...accounts].sort((a, b) => {
+      const wA = statusWeight[a.status] || 99;
+      const wB = statusWeight[b.status] || 99;
+      if (wA !== wB) return wA - wB;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }, [accounts]);
 
   const canonicalUrl = `https://www.clashmarket.online/clash-of-clans/town-hall-${config.level}`;
 
@@ -158,11 +173,11 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
     })),
   };
 
-  const itemListJsonLd = accounts && accounts.length > 0 ? {
+  const itemListJsonLd = sortedAccounts && sortedAccounts.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: config.title,
-    itemListElement: accounts.map((a, i) => ({
+    itemListElement: sortedAccounts.map((a, i) => ({
       "@type": "ListItem",
       position: i + 1,
       url: `https://www.clashmarket.online/account/${a.slug}`,
@@ -228,7 +243,7 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
         {/* Accounts Grid */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8 border-b border-border/60 pb-4">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
-            قريات تاون هول {config.level} المتاحة للشراء
+            قريات تاون هول {config.level}
           </h2>
           <span className="text-xs sm:text-sm md:text-base text-muted-foreground">تسليم يدوي فوري وضمان كلاش ماركت</span>
         </div>
@@ -239,9 +254,9 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
               <div key={i} className="h-96 bg-muted animate-pulse rounded-lg" />
             ))}
           </div>
-        ) : accounts && accounts.length > 0 ? (
+        ) : sortedAccounts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {accounts.map((account) => (
+            {sortedAccounts.map((account) => (
               <AccountCard key={account.id} account={account} />
             ))}
           </div>

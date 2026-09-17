@@ -127,8 +127,7 @@ router.get("/sitemap.xml", async (req, res) => {
           createdAt: accountsTable.createdAt,
           status: accountsTable.status,
         })
-        .from(accountsTable)
-        .where(ne(accountsTable.status, "sold")),
+        .from(accountsTable),
       db
         .select({
           slug: blogTable.slug,

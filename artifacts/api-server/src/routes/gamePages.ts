@@ -1,9 +1,16 @@
 import { Router } from "express";
 import { db, accountsTable } from "@workspace/db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import { escapeHtml, pageShell, breadcrumbHtml, breadcrumbJsonLd, SITE_NAME, SITE_URL } from "../lib/pageshell";
 
 const router = Router();
+
+const statusPriorityOrder = sql`CASE 
+  WHEN ${accountsTable.status} = 'available' THEN 1 
+  WHEN ${accountsTable.status} = 'reserved' THEN 2 
+  WHEN ${accountsTable.status} = 'sold' THEN 3 
+  ELSE 4 
+END ASC`;
 
 function formatCloudinaryUrl(url: string | undefined | null): string {
   if (!url) return "";
@@ -36,7 +43,13 @@ function accountCardHtml(a: {
   const rawImg = a.images && a.images.length > 0 ? a.images[0] : "";
   const img = formatCloudinaryUrl(rawImg);
   const thText = a.townHall ? `تاون هول ${a.townHall}` : a.arena ? `${a.arena}` : "";
+  const isSold = a.status === "sold";
   const statusText = a.status === "available" ? "متاح للشراء" : a.status === "reserved" ? "محجوز" : "تم البيع";
+  const statusBadgeStyle = a.status === "available" 
+    ? "background:#065f46; color:#a7f3d0; border:1px solid #059669;" 
+    : a.status === "reserved" 
+    ? "background:#854d0e; color:#fef08a; border:1px solid #ca8a04;" 
+    : "background:#991b1b; color:#fecaca; border:1px solid #dc2626; font-weight:800;";
 
   // Detect Max / Semi-Max status from title and description
   const textToScan = `${a.title || ""} ${a.description || ""}`.toLowerCase();
@@ -59,15 +72,18 @@ function accountCardHtml(a: {
     : `حساب ${escapeHtml(a.title)}`;
 
   return `
-    <a class="card" href="/account/${escapeHtml(a.slug)}" title="${escapeHtml(a.title)}">
-      ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" width="300" height="180" loading="lazy" style="width:100%; height:180px; object-fit:cover; display:block; background:#0f172a;" />` : ""}
+    <a class="card" href="/account/${escapeHtml(a.slug)}" title="${escapeHtml(a.title)}" style="${isSold ? "opacity:0.88;" : ""}">
+      <div style="position:relative; width:100%; height:180px; overflow:hidden; background:#0f172a;">
+        ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" width="300" height="180" loading="lazy" style="width:100%; height:180px; object-fit:cover; display:block;" />` : ""}
+        ${isSold ? `<div style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center;"><span style="background:#dc2626; color:#ffffff; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transform:rotate(-4deg); border:1px solid #ef4444;">تم البيع</span></div>` : ""}
+      </div>
       <div class="card-body">
         <div style="display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
           ${a.featured ? `<span class="featured-badge" style="margin:0;">⭐ مميز</span>` : ""}
           ${thText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#1e3a8a; color:#bfdbfe; border:1px solid #2563eb;">${thText}</span>` : ""}
           ${maxTag ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#78350f; color:#fde68a; border:1px solid #d97706;">${maxTag}</span>` : ""}
           ${levelText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#334155; color:#f1f5f9; border:1px solid #475569;">${escapeHtml(levelText)}</span>` : ""}
-          <span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#065f46; color:#a7f3d0; border:1px solid #059669;">${statusText}</span>
+          <span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; ${statusBadgeStyle}">${statusText}</span>
         </div>
         <div class="card-title">${escapeHtml(a.title)}</div>
         <div class="card-price">${Number(a.price).toLocaleString("ar-SA")} ر.س</div>
@@ -106,10 +122,9 @@ router.get("/clash-of-clans/town-hall-18", async (req, res) => {
       .from(accountsTable)
       .where(and(
         eq(accountsTable.game, "clash-of-clans"),
-        eq(accountsTable.townHall, 18),
-        eq(accountsTable.status, "available")
+        eq(accountsTable.townHall, 18)
       ))
-      .orderBy(desc(accountsTable.id));
+      .orderBy(statusPriorityOrder, desc(accountsTable.id));
 
     const accountsHtml = accounts.length
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
@@ -202,10 +217,9 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
       .from(accountsTable)
       .where(and(
         eq(accountsTable.game, "clash-of-clans"),
-        eq(accountsTable.townHall, 17),
-        eq(accountsTable.status, "available")
+        eq(accountsTable.townHall, 17)
       ))
-      .orderBy(desc(accountsTable.id));
+      .orderBy(statusPriorityOrder, desc(accountsTable.id));
 
     const accountsHtml = accounts.length
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
@@ -298,10 +312,9 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
       .from(accountsTable)
       .where(and(
         eq(accountsTable.game, "clash-of-clans"),
-        eq(accountsTable.townHall, 16),
-        eq(accountsTable.status, "available")
+        eq(accountsTable.townHall, 16)
       ))
-      .orderBy(desc(accountsTable.id));
+      .orderBy(statusPriorityOrder, desc(accountsTable.id));
 
     const accountsHtml = accounts.length
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
@@ -343,7 +356,7 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
       <h1>حسابات كلاش أوف كلانس تاون هول 16 للبيع (TH16)</h1>
       <p>تصفح تشكيلة حسابات وقريات كلاش أوف كلانس تاون هول 16 (Town Hall 16). يقدم TH16 نقطة انطلاق مثالية ومتقدمة للاعبين الذين يبحثون عن قوة دفاعية قوية بالدفاعات المدمجة الجديدة ومعدات الأبطال الملحمية، مع الحفاظ على سعر اقتصادي ومناسب في متناول الجميع.</p>
 
-      <h2>قريات تاون هول 16 المتاحة للشراء الآن</h2>
+      <h2>قريات تاون هول 16 المعروضة للبيع</h2>
       ${accountsHtml}
 
       <h2>لماذا يفضل الكثيرون شراء تاون هول 16؟</h2>
@@ -394,10 +407,9 @@ router.get("/clash-of-clans/town-hall-15", async (req, res) => {
       .from(accountsTable)
       .where(and(
         eq(accountsTable.game, "clash-of-clans"),
-        eq(accountsTable.townHall, 15),
-        eq(accountsTable.status, "available")
+        eq(accountsTable.townHall, 15)
       ))
-      .orderBy(desc(accountsTable.id));
+      .orderBy(statusPriorityOrder, desc(accountsTable.id));
 
     const accountsHtml = accounts.length
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
@@ -497,18 +509,14 @@ router.get("/clash-of-clans", async (req, res) => {
         .from(accountsTable)
         .where(and(
           eq(accountsTable.game, "clash-of-clans"),
-          eq(accountsTable.status, "available"),
           eq(accountsTable.featured, true)
         ))
-        .orderBy(desc(accountsTable.id)),
+        .orderBy(statusPriorityOrder, desc(accountsTable.id)),
       db
         .select()
         .from(accountsTable)
-        .where(and(
-          eq(accountsTable.game, "clash-of-clans"),
-          eq(accountsTable.status, "available")
-        ))
-        .orderBy(desc(accountsTable.id)),
+        .where(eq(accountsTable.game, "clash-of-clans"))
+        .orderBy(statusPriorityOrder, desc(accountsTable.id)),
     ]);
 
     const featuredHtml = featuredAccounts.length
@@ -922,18 +930,14 @@ router.get("/clash-royale", async (req, res) => {
         .from(accountsTable)
         .where(and(
           eq(accountsTable.game, "clash-royale"),
-          eq(accountsTable.status, "available"),
           eq(accountsTable.featured, true)
         ))
-        .orderBy(desc(accountsTable.id)),
+        .orderBy(statusPriorityOrder, desc(accountsTable.id)),
       db
         .select()
         .from(accountsTable)
-        .where(and(
-          eq(accountsTable.game, "clash-royale"),
-          eq(accountsTable.status, "available")
-        ))
-        .orderBy(desc(accountsTable.id)),
+        .where(eq(accountsTable.game, "clash-royale"))
+        .orderBy(statusPriorityOrder, desc(accountsTable.id)),
     ]);
 
     const featuredHtml = featuredAccounts.length

@@ -14,7 +14,7 @@ export function AccountCard({ account }: { account: Account }) {
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
 
   return (
-    <Card className="overflow-hidden bg-card border-border hover:border-primary transition-colors duration-300 group">
+    <Card className={`overflow-hidden bg-card border-border hover:border-primary transition-all duration-300 group ${account.status === "sold" ? "opacity-90 hover:opacity-100" : ""}`}>
       <div className="relative aspect-video overflow-hidden">
         {account.images && account.images.length > 0 ? (
           <img 
@@ -25,6 +25,13 @@ export function AccountCard({ account }: { account: Account }) {
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">لا توجد صورة</div>
+        )}
+        {account.status === "sold" && (
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-[1px] flex items-center justify-center pointer-events-none">
+            <span className="bg-red-600 text-white font-extrabold text-sm px-4 py-1.5 rounded-lg shadow-xl border border-red-400/50 transform -rotate-6 tracking-wide">
+              تم البيع
+            </span>
+          </div>
         )}
         <div className="absolute top-2 right-2 flex gap-2">
   {account.status === "available" && (
@@ -60,15 +67,14 @@ export function AccountCard({ account }: { account: Account }) {
   {account.status === "sold" && (
     <Badge
       className="
-        bg-gradient-to-r from-purple-950 to-violet-900
-        text-white
-        border border-violet-400/30
-        shadow-[0_0_12px_rgba(109,40,217,0.45)]
-        hover:shadow-[0_0_18px_rgba(109,40,217,0.65)]
+        bg-red-600 hover:bg-red-700
+        text-white font-bold
+        border border-red-400/50
+        shadow-[0_0_12px_rgba(239,68,68,0.5)]
         transition-all duration-300
       "
     >
-      مباع
+      تم البيع
     </Badge>
   )}
 </div>
@@ -144,16 +150,16 @@ export function AccountCard({ account }: { account: Account }) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button asChild variant="default" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+        <Button asChild variant={account.status === "sold" ? "secondary" : "default"} className={`w-full ${account.status === "sold" ? "bg-muted text-foreground hover:bg-muted/80" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
           <TrackedWhatsAppLink
             cta="product_card"
             accountId={account.id}
             accountSlug={account.slug}
-            text={message}
+            text={account.status === "sold" ? `مرحباً، أستفسر عن توفر حساب مشابه لـ ${account.title}` : message}
             target="_blank"
             rel="noopener noreferrer"
           >
-            تواصل واتساب
+            {account.status === "sold" ? "طلب حساب مشابه" : "تواصل واتساب"}
           </TrackedWhatsAppLink>
         </Button>
         <Button asChild variant="outline" className="w-full">

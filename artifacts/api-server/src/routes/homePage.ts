@@ -1,19 +1,35 @@
 import { Router } from "express";
 import { db, accountsTable, blogTable } from "@workspace/db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import { escapeHtml, pageShell, SITE_NAME, SITE_URL } from "../lib/pageshell";
 
 const router = Router();
+
+const statusPriorityOrder = sql`CASE 
+  WHEN ${accountsTable.status} = 'available' THEN 1 
+  WHEN ${accountsTable.status} = 'reserved' THEN 2 
+  WHEN ${accountsTable.status} = 'sold' THEN 3 
+  ELSE 4 
+END ASC`;
 
 function accountCardHtml(a: {
   slug: string;
   title: string;
   price: string | number;
   images: string[] | null;
+  status?: string | null;
 }) {
   const img = a.images && a.images.length > 0 ? a.images[0] : "";
+  const isSold = a.status === "sold";
+  const isReserved = a.status === "reserved";
+  const badgeHtml = isSold
+    ? `<span style="position:absolute; top:8px; right:8px; background:#dc2626; color:#fff; font-size:0.75rem; font-weight:800; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.4); z-index:2;">تم البيع</span>`
+    : isReserved
+    ? `<span style="position:absolute; top:8px; right:8px; background:#d97706; color:#fff; font-size:0.75rem; font-weight:800; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.4); z-index:2;">محجوز</span>`
+    : "";
   return `
-    <a class="card" href="/account/${escapeHtml(a.slug)}">
+    <a class="card" href="/account/${escapeHtml(a.slug)}" style="${isSold ? "opacity:0.88;" : ""} position:relative;">
+      ${badgeHtml}
       ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(a.title)}" loading="lazy" />` : ""}
       <div class="card-body">
         <div class="card-title">${escapeHtml(a.title)}</div>
@@ -41,14 +57,14 @@ router.get("/", async (req, res) => {
       db
         .select()
         .from(accountsTable)
-        .where(and(eq(accountsTable.game, "clash-of-clans"), eq(accountsTable.status, "available")))
-        .orderBy(desc(accountsTable.featured), desc(accountsTable.id))
+        .where(eq(accountsTable.game, "clash-of-clans"))
+        .orderBy(statusPriorityOrder, desc(accountsTable.featured), desc(accountsTable.id))
         .limit(6),
       db
         .select()
         .from(accountsTable)
-        .where(and(eq(accountsTable.game, "clash-royale"), eq(accountsTable.status, "available")))
-        .orderBy(desc(accountsTable.featured), desc(accountsTable.id))
+        .where(eq(accountsTable.game, "clash-royale"))
+        .orderBy(statusPriorityOrder, desc(accountsTable.featured), desc(accountsTable.id))
         .limit(6),
       db.select().from(blogTable).orderBy(desc(blogTable.createdAt)).limit(3),
     ]);

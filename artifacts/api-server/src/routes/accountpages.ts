@@ -1,9 +1,16 @@
 import { Router, type Request, type Response } from "express";
 import { db, accountsTable } from "@workspace/db";
-import { desc, eq, and } from "drizzle-orm";
+import { desc, eq, and, sql } from "drizzle-orm";
 import { SITE_NAME, SITE_URL, escapeHtml, pageShell, breadcrumbJsonLd, breadcrumbHtml } from "../lib/pageshell";
 
 const router = Router();
+
+const statusPriorityOrder = sql`CASE 
+  WHEN ${accountsTable.status} = 'available' THEN 1 
+  WHEN ${accountsTable.status} = 'reserved' THEN 2 
+  WHEN ${accountsTable.status} = 'sold' THEN 3 
+  ELSE 4 
+END ASC`;
 
 const WHATSAPP_NUMBER = process.env["WHATSAPP_NUMBER"] || "";
 
@@ -46,7 +53,15 @@ function formatCloudinaryUrl(url: string | undefined | null): string {
 function accountCardHtml(a: typeof accountsTable.$inferSelect): string {
   const rawImage = a.images?.[0] || "";
   const image = formatCloudinaryUrl(rawImage);
-  return `<a class="card" href="/account/${escapeHtml(a.slug)}">
+  const isSold = a.status === "sold";
+  const isReserved = a.status === "reserved";
+  const badgeHtml = isSold
+    ? `<span style="position:absolute; top:8px; right:8px; background:#dc2626; color:#fff; font-size:0.75rem; font-weight:800; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.4); z-index:2;">تم البيع</span>`
+    : isReserved
+    ? `<span style="position:absolute; top:8px; right:8px; background:#d97706; color:#fff; font-size:0.75rem; font-weight:800; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.4); z-index:2;">محجوز</span>`
+    : "";
+  return `<a class="card" href="/account/${escapeHtml(a.slug)}" style="${isSold ? "opacity:0.88;" : ""} position:relative;">
+    ${badgeHtml}
     ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(a.title)}" loading="lazy" />` : ""}
     <div class="card-body">
       <div class="card-title">${escapeHtml(a.title)}</div>
@@ -88,9 +103,9 @@ router.get("/account/:slug", async (req, res) => {
     const related = await db
       .select()
       .from(accountsTable)
-      .where(and(eq(accountsTable.game, account.game), eq(accountsTable.status, "available")))
-      .orderBy(desc(accountsTable.createdAt))
-      .limit(5);
+      .where(eq(accountsTable.game, account.game))
+      .orderBy(statusPriorityOrder, desc(accountsTable.createdAt))
+      .limit(6);
     const relatedFiltered = related.filter((r) => r.slug !== slug).slice(0, 4);
 
     const gameLabel = GAME_LABEL[account.game] || account.game;
@@ -186,7 +201,7 @@ router.get("/account/:slug", async (req, res) => {
       </div>
       <h1>${escapeHtml(account.title)}</h1>
       <div class="meta" style="margin-bottom: 16px;">
-        الحالة: <span class="status ${escapeHtml(account.status)}" style="color: ${account.status === 'available' ? '#10b981' : '#f59e0b'}; font-weight: 700;">${escapeHtml(statusLabel)}</span> | متجر موثوق | تسليم فوري في السعودية ودول الخليج
+        الحالة: <span class="status ${escapeHtml(account.status)}" style="color: ${account.status === 'available' ? '#10b981' : account.status === 'sold' ? '#ef4444' : '#f59e0b'}; font-weight: 700;">${escapeHtml(statusLabel)}</span> | متجر موثوق | تسليم فوري في السعودية ودول الخليج
       </div>
       ${account.images?.length ? `<div class="gallery">${galleryHtml}</div>` : ""}
       <div class="price-row">
@@ -199,7 +214,7 @@ router.get("/account/:slug", async (req, res) => {
       ${specsHtml ? `<div class="specs">${specsHtml}</div>` : ""}
       ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1; line-height: 1.9;">${escapeHtml(account.description)}</div>` : ""}
       
-      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage, account.id, account.slug))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)</a>
+      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage, account.id, account.slug))}" target="_blank" rel="noopener noreferrer" style="${account.status === 'sold' ? 'background:#334155; border:1px solid #475569;' : ''}">${account.status === 'sold' ? 'الحساب مباع - طلب حساب مشابه عبر الواتساب' : 'شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)'}</a>
       <div style="text-align: center; margin-top: 10px; font-size: 0.85rem;">
         <a href="/guarantee" style="color: #94a3b8; text-decoration: underline;">🛡️ مشمول بالضمان الذهبي وحماية المشتري (اضغط للتفاصيل)</a>
       </div>

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { db } from "@workspace/db";
 import { accountsTable } from "@workspace/db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import {
   ListAccountsQueryParams,
   GetFeaturedAccountsQueryParams,
@@ -15,6 +15,13 @@ import {
 import { requireAdmin } from "../middlewares/requireAdmin";
 
 const router = Router();
+
+export const statusPriorityOrder = sql`CASE 
+  WHEN ${accountsTable.status} = 'available' THEN 1 
+  WHEN ${accountsTable.status} = 'reserved' THEN 2 
+  WHEN ${accountsTable.status} = 'sold' THEN 3 
+  ELSE 4 
+END ASC`;
 
 // GET /accounts
 router.get("/accounts", async (req, res) => {
@@ -37,14 +44,14 @@ router.get("/accounts", async (req, res) => {
         .select()
         .from(accountsTable)
         .where(and(...conditions))
-        .orderBy(desc(accountsTable.createdAt))
+        .orderBy(statusPriorityOrder, desc(accountsTable.createdAt))
         .limit(limit)
         .offset(offset);
     } else {
       rows = await db
         .select()
         .from(accountsTable)
-        .orderBy(desc(accountsTable.createdAt))
+        .orderBy(statusPriorityOrder, desc(accountsTable.createdAt))
         .limit(limit)
         .offset(offset);
     }
@@ -87,7 +94,6 @@ router.get("/accounts/featured", async (req, res) => {
     const query = GetFeaturedAccountsQueryParams.parse(req.query);
     const conditions = [
       eq(accountsTable.featured, true),
-      eq(accountsTable.status, "available"),
     ];
 
     if (query.game) {
@@ -98,7 +104,7 @@ router.get("/accounts/featured", async (req, res) => {
       .select()
       .from(accountsTable)
       .where(and(...conditions))
-      .orderBy(desc(accountsTable.createdAt))
+      .orderBy(statusPriorityOrder, desc(accountsTable.createdAt))
       .limit(12);
     res.json(rows.map(serializeAccount));
   } catch (err: any) {
@@ -194,9 +200,9 @@ router.get("/accounts/:slug/related", async (req, res): Promise<void> => {
     const rows = await db
       .select()
       .from(accountsTable)
-      .where(and(eq(accountsTable.game, current.game), eq(accountsTable.status, "available")))
-      .orderBy(desc(accountsTable.createdAt))
-      .limit(5);
+      .where(eq(accountsTable.game, current.game))
+      .orderBy(statusPriorityOrder, desc(accountsTable.createdAt))
+      .limit(6);
 
     res.json(rows.filter((r) => r.slug !== slug).slice(0, 4).map(serializeAccount));
   } catch (err) {

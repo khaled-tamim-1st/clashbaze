@@ -5,7 +5,7 @@ import { AccountCard } from "@/components/AccountCard";
 import { TouchMarquee } from "@/components/TouchMarquee";
 import { SEO } from "@/components/SEO";
 import { Link, useLocation } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 const cocFaqItems = [
@@ -64,11 +64,41 @@ export default function ClashOfClans() {
   const { data: accounts, isLoading } = useListAccounts({ game: "clash-of-clans" });
   const { data: featuredAccounts, isLoading: loadingFeatured } = useListAccounts({ game: "clash-of-clans", featured: "true" });
 
-  const itemListJsonLd = accounts && accounts.length > 0 ? {
+  const sortedAccounts = useMemo(() => {
+    if (!accounts) return [];
+    const statusWeight: Record<string, number> = {
+      available: 1,
+      reserved: 2,
+      sold: 3,
+    };
+    return [...accounts].sort((a, b) => {
+      const wA = statusWeight[a.status] || 99;
+      const wB = statusWeight[b.status] || 99;
+      if (wA !== wB) return wA - wB;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }, [accounts]);
+
+  const sortedFeatured = useMemo(() => {
+    if (!featuredAccounts) return [];
+    const statusWeight: Record<string, number> = {
+      available: 1,
+      reserved: 2,
+      sold: 3,
+    };
+    return [...featuredAccounts].sort((a, b) => {
+      const wA = statusWeight[a.status] || 99;
+      const wB = statusWeight[b.status] || 99;
+      if (wA !== wB) return wA - wB;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }, [featuredAccounts]);
+
+  const itemListJsonLd = sortedAccounts && sortedAccounts.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "حسابات كلاش أوف كلانس للبيع",
-    itemListElement: accounts.map((a, i) => ({
+    itemListElement: sortedAccounts.map((a, i) => ({
       "@type": "ListItem",
       position: i + 1,
       url: `https://www.clashmarket.online/account/${a.slug}`,
@@ -187,7 +217,7 @@ export default function ClashOfClans() {
             </div>
 
             <TouchMarquee speed={0.85}>
-              {featuredAccounts.map((account, i) => (
+              {sortedFeatured.map((account, i) => (
                 <div key={`coc-${account.id}-${i}`} className="w-[300px] shrink-0">
                   <AccountCard account={account} />
                 </div>
@@ -195,6 +225,37 @@ export default function ClashOfClans() {
             </TouchMarquee>
           </section>
         )}
+
+        {/* All Accounts Grid */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8 border-b border-border/60 pb-4">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
+              جميع قريات وحسابات كلاش أوف كلانس
+            </h2>
+            <span className="text-xs sm:text-sm md:text-base text-muted-foreground">
+              تسليم يدوي فوري وضمان شامل
+            </span>
+          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-96 bg-muted animate-pulse rounded-lg" />
+              ))}
+            </div>
+          ) : sortedAccounts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sortedAccounts.map((account) => (
+                <AccountCard key={account.id} account={account} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 px-6 bg-card/30 border border-border/60 rounded-2xl text-muted-foreground">
+              <p className="text-lg font-medium mb-2">لا توجد حسابات كلاش أوف كلانس معروضة حالياً.</p>
+              <p className="text-sm">يمكنك التواصل معنا عبر الواتساب للاستفسار عن توفر قريات جديدة مطابقة لمواصفاتك.</p>
+            </div>
+          )}
+        </section>
 
         {/* What determines account value */}
         <section className="mt-20 space-y-6">
