@@ -99,60 +99,6 @@ export default function ClashOfClans() {
       <main className="flex-1">
         <h1 className="sr-only">حسابات كلاش أوف كلانس للبيع</h1>
 
-        {/* Town Hall Banners with Generous Spacing and Uncropped Native Aspect Ratio */}
-        <section className="w-full py-8 md:py-14">
-          <div className="container mx-auto px-3 sm:px-4 max-w-5xl space-y-10 md:space-y-16">
-            <div className="rounded-2xl overflow-hidden border border-border/80 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all duration-300">
-              <Link href="/clash-of-clans/town-hall-18" className="block w-full group">
-                <img
-                  src="/banners/th18-banner.png"
-                  alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع"
-                  width={1024}
-                  height={528}
-                  loading="eager"
-                  className="w-full h-auto block aspect-[1024/528] object-contain group-hover:scale-[1.01] transition-transform duration-300"
-                />
-              </Link>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-border/80 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all duration-300">
-              <Link href="/clash-of-clans/town-hall-17" className="block w-full group">
-                <img
-                  src="/banners/th17-banner.png"
-                  alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع"
-                  width={1024}
-                  height={528}
-                  loading="eager"
-                  className="w-full h-auto block aspect-[1024/528] object-contain group-hover:scale-[1.01] transition-transform duration-300"
-                />
-              </Link>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-border/80 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all duration-300">
-              <Link href="/clash-of-clans/town-hall-16" className="block w-full group">
-                <img
-                  src="/banners/th16-banner.png"
-                  alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع"
-                  width={1024}
-                  height={528}
-                  loading="lazy"
-                  className="w-full h-auto block aspect-[1024/528] object-contain group-hover:scale-[1.01] transition-transform duration-300"
-                />
-              </Link>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-border/80 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all duration-300">
-              <Link href="/clash-of-clans/town-hall-15" className="block w-full group">
-                <img
-                  src="/banners/th15-banner.png"
-                  alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع"
-                  width={1024}
-                  height={528}
-                  loading="lazy"
-                  className="w-full h-auto block aspect-[1024/528] object-contain group-hover:scale-[1.01] transition-transform duration-300"
-                />
-              </Link>
-            </div>
-          </div>
-        </section>
-
         <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
 
         {/* Featured Section: Horizontal Marquee Single Row */}
