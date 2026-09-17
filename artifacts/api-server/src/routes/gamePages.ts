@@ -78,33 +78,7 @@ function accountCardHtml(a: {
     </a>`;
 }
 
-// Visual banners helper for Town Hall categories
-function townHallBannersHtml() {
-  return `
-    <div style="margin:24px 0 36px; display:flex; flex-direction:column; gap:20px;">
-      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
-        <a href="/clash-of-clans/town-hall-18" style="display:block;">
-          <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع - قريات تاون 18 ماكس" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
-        </a>
-      </div>
-      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
-        <a href="/clash-of-clans/town-hall-17" style="display:block;">
-          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع - قريات تاون 17 ماكس وشبه ماكس" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
-        </a>
-      </div>
-      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
-        <a href="/clash-of-clans/town-hall-16" style="display:block;">
-          <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع - قريات تاون 16 بدفاعات مدمجة" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
-        </a>
-      </div>
-      <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
-        <a href="/clash-of-clans/town-hall-15" style="display:block;">
-          <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع - قريات تاون 15 بأسعار اقتصادية" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
-        </a>
-      </div>
-    </div>
-  `;
-}
+
 
 function accountItemListJsonLd(name: string, accounts: Array<{ slug: string; title: string }>) {
   if (!accounts || accounts.length === 0) return null;
@@ -667,8 +641,6 @@ router.get("/clash-of-clans", async (req, res) => {
       ${breadcrumbHtml(breadcrumbItems)}
       
       <h1>حسابات كلاش أوف كلانس للبيع والشراء</h1>
-
-      ${townHallBannersHtml()}
 
       <!-- المقدمة الشاملة حول القسم والمخزون -->
       <section style="margin: 28px 0 36px; line-height: 1.9;">
