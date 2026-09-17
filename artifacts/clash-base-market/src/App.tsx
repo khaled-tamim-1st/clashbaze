@@ -19,6 +19,7 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/admin/Dashboard";
 import AdminAccounts from "@/pages/admin/AdminAccounts";
 import AdminBlog from "@/pages/admin/AdminBlog";
+import WhatsAppAnalytics from "@/pages/admin/WhatsAppAnalytics";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,7 @@ function Router() {
       <Route path="/login" component={Login} />
 
       <Route path="/admin" component={Dashboard} />
+      <Route path="/admin/whatsapp" component={WhatsAppAnalytics} />
       <Route path="/admin/accounts" component={AdminAccounts} />
       <Route path="/admin/blog" component={AdminBlog} />
 

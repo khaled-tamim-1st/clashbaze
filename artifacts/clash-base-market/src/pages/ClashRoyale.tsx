@@ -4,6 +4,7 @@ import { useListAccounts } from "@workspace/api-client-react";
 import { AccountCard } from "@/components/AccountCard";
 import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 const crFaqItems = [
   {
@@ -222,14 +223,14 @@ export default function ClashRoyale() {
             تصفح الحسابات المعروضة أعلاه، أو تواصل معنا مباشرة عبر الواتساب للاستفسار عن أي حساب أو طلب مواصفات كروت محددة.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER || ""}`}
+            <TrackedWhatsAppLink
+              cta="cr_hub_contact"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-base transition-all shadow-md hover:shadow-emerald-600/20"
             >
               تواصل معنا عبر الواتساب
-            </a>
+            </TrackedWhatsAppLink>
             <Link href="/clash-of-clans" className="px-8 py-4 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl text-base transition-all border border-primary/30">
               تصفح قريات كلاش أوف كلانس
             </Link>

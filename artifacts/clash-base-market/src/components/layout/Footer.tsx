@@ -1,9 +1,7 @@
 import { Link } from "wouter";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 export function Footer() {
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
-  const whatsappLink = `https://wa.me/${whatsappNumber}`;
-
   return (
     <footer className="border-t border-border bg-card">
       <div className="container px-4 py-8 md:px-8">
@@ -35,14 +33,14 @@ export function Footer() {
             <p className="text-sm text-muted-foreground mb-4">
               نحن هنا لمساعدتك في أي وقت. تواصل معنا عبر الواتساب.
             </p>
-            <a 
-              href={whatsappLink} 
+            <TrackedWhatsAppLink 
+              cta="footer_contact"
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
             >
               تواصل واتساب
-            </a>
+            </TrackedWhatsAppLink>
           </div>
         </div>
         <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">

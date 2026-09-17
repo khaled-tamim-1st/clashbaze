@@ -22,9 +22,13 @@ function formatPrice(value: string): string {
   return Number(value).toLocaleString("ar-SA");
 }
 
-function whatsappLink(title: string, whatsappMessage: string | null): string {
+function whatsappLink(title: string, whatsappMessage: string | null, accountId?: number, slug?: string): string {
   const message = `أريد شراء حساب ${whatsappMessage || title}`;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  const params = new URLSearchParams();
+  if (accountId) params.set("accountId", String(accountId));
+  if (slug) params.set("accountSlug", slug);
+  params.set("text", message);
+  return `/go/whatsapp/product_detail_ssr?${params.toString()}`;
 }
 
 function formatCloudinaryUrl(url: string | undefined | null): string {
@@ -195,7 +199,7 @@ router.get("/account/:slug", async (req, res) => {
       ${specsHtml ? `<div class="specs">${specsHtml}</div>` : ""}
       ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1; line-height: 1.9;">${escapeHtml(account.description)}</div>` : ""}
       
-      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)</a>
+      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage, account.id, account.slug))}" target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)</a>
       <div style="text-align: center; margin-top: 10px; font-size: 0.85rem;">
         <a href="/guarantee" style="color: #94a3b8; text-decoration: underline;">🛡️ مشمول بالضمان الذهبي وحماية المشتري (اضغط للتفاصيل)</a>
       </div>

@@ -63,6 +63,8 @@ router.get("/robots.txt", (req, res) => {
     "Disallow: /admin/accounts",
     "Disallow: /admin/blog",
     "Disallow: /login",
+    "Disallow: /go/",
+    "Disallow: /api/track/",
     "",
     "User-agent: Googlebot",
     "Allow: /",

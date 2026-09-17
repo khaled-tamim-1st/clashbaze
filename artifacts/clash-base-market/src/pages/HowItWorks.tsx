@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
 import { MessageCircle, ShieldCheck, CreditCard, KeyRound } from "lucide-react";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 export default function HowItWorks() {
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "966576742294";
@@ -101,15 +102,15 @@ export default function HowItWorks() {
               لأننا تجار متخصصون ونفحص كل حساب بدقة قبل عرضه، نضمن لك سلامة الحساب واستقراره التام وخلوه من أي مشاكل.
             </p>
             <div className="pt-2">
-              <a
-                href={`https://wa.me/${whatsappNumber}`}
+              <TrackedWhatsAppLink
+                cta="how_it_works_contact"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-colors shadow"
               >
                 <MessageCircle className="w-5 h-5" />
                 تواصل مع إدارة المتجر للاستفسار
-              </a>
+              </TrackedWhatsAppLink>
             </div>
           </div>
         </main>

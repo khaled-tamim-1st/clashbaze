@@ -5,15 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
 import { formatImageUrl } from "@/lib/utils";
-
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
 export function AccountCard({ account }: { account: Account }) {
   const { formatPrice } = useCurrency();
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
   const priceFormatted = formatPrice(account.price);
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (
     <Card className="overflow-hidden bg-card border-border hover:border-primary transition-colors duration-300 group">
@@ -147,7 +145,16 @@ export function AccountCard({ account }: { account: Account }) {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex gap-2">
         <Button asChild variant="default" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer">تواصل واتساب</a>
+          <TrackedWhatsAppLink
+            cta="product_card"
+            accountId={account.id}
+            accountSlug={account.slug}
+            text={message}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            تواصل واتساب
+          </TrackedWhatsAppLink>
         </Button>
         <Button asChild variant="outline" className="w-full">
           <Link href={`/account/${account.slug}`}>التفاصيل</Link>

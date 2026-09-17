@@ -1,5 +1,11 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { initWhatsAppTables } from "@workspace/db";
+
+// Safely ensure WhatsApp tables are initialized on startup
+initWhatsAppTables().catch((err) => {
+  logger.warn({ err }, "WhatsApp tracking tables check/initialization deferred");
+});
 
 const rawPort = process.env["PORT"];
 

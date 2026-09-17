@@ -6,7 +6,8 @@ import { AccountGallery } from "@/components/AccountGallery";
 import { AccountCard } from "@/components/AccountCard";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
-
+import { formatImageUrl } from "@/lib/utils";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
 export default function AccountDetail() {
@@ -41,10 +42,8 @@ export default function AccountDetail() {
     );
   }
 
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
   const priceFormatted = formatPrice(account.price);
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const isCoc = account.game === "clash-of-clans";
@@ -219,7 +218,16 @@ export default function AccountDetail() {
             </div>
 
             <Button asChild size="lg" className="w-full text-lg h-14 bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">شراء الآن عبر الواتساب</a>
+              <TrackedWhatsAppLink
+                cta="product_detail"
+                accountId={account.id}
+                accountSlug={account.slug}
+                text={message}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                شراء الآن عبر الواتساب
+              </TrackedWhatsAppLink>
             </Button>
 
             <div className="mt-3 text-center">

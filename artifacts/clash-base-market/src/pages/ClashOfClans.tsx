@@ -6,6 +6,7 @@ import { TouchMarquee } from "@/components/TouchMarquee";
 import { SEO } from "@/components/SEO";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 const cocFaqItems = [
   {
@@ -316,14 +317,14 @@ export default function ClashOfClans() {
             تصفح القريات المتاحة أعلاه، أو تواصل مباشرة مع فريق كلاش ماركت عبر الواتساب لطلب مواصفات معينة أو استفسار عن أي قرية.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER || ""}`}
+            <TrackedWhatsAppLink
+              cta="coc_hub_contact"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-base transition-all shadow-md hover:shadow-emerald-600/20"
             >
               تواصل معنا عبر الواتساب
-            </a>
+            </TrackedWhatsAppLink>
             <Link href="/clash-royale" className="px-8 py-4 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl text-base transition-all border border-primary/30">
               تصفح حسابات كلاش رويال
             </Link>

@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
 import { Shield, Users, CheckCircle2, MessageCircle } from "lucide-react";
+import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 const aboutFaqItems = [
   {
@@ -190,15 +191,15 @@ export default function About() {
                 <Link href="/clash-royale" className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm transition-colors">
                   تصفح حسابات كلاش رويال
                 </Link>
-                <a
-                  href={`https://wa.me/${whatsappNumber}`}
+                <TrackedWhatsAppLink
+                  cta="about_contact"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-colors shadow"
                 >
                   <MessageCircle className="w-4 h-4" />
                   تواصل عبر الواتساب
-                </a>
+                </TrackedWhatsAppLink>
               </div>
               <p className="text-muted-foreground text-xs mt-2">
                 يمكنك أيضاً زيارة <Link href="/blog" className="text-primary hover:underline">مدونة كلاش ماركت</Link> لقراءة أدلة الشراء والحماية.

@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const sidebarLinks = [
   { href: "/admin", label: "نظرة عامة", exact: true },
+  { href: "/admin/whatsapp", label: "تحليلات الواتساب" },
   { href: "/admin/accounts", label: "الحسابات" },
   { href: "/admin/blog", label: "المدونة" },
 ];

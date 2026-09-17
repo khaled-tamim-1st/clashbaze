@@ -8,6 +8,7 @@ import gamePagesRouter from "./routes/gamePages";
 import accountPagesRouter from "./routes/accountpages";
 import policyPagesRouter from "./routes/policyPages";
 
+import whatsappTrackingRouter from "./routes/whatsappTracking";
 import sitemapRouter from "./routes/sitemap";
 import { logger } from "./lib/logger";
 
@@ -48,10 +49,13 @@ app.use(express.urlencoded({ extended: true }));
 // 3. مسارات الـ API
 app.use("/api", router);
 
+// مسار التتبع المباشر لروابط الواتساب
+app.use(whatsappTrackingRouter);
+
 // 3.5. تسريع الاستجابة وتحسين الـ TTFB عبر Edge Caching لمحركات البحث والزوار
 app.use((req, res, next) => {
   if (req.method === "GET" || req.method === "HEAD") {
-    if (!req.path.startsWith("/api") && !req.path.startsWith("/admin")) {
+    if (!req.path.startsWith("/api") && !req.path.startsWith("/admin") && !req.path.startsWith("/go")) {
       res.set("Cache-Control", "public, max-age=120, s-maxage=3600, stale-while-revalidate=86400");
     }
   }

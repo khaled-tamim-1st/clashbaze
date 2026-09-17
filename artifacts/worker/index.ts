@@ -51,8 +51,8 @@ export default {
 
     const context = analyzeRequest(request);
 
-    // 1. /api/* → دايمًا للـ VPS (بغض النظر عن الموقع أو نوع الزائر)
-    if (new URL(request.url).pathname.startsWith("/api/")) {
+    // 1. /api/* و /go/* → دايمًا للـ VPS (بغض النظر عن الموقع أو نوع الزائر)
+    if (new URL(request.url).pathname.startsWith("/api/") || new URL(request.url).pathname.startsWith("/go/")) {
       return proxyTo(VPS_ORIGIN, request, context);
     }
 
