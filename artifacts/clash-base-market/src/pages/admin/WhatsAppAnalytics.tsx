@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -183,9 +184,23 @@ export default function WhatsAppAnalytics() {
     return params.toString();
   }, [range, customStartDate, customEndDate]);
 
+  const { user, loading: authLoading, isAdmin } = useAuth();
+
+  const getAuthHeaders = useCallback(async (): Promise<Record<string, string>> => {
+    if (!user) return {};
+    try {
+      const token = await user.getIdToken();
+      return token ? { Authorization: `Bearer ${token}` } : {};
+    } catch {
+      return {};
+    }
+  }, [user]);
+
   const loadData = useCallback(async () => {
+    if (authLoading || !user || !isAdmin) return;
     setLoading(true);
     try {
+      const authHeaders = await getAuthHeaders();
       const q = buildDateQueryString();
       const [
         overviewRes,
@@ -197,14 +212,14 @@ export default function WhatsAppAnalytics() {
         devicesRes,
         hourlyRes,
       ] = await Promise.all([
-        customFetch<OverviewData>(`/api/admin/whatsapp/overview?${q}`),
-        customFetch<{ points: TimeseriesPoint[] }>(`/api/admin/whatsapp/timeseries?${q}`),
-        customFetch<{ ctas: CtaStat[] }>(`/api/admin/whatsapp/ctas?${q}`),
-        customFetch<{ products: ProductStat[] }>(`/api/admin/whatsapp/products?${q}`),
-        customFetch<{ pages: PageStat[] }>(`/api/admin/whatsapp/pages?${q}`),
-        customFetch<{ sources: SourceStat[] }>(`/api/admin/whatsapp/sources?${q}`),
-        customFetch<DeviceStat>(`/api/admin/whatsapp/devices?${q}`),
-        customFetch<HourlyStat>(`/api/admin/whatsapp/hourly?${q}`),
+        customFetch<OverviewData>(`/api/admin/whatsapp/overview?${q}`, { headers: authHeaders }),
+        customFetch<{ points: TimeseriesPoint[] }>(`/api/admin/whatsapp/timeseries?${q}`, { headers: authHeaders }),
+        customFetch<{ ctas: CtaStat[] }>(`/api/admin/whatsapp/ctas?${q}`, { headers: authHeaders }),
+        customFetch<{ products: ProductStat[] }>(`/api/admin/whatsapp/products?${q}`, { headers: authHeaders }),
+        customFetch<{ pages: PageStat[] }>(`/api/admin/whatsapp/pages?${q}`, { headers: authHeaders }),
+        customFetch<{ sources: SourceStat[] }>(`/api/admin/whatsapp/sources?${q}`, { headers: authHeaders }),
+        customFetch<DeviceStat>(`/api/admin/whatsapp/devices?${q}`, { headers: authHeaders }),
+        customFetch<HourlyStat>(`/api/admin/whatsapp/hourly?${q}`, { headers: authHeaders }),
       ]);
 
       setOverview(overviewRes);
@@ -224,10 +239,12 @@ export default function WhatsAppAnalytics() {
     } finally {
       setLoading(false);
     }
-  }, [buildDateQueryString, toast]);
+  }, [authLoading, user, isAdmin, getAuthHeaders, buildDateQueryString, toast]);
 
   const loadEvents = useCallback(async () => {
+    if (authLoading || !user || !isAdmin) return;
     try {
+      const authHeaders = await getAuthHeaders();
       const params = new URLSearchParams();
       params.set("range", range);
       if (range === "custom") {
@@ -241,26 +258,34 @@ export default function WhatsAppAnalytics() {
       if (filterDevice !== "all") params.set("deviceType", filterDevice);
       if (filterTraffic !== "all") params.set("trafficType", filterTraffic);
 
-      const res = await customFetch<EventsResponse>(`/api/admin/whatsapp/events?${params.toString()}`);
+      const res = await customFetch<EventsResponse>(`/api/admin/whatsapp/events?${params.toString()}`, {
+        headers: authHeaders,
+      });
       setEventsData(res);
     } catch (err: any) {
       console.error("Failed to load events", err);
     }
-  }, [range, customStartDate, customEndDate, page, limit, search, filterCta, filterDevice, filterTraffic]);
+  }, [authLoading, user, isAdmin, getAuthHeaders, range, customStartDate, customEndDate, page, limit, search, filterCta, filterDevice, filterTraffic]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    if (!authLoading && user && isAdmin) {
+      loadData();
+    }
+  }, [authLoading, user, isAdmin, loadData]);
 
   useEffect(() => {
-    loadEvents();
-  }, [loadEvents]);
+    if (!authLoading && user && isAdmin) {
+      loadEvents();
+    }
+  }, [authLoading, user, isAdmin, loadEvents]);
 
   const handleExportCsv = async () => {
     setExporting(true);
     try {
+      const authHeaders = await getAuthHeaders();
       const q = buildDateQueryString();
       const blob = await customFetch<Blob>(`/api/admin/whatsapp/export?${q}`, {
+        headers: authHeaders,
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(blob);

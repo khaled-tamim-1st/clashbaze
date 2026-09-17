@@ -132,21 +132,23 @@ router.get("/admin/whatsapp/timeseries", requireAdmin, async (req: Request, res:
     const { start, end } = parseDateFilter(req.query);
     const range = (req.query["range"] as string) || "7d";
     const isHourly = range === "today" || range === "yesterday";
-
-    const dateTrunc = isHourly ? "hour" : "day";
+    const truncExpr = isHourly
+      ? sql`date_trunc('hour', ${whatsappClickEventsTable.createdAt})`
+      : sql`date_trunc('day', ${whatsappClickEventsTable.createdAt})`;
+    const formatExpr = isHourly ? sql`'HH24:00'` : sql`'YYYY-MM-DD'`;
 
     const rows = await db
       .select({
-        bucket: sql<string>`to_char(date_trunc(${dateTrunc}, ${whatsappClickEventsTable.createdAt}), 'YYYY-MM-DD"T"HH24:MI:SS')`,
-        displayLabel: sql<string>`to_char(date_trunc(${dateTrunc}, ${whatsappClickEventsTable.createdAt}), ${isHourly ? sql`'HH24:00'` : sql`'YYYY-MM-DD'`})`,
+        bucket: sql<string>`to_char(${truncExpr}, 'YYYY-MM-DD"T"HH24:MI:SS')`,
+        displayLabel: sql<string>`to_char(${truncExpr}, ${formatExpr})`,
         clicks: sql<number>`count(*)::int`,
         uniqueVisitors: sql<number>`count(distinct ${whatsappClickEventsTable.visitorId})::int`,
         uniqueSessions: sql<number>`count(distinct ${whatsappClickEventsTable.sessionId})::int`,
       })
       .from(whatsappClickEventsTable)
       .where(and(gte(whatsappClickEventsTable.createdAt, start), lte(whatsappClickEventsTable.createdAt, end)))
-      .groupBy(sql`date_trunc(${dateTrunc}, ${whatsappClickEventsTable.createdAt})`)
-      .orderBy(sql`date_trunc(${dateTrunc}, ${whatsappClickEventsTable.createdAt})`);
+      .groupBy(truncExpr)
+      .orderBy(truncExpr);
 
     res.json({ points: rows });
   } catch (err) {

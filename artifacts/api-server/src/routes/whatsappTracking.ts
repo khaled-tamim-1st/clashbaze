@@ -42,12 +42,33 @@ async function handleTracking(req: Request, res: Response): Promise<void> {
       return;
     }
 
-    // Direct redirect to WhatsApp
-    res.redirect(302, redirectUrl);
+    // Direct redirect to WhatsApp with HTML meta-refresh fallback for mobile WebViews
+    const safeUrl = redirectUrl.replace(/"/g, "&quot;");
+    res.status(302);
+    res.set("Location", redirectUrl);
+    res.send(`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=${safeUrl}">
+  <title>جاري التحويل إلى واتساب...</title>
+  <script>window.location.replace(${JSON.stringify(redirectUrl)});</script>
+</head>
+<body style="font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#0f172a;color:#fff;text-align:center;padding:20px;">
+  <div>
+    <div style="font-size:18px;margin-bottom:16px;">جاري تحويلك إلى الواتساب...</div>
+    <a href="${safeUrl}" style="display:inline-block;padding:12px 24px;background:#25d366;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;">اضغط هنا إذا لم يتم التحويل تلقائياً</a>
+  </div>
+</body>
+</html>`);
   } catch (err) {
     logger.error({ err }, "Unhandled error in handleTracking; redirecting to default WhatsApp");
     const fallbackNumber = (process.env["WHATSAPP_NUMBER"] || "966576742294").replace(/[^\d]/g, "");
-    res.redirect(302, `https://wa.me/${fallbackNumber}`);
+    const fallbackUrl = `https://wa.me/${fallbackNumber}`;
+    res.status(302);
+    res.set("Location", fallbackUrl);
+    res.send(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=${fallbackUrl}"></head><body><a href="${fallbackUrl}">اضغط هنا</a></body></html>`);
   }
 }
 

@@ -59,18 +59,18 @@ export function TrackedWhatsAppLink({
   }, [cta, accountId, productId, accountSlug, text, number, campaign, sourcePage, sourcePath, referrer]);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Generate the freshest URL right at click time to capture exact referrer and active page
-    const freshUrl = buildFreshUrl();
-    setHref(freshUrl);
     if (rest.onClick) {
       rest.onClick(e);
     }
   };
 
+  const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const effectiveTarget = isMobile ? undefined : target;
+  const effectiveRel = isMobile ? undefined : rel;
+
   return (
-    <a href={href} target={target} rel={rel} className={className} {...rest} onClick={handleClick}>
+    <a href={href} target={effectiveTarget} rel={effectiveRel} className={className} {...rest} onClick={handleClick}>
       {children}
     </a>
   );
-
 }
