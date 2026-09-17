@@ -111,13 +111,13 @@ export const allNewAccounts = [
     title: "قرية كلاش أوف كلانس تاون هول 18 ليفل 257 — TH18",
     slug: "coc-th18-l257",
     game: "clash-of-clans",
-    price: "450.00",
-    oldPrice: "540.00",
+    price: "550.00",
+    oldPrice: "580.00",
     images: [
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789645541/IMG-20260917-WA0032_xsmeck.jpg",
       "https://res.cloudinary.com/doorrysnw/image/upload/v1789645540/IMG-20260917-WA0029_dv1y4m.jpg",
       "https://res.cloudinary.com/doorrysnw/image/upload/v1789645541/IMG-20260917-WA0030_n3vnp9.jpg",
       "https://res.cloudinary.com/doorrysnw/image/upload/v1789645541/IMG-20260917-WA0031_lzibgy.jpg",
-      "https://res.cloudinary.com/doorrysnw/image/upload/v1789645541/IMG-20260917-WA0032_xsmeck.jpg",
       "https://res.cloudinary.com/doorrysnw/image/upload/v1789645542/IMG-20260917-WA0033_zy9lrl.jpg",
       "https://res.cloudinary.com/doorrysnw/image/upload/v1789645540/IMG-20260917-WA0034_rsae3i.jpg",
       "https://res.cloudinary.com/doorrysnw/image/upload/v1789645540/IMG-20260917-WA0035_fubaof.jpg",
@@ -139,7 +139,7 @@ export const allNewAccounts = [
     evolutions: null,
     emotes: null,
     maxCards: null,
-    whatsappMessage: "قرية كلاش تاون 18 ليفل 257 سعر 450",
+    whatsappMessage: "قرية كلاش تاون 18 ليفل 257 سعر 550",
     featured: false
   },
   {
