@@ -5,6 +5,18 @@ import { escapeHtml, pageShell, breadcrumbHtml, breadcrumbJsonLd, SITE_NAME, SIT
 
 const router = Router();
 
+function formatCloudinaryUrl(url: string | undefined | null): string {
+  if (!url) return "";
+  if (url.includes("res.cloudinary.com") && url.includes("/upload/")) {
+    let formatted = url.replace(/\.(heic|heif)$/i, ".jpg");
+    if (!formatted.includes("/f_auto") && !formatted.includes("/q_auto")) {
+      formatted = formatted.replace("/upload/", "/upload/f_auto,q_auto/");
+    }
+    return formatted;
+  }
+  return url;
+}
+
 function accountCardHtml(a: {
   slug: string;
   title: string;
@@ -16,25 +28,52 @@ function accountCardHtml(a: {
   arena?: string | null;
   game?: string | null;
   status?: string | null;
+  league?: string | null;
+  heroes?: string | null;
+  gems?: number | null;
+  description?: string | null;
 }) {
-  const img = a.images && a.images.length > 0 ? a.images[0] : "";
+  const rawImg = a.images && a.images.length > 0 ? a.images[0] : "";
+  const img = formatCloudinaryUrl(rawImg);
   const thText = a.townHall ? `تاون هول ${a.townHall}` : a.arena ? `${a.arena}` : "";
-  const statusText = a.status === "available" ? "متاح للشراء" : a.status === "reserved" ? "محجوز" : "مباع";
+  const statusText = a.status === "available" ? "متاح للشراء" : a.status === "reserved" ? "محجوز" : "تم البيع";
+
+  // Detect Max / Semi-Max status from title and description
+  const textToScan = `${a.title || ""} ${a.description || ""}`.toLowerCase();
+  let maxTag = "";
+  if (textToScan.includes("شبه ماكس") || textToScan.includes("semi")) {
+    maxTag = "شبه ماكس";
+  } else if (textToScan.includes("ماكس") || textToScan.includes("max")) {
+    maxTag = "ماكس";
+  }
+
+  // Level / League badge formatting
+  let levelText = "";
+  if (a.league) {
+    const rawLeague = String(a.league).trim();
+    levelText = rawLeague.includes("مستوى") ? rawLeague : `مستوى ${rawLeague}`;
+  }
+
   const altText = a.townHall
-    ? `قرية كلاش أوف كلانس تاون هول ${a.townHall} - ${escapeHtml(a.title)}`
+    ? `قرية كلاش أوف كلانس تاون هول ${a.townHall}${maxTag ? ` ${maxTag}` : ""} - ${escapeHtml(a.title)}`
     : `حساب ${escapeHtml(a.title)}`;
 
   return `
     <a class="card" href="/account/${escapeHtml(a.slug)}" title="${escapeHtml(a.title)}">
-      ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" loading="lazy" />` : ""}
+      ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" width="300" height="180" loading="lazy" style="width:100%; height:180px; object-fit:cover; display:block; background:#0f172a;" />` : ""}
       <div class="card-body">
         <div style="display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
-          ${a.featured ? `<span class="featured-badge" style="margin:0;">⭐ حساب مميز</span>` : ""}
+          ${a.featured ? `<span class="featured-badge" style="margin:0;">⭐ مميز</span>` : ""}
           ${thText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#1e3a8a; color:#bfdbfe; border:1px solid #2563eb;">${thText}</span>` : ""}
+          ${maxTag ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#78350f; color:#fde68a; border:1px solid #d97706;">${maxTag}</span>` : ""}
+          ${levelText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#334155; color:#f1f5f9; border:1px solid #475569;">${escapeHtml(levelText)}</span>` : ""}
           <span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#065f46; color:#a7f3d0; border:1px solid #059669;">${statusText}</span>
         </div>
         <div class="card-title">${escapeHtml(a.title)}</div>
         <div class="card-price">${Number(a.price).toLocaleString("ar-SA")} ر.س</div>
+        <div style="font-size:0.85rem; color:#f59e0b; margin-top:10px; font-weight:700; display:flex; align-items:center; gap:4px;">
+          <span>عرض تفاصيل القرية</span> <span>←</span>
+        </div>
       </div>
     </a>`;
 }
@@ -50,7 +89,7 @@ function townHallBannersHtml() {
       </div>
       <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
         <a href="/clash-of-clans/town-hall-17" style="display:block;">
-          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع - قريات تاون 17 ماكس وشبه ماكس" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
+          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع - قريات تاون 17 ماكس وشبه ماكس" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
         </a>
       </div>
       <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
@@ -77,6 +116,7 @@ function accountItemListJsonLd(name: string, accounts: Array<{ slug: string; tit
       "@type": "ListItem",
       position: i + 1,
       url: `${SITE_URL}/account/${a.slug}`,
+      item: `${SITE_URL}/account/${a.slug}`,
       name: a.title,
     })),
   };
@@ -513,14 +553,21 @@ router.get("/clash-of-clans", async (req, res) => {
       ? `<div class="grid-list">${allAccounts.map(accountCardHtml).join("")}</div>`
       : `<p style="padding:24px; background:#1e293b; border-radius:12px; border:1px solid #334155; text-align:center;">لا توجد حسابات كلاش أوف كلانس متاحة حالياً. يمكنك التواصل معنا عبر الواتساب للاستفسار عن القريات القادمة قريباً.</p>`;
 
+    const numericPrices = allAccounts.map(a => Number(a.price)).filter(p => !isNaN(p) && p > 0);
+    const minPrice = numericPrices.length ? Math.min(...numericPrices) : null;
+    const maxPrice = numericPrices.length ? Math.max(...numericPrices) : null;
+    const priceSummaryText = minPrice !== null && maxPrice !== null
+      ? (minPrice === maxPrice ? `بسعر ${minPrice.toLocaleString("ar-SA")} ريال سعودي` : `بأسعار تبدأ من ${minPrice.toLocaleString("ar-SA")} وتصل إلى ${maxPrice.toLocaleString("ar-SA")} ريال سعودي`)
+      : "بأسعار منافسة مدروسة ومحدثة";
+
     const title = "حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت";
     const description = "تصفح أكبر متجر لبيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج. قريات تاون هول 14 إلى 18 ماكس وشبه ماكس بأسعار منافسة وتسليم يدوي فوري وتأمين Supercell ID وضمان موثق.";
 
     const canonicalPath = "https://api.clashmarket.online/clash-of-clans";
 
     const breadcrumbItems = [
-      { name: "كلاش ماركت", path: "https://www.clashmarket.online/" },
-      { name: "حسابات كلاش أوف كلانس", path: "https://api.clashmarket.online/clash-of-clans" },
+      { name: "الرئيسية", path: "/" },
+      { name: "حسابات كلاش أوف كلانس", path: canonicalPath },
     ];
 
     const faqItems = [
@@ -619,7 +666,7 @@ router.get("/clash-of-clans", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       
-      <h1>حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت</h1>
+      <h1>حسابات كلاش أوف كلانس للبيع والشراء</h1>
 
       ${townHallBannersHtml()}
 
@@ -733,7 +780,7 @@ router.get("/clash-of-clans", async (req, res) => {
           <li><strong>حدد دورك في الكلان والحروب:</strong> إذا كنت تنوي خوض حروب CWL في تصنيفات الماستر والأبطال، فالأولوية تكون لحسابات TH17 أو TH18 لضمان صد الهجمات. أما للمشاركة العادية، فتاون 16 أو 15 يكفي وزيادة.</li>
           <li><strong>قيّم جاهزية الأبطال قبل الجدران:</strong> ترقية الجدران تتطلب موارد فقط، بينما ترقية الأبطال تعطل قدرتك على الهجوم لشهور. احرص دائماً على اختيار قرية بأبطال مطورين حتى لو كانت بعض الجدران لم تكتمل بعد.</li>
           <li><strong>اختر بين الماكس التام وشبه الماكس:</strong> الحساب شبه الماكس يمنحك 90-95% من قوة القرية بتكلفة توفر ما بين 30% إلى 40% من السعر، وهو خيار ذكي لمن يرغب بإكمال ما تبقى بنفسه.</li>
-          <li><strong>احسب القيمة مقابل الوقت:</strong> شراء قرية متقدمة بسعر يتراوح بين 170 إلى 720 ريال سعودي يوفر عليك ما يعادل 3 إلى 5 سنوات من ساعات البناء والتجميع اليومي المتواصل.</li>
+          <li><strong>احسب القيمة مقابل الوقت:</strong> شراء قرية متقدمة (${priceSummaryText}) يوفر عليك ما يعادل سنوات من أوقات البناء والتجميع اليومي المتواصل ومئات آلاف الموارد.</li>
           <li><strong>تحقق من ضمان المتجر ونظافة البريد:</strong> الشراء من جهة موثوقة تطبق نقل ملكية Supercell ID وتفعيل حماية الحساب (Account Protection) يحميك من أي مخاطر استرجاع أو نزاع.</li>
         </ol>
       </section>
@@ -793,8 +840,8 @@ router.get("/clash-of-clans", async (req, res) => {
         </p>
 
         <ul style="line-height:2; color:#cbd5e1; margin:16px 0;">
-          <li><strong>مستوى تاون هول والتقدم الزمني:</strong> الحسابات من مستوى تاون هول 18 تتطلب أعلى قدر من الاستثمار الزمني، وتتراوح أسعارها المعروضة حالياً بين 480 و720 ريال سعودي وفق درجة اكتمال الأبطال والمعدات.</li>
-          <li><strong>مستويات التاون هول الأسبق:</strong> قريات تاون هول 16 تعرض بأسعار اقتصادية تبدأ من نحو 170 ريال سعودي، مما يتيح دخولاً سريعاً للمستويات التنافسية بأقل تكلفة ممكنة.</li>
+          <li><strong>مستوى تاون هول والتقدم الزمني:</strong> الحسابات ذات مستويات التاون هول المتقدمة تتطلب أعلى قدر من الاستثمار الزمني، وتتحدد أسعارها المعروضة في المتجر (${priceSummaryText}) وفق درجة اكتمال الأبطال والدفاعات والعتاد الملحمي.</li>
+          <li><strong>مستويات التاون هول الأسبق:</strong> قريات التاون هول الأسبق كتاون 16 و15 تعرض بأسعار اقتصادية تنافسية تتيح دخولاً سريعاً للساحة التنافسية بأقل تكلفة ممكنة.</li>
           <li><strong>العتاد الملحمي وتطويرات الخامات:</strong> المعدات الملحمية مثل Gauntlet و Frozen Arrow تحتاج استثماراً مكثفاً في حروب Clan Wars لتجميع خامات Starry Ores، مما ينعكس مباشرة على قيمة القرية.</li>
           <li><strong>الرصيد المالي المتاح والملحقات:</strong> عدد الجواهر غير المستهلكة، ومستوى القرية الليلية (Builder Base 2.0)، ومظهر القرية وعاصمتها يمثل قيمة مضافة حقيقية للمشتري.</li>
         </ul>
@@ -804,9 +851,9 @@ router.get("/clash-of-clans", async (req, res) => {
         </p>
       </section>
 
-      <!-- خطوات الفحص والتسليم والأمان في كلاش ماركت -->
+      <!-- سياسات المتجر والشفافية وخطوات التسليم الآمن -->
       <section style="margin: 44px 0; line-height: 1.9;">
-        <h2>خطوات الفحص والتسليم والأمان في كلاش ماركت</h2>
+        <h2>سياسات المتجر والشفافية وخطوات التسليم الآمن</h2>
         <p style="color: #94a3b8;">
           نعتمد في كلاش ماركت آلية التسليم اليدوي المباشر خطوة بخطوة مع المشتري عبر محادثة واتساب مخصصة لضمان أقصى درجات الطمأنينة والأمان:
         </p>
