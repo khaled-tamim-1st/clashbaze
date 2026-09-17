@@ -45,7 +45,6 @@ const crFaqJsonLd = {
 
 export default function ClashRoyale() {
   const { data: accounts, isLoading } = useListAccounts({ game: "clash-royale" });
-  const { data: featuredAccounts, isLoading: loadingFeatured } = useListAccounts({ game: "clash-royale", featured: "true" });
 
   const sortedAccounts = useMemo(() => {
     if (!accounts) return [];
@@ -61,21 +60,6 @@ export default function ClashRoyale() {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   }, [accounts]);
-
-  const sortedFeatured = useMemo(() => {
-    if (!featuredAccounts) return [];
-    const statusWeight: Record<string, number> = {
-      available: 1,
-      reserved: 2,
-      sold: 3,
-    };
-    return [...featuredAccounts].sort((a, b) => {
-      const wA = statusWeight[a.status] || 99;
-      const wB = statusWeight[b.status] || 99;
-      if (wA !== wB) return wA - wB;
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
-  }, [featuredAccounts]);
 
   const itemListJsonLd = sortedAccounts && sortedAccounts.length > 0 ? {
     "@context": "https://schema.org",
@@ -121,23 +105,6 @@ export default function ClashRoyale() {
           </p>
         </div>
 
-        {/* Featured Section */}
-        {featuredAccounts && featuredAccounts.length > 0 && (
-          <section className="mb-12 p-6 rounded-2xl bg-card/50 border border-border/80">
-            <div className="flex items-center justify-between mb-6 pb-2 border-b border-border/60">
-              <h2 className="text-xl md:text-2xl font-bold text-foreground flex items-center gap-2">
-                <span>⭐ حسابات كلاش رويال المميزة</span>
-              </h2>
-              <span className="text-xs md:text-sm text-red-500 font-semibold">كروت وإيفو ماكس</span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sortedFeatured.map(account => (
-                <AccountCard key={account.id} account={account} />
-              ))}
-            </div>
-          </section>
-        )}
-
         {/* Accounts Grid */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8 border-b border-border/60 pb-4">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">حسابات كلاش رويال</h2>
@@ -145,11 +112,11 @@ export default function ClashRoyale() {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-96 bg-muted animate-pulse rounded-lg"></div>)}
           </div>
         ) : sortedAccounts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {sortedAccounts.map(account => (
               <AccountCard key={account.id} account={account} />
             ))}
@@ -262,9 +229,6 @@ export default function ClashRoyale() {
             >
               تواصل معنا عبر الواتساب
             </TrackedWhatsAppLink>
-            <Link href="/clash-of-clans" className="px-8 py-4 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl text-base transition-all border border-primary/30">
-              تصفح قريات كلاش أوف كلانس
-            </Link>
           </div>
         </section>
       </main>

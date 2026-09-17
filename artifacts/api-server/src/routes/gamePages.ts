@@ -42,6 +42,7 @@ function accountCardHtml(a: {
 }) {
   const rawImg = a.images && a.images.length > 0 ? a.images[0] : "";
   const img = formatCloudinaryUrl(rawImg);
+  const isRoyale = a.game === "clash-royale";
   const thText = a.townHall ? `تاون هول ${a.townHall}` : a.arena ? `${a.arena}` : "";
   const isSold = a.status === "sold";
   const statusText = a.status === "available" ? "متاح للشراء" : a.status === "reserved" ? "محجوز" : "تم البيع";
@@ -73,9 +74,10 @@ function accountCardHtml(a: {
 
   return `
     <a class="card" href="/account/${escapeHtml(a.slug)}" title="${escapeHtml(a.title)}" style="${isSold ? "opacity:0.88;" : ""}">
-      <div style="position:relative; width:100%; height:180px; overflow:hidden; background:#0f172a;">
-        ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" width="300" height="180" loading="lazy" style="width:100%; height:180px; object-fit:cover; display:block;" />` : ""}
-        ${isSold ? `<div style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center;"><span style="background:#dc2626; color:#ffffff; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transform:rotate(-4deg); border:1px solid #ef4444;">تم البيع</span></div>` : ""}
+      <div class="card-img-wrap ${isRoyale ? "royale" : ""}" style="position:relative; width:100%; ${isRoyale ? "aspect-ratio:3/4; height:auto; background:#020617;" : "height:180px; aspect-ratio:16/9; background:#0f172a;"} overflow:hidden;">
+        ${img && isRoyale ? `<img src="${escapeHtml(img)}" alt="" class="card-img-bg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(10px); transform:scale(1.15); opacity:0.35; pointer-events:none;" />` : ""}
+        ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" class="card-img-main" ${!isRoyale ? 'width="300" height="180"' : ""} loading="lazy" style="position:relative; width:100%; height:100%; ${isRoyale ? "object-fit:contain;" : "height:180px; object-fit:cover;"} display:block;" />` : ""}
+        ${isSold ? `<div style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:2;"><span style="background:#dc2626; color:#ffffff; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transform:rotate(-4deg); border:1px solid #ef4444;">تم البيع</span></div>` : ""}
       </div>
       <div class="card-body">
         <div style="display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
@@ -88,7 +90,7 @@ function accountCardHtml(a: {
         <div class="card-title">${escapeHtml(a.title)}</div>
         <div class="card-price">${Number(a.price).toLocaleString("ar-SA")} ر.س</div>
         <div style="font-size:0.85rem; color:#f59e0b; margin-top:10px; font-weight:700; display:flex; align-items:center; gap:4px;">
-          <span>عرض تفاصيل القرية</span> <span>←</span>
+          <span>${isRoyale ? "عرض تفاصيل الحساب" : "عرض تفاصيل القرية"}</span> <span>←</span>
         </div>
       </div>
     </a>`;
@@ -924,33 +926,11 @@ router.get("/clash-of-clans", async (req, res) => {
 // -------------------------------------------------------------
 router.get("/clash-royale", async (req, res) => {
   try {
-    const [featuredAccounts, allAccounts] = await Promise.all([
-      db
-        .select()
-        .from(accountsTable)
-        .where(and(
-          eq(accountsTable.game, "clash-royale"),
-          eq(accountsTable.featured, true)
-        ))
-        .orderBy(statusPriorityOrder, desc(accountsTable.id)),
-      db
-        .select()
-        .from(accountsTable)
-        .where(eq(accountsTable.game, "clash-royale"))
-        .orderBy(statusPriorityOrder, desc(accountsTable.id)),
-    ]);
-
-    const featuredHtml = featuredAccounts.length
-      ? `
-        <div style="margin: 28px 0 40px; padding: 24px; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 16px;">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
-            <h2 style="margin:0; font-size:1.4rem; color:#f8fafc;">⭐ حسابات كلاش رويال المميزة</h2>
-            <span style="color:#ef4444; font-size:0.9rem; font-weight:600;">كروت وإيفو ماكس ومضمونة</span>
-          </div>
-          <div class="grid-list" style="margin:0;">${featuredAccounts.map(accountCardHtml).join("")}</div>
-        </div>
-      `
-      : "";
+    const allAccounts = await db
+      .select()
+      .from(accountsTable)
+      .where(eq(accountsTable.game, "clash-royale"))
+      .orderBy(statusPriorityOrder, desc(accountsTable.id));
 
     const accountsHtml = allAccounts.length
       ? `<div class="grid-list">${allAccounts.map(accountCardHtml).join("")}</div>`
@@ -989,8 +969,6 @@ router.get("/clash-royale", async (req, res) => {
       <h1>حسابات كلاش رويال للبيع</h1>
       <p>يوفر كلاش ماركت حسابات كلاش رويال جاهزة للمنافسة في السلم التنافسي وRanked Mode. كلاش رويال لعبة مختلفة تماماً عن كلاش أوف كلانس — التقدم فيها يعتمد على مستوى البطاقات والتطورات والأبطال وليس على مباني القرية.</p>
 
-      ${featuredHtml}
-
       <h2>حسابات كلاش رويال المتاحة الآن</h2>
       ${accountsHtml}
 
@@ -1017,10 +995,7 @@ router.get("/clash-royale", async (req, res) => {
       <h2>أسئلة شائعة حول شراء حسابات كلاش رويال</h2>
       ${crFaqHtml}
 
-      <div style="text-align:center; margin-top:40px;">
-        <a class="cta" href="/clash-of-clans" style="margin-left:12px;">تصفح قريات كلاش أوف كلانس</a>
-      </div>
-      <p><a class="back-link" href="/">← العودة للصفحة الرئيسية</a></p>
+      <p style="margin-top:32px;"><a class="back-link" href="/">← العودة للصفحة الرئيسية</a></p>
     `;
 
     const html = pageShell({

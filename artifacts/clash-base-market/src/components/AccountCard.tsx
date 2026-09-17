@@ -12,17 +12,28 @@ export function AccountCard({ account }: { account: Account }) {
   const { formatPrice } = useCurrency();
   const priceFormatted = formatPrice(account.price);
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
+  const isRoyale = account.game === "clash-royale";
 
   return (
     <Card className={`overflow-hidden bg-card border-border hover:border-primary transition-all duration-300 group ${account.status === "sold" ? "opacity-90 hover:opacity-100" : ""}`}>
-      <div className="relative aspect-video overflow-hidden">
+      <div className={`relative overflow-hidden ${isRoyale ? "aspect-[3/4] bg-slate-950" : "aspect-video bg-muted"}`}>
         {account.images && account.images.length > 0 ? (
-          <img 
-            loading="lazy"
-            src={formatImageUrl(account.images[0])} 
-            alt={account.title} 
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          <>
+            {isRoyale && (
+              <img
+                aria-hidden="true"
+                src={formatImageUrl(account.images[0])}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-30 pointer-events-none"
+              />
+            )}
+            <img 
+              loading="lazy"
+              src={formatImageUrl(account.images[0])} 
+              alt={account.title} 
+              className={`relative w-full h-full ${isRoyale ? "object-contain" : "object-cover"} group-hover:scale-105 transition-transform duration-500`}
+            />
+          </>
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">لا توجد صورة</div>
         )}

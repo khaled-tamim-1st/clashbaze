@@ -30,11 +30,13 @@ function accountCardHtml(a: {
   price: string | number;
   images: string[] | null;
   status?: string | null;
+  game?: string | null;
 }) {
   const rawImg = a.images && a.images.length > 0 ? a.images[0] : "";
   const img = formatCloudinaryUrl(rawImg);
   const isSold = a.status === "sold";
   const isReserved = a.status === "reserved";
+  const isRoyale = a.game === "clash-royale";
   const badgeHtml = isSold
     ? `<span style="position:absolute; top:8px; right:8px; background:#dc2626; color:#fff; font-size:0.75rem; font-weight:800; padding:2px 8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.4); z-index:2;">تم البيع</span>`
     : isReserved
@@ -43,9 +45,10 @@ function accountCardHtml(a: {
   return `
     <a class="card" href="/account/${escapeHtml(a.slug)}" style="${isSold ? "opacity:0.88;" : ""} position:relative;">
       ${badgeHtml}
-      <div style="position:relative; width:100%; height:180px; overflow:hidden; background:#0f172a;">
-        ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(a.title)}" loading="lazy" style="width:100%; height:180px; object-fit:cover; display:block;" />` : ""}
-        ${isSold ? `<div style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center;"><span style="background:#dc2626; color:#ffffff; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transform:rotate(-4deg); border:1px solid #ef4444;">تم البيع</span></div>` : ""}
+      <div class="card-img-wrap ${isRoyale ? "royale" : ""}" style="position:relative; width:100%; ${isRoyale ? "aspect-ratio:3/4; height:auto; background:#020617;" : "height:180px; aspect-ratio:16/9; background:#0f172a;"} overflow:hidden;">
+        ${img && isRoyale ? `<img src="${escapeHtml(img)}" alt="" class="card-img-bg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(10px); transform:scale(1.15); opacity:0.35; pointer-events:none;" />` : ""}
+        ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(a.title)}" class="card-img-main" loading="lazy" style="position:relative; width:100%; height:100%; ${isRoyale ? "object-fit:contain;" : "height:180px; object-fit:cover;"} display:block;" />` : ""}
+        ${isSold ? `<div style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:2;"><span style="background:#dc2626; color:#ffffff; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transform:rotate(-4deg); border:1px solid #ef4444;">تم البيع</span></div>` : ""}
       </div>
       <div class="card-body">
         <div class="card-title">${escapeHtml(a.title)}</div>

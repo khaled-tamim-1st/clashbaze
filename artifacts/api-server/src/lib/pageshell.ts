@@ -283,12 +283,41 @@ export function pageShell(opts: {
       transform: translateY(-2px);
       text-decoration: none;
     }
-    .card img {
+    .card .card-img-wrap {
+      position: relative;
       width: 100%;
       height: 180px;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #0f172a;
+    }
+    .card .card-img-wrap.royale {
+      aspect-ratio: 3 / 4;
+      height: auto;
+      background: #020617;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
       background: #0f172a;
+    }
+    .card .card-img-wrap.royale .card-img-main {
+      object-fit: contain;
+      background: transparent;
+    }
+    .card .card-img-wrap.royale .card-img-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(12px);
+      transform: scale(1.15);
+      opacity: 0.35;
+      pointer-events: none;
+      background: transparent;
     }
     .card-body {
       padding: 16px;
