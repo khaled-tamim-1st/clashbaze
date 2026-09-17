@@ -6,6 +6,7 @@
   "scripts": {
     "hello": "tsx ./src/hello.ts",
     "update-descriptions": "tsx ./src/update-descriptions.ts",
+    "seed-new-accounts": "tsx ./src/seed-new-accounts.ts",
     "seo-audit": "node ./seo-audit.mjs",
     "test-whatsapp": "tsx ./test-whatsapp-tracking.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
