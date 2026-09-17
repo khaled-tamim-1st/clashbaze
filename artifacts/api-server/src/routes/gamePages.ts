@@ -211,7 +211,7 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
       : `<p style="padding:24px; background:#1e293b; border-radius:12px; border:1px solid #334155; text-align:center;">لا توجد حسابات تاون هول 17 معروضة حالياً. يمكنك التواصل معنا عبر الواتساب للاستفسار عن القريات القادمة قريباً.</p>`;
 
-    const title = "حسابات كلاش أوف كلانس تاون هول 17 للبيع | قريات ماكس وشبه ماكس — كلاش ماركت";
+    const title = "حسابات كلاش أوف كلانس تاون هول 17 للبيع | قريات ماكس — كلاش ماركت";
     const description = "اشترِ حسابات وقريات كلاش أوف كلانس تاون هول 17 (TH17) ماكس وشبه ماكس بأسعار منافسة وتسليم فوري مع نقل ملكية Supercell ID وضمان متجر كلاش ماركت.";
 
     const breadcrumbItems = [
@@ -307,7 +307,7 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
       : `<p style="padding:24px; background:#1e293b; border-radius:12px; border:1px solid #334155; text-align:center;">لا توجد حسابات تاون هول 16 معروضة حالياً. يمكنك مراسلتنا عبر الواتساب للاستفسار عن القريات القادمة قريباً.</p>`;
 
-    const title = "حسابات كلاش أوف كلانس تاون هول 16 للبيع | قريات مميزة بأسعار منافسة — كلاش ماركت";
+    const title = "حسابات كلاش أوف كلانس تاون هول 16 للبيع | قريات مميزة — كلاش ماركت";
     const description = "تسوق حسابات كلاش أوف كلانس تاون هول 16 (TH16) بتصاميم دفاعية قوية وأبطال متقدمين ومعدات ملحمية بتسليم فوري وضمان كلاش ماركت المعتمد.";
 
     const breadcrumbItems = [
@@ -403,7 +403,7 @@ router.get("/clash-of-clans/town-hall-15", async (req, res) => {
       ? `<div class="grid-list">${accounts.map(accountCardHtml).join("")}</div>`
       : `<p style="padding:24px; background:#1e293b; border-radius:12px; border:1px solid #334155; text-align:center;">لا توجد حسابات تاون هول 15 معروضة حالياً. يمكنك مراسلتنا عبر الواتساب للاستفسار عن القريات القادمة قريباً.</p>`;
 
-    const title = "حسابات كلاش أوف كلانس تاون هول 15 للبيع | قريات مميزة بأسعار اقتصادية — كلاش ماركت";
+    const title = "حسابات كلاش أوف كلانس تاون هول 15 للبيع | أسعار مخفضة — كلاش ماركت";
     const description = "تصفح واشترِ حسابات وقريات كلاش أوف كلانس تاون هول 15 (TH15) ماكس وشبه ماكس بأسعار اقتصادية ممتازة وتسليم فوري مع ضمان كلاش ماركت.";
 
     const breadcrumbItems = [
@@ -534,7 +534,7 @@ router.get("/clash-of-clans", async (req, res) => {
       ? (minPrice === maxPrice ? `بسعر ${minPrice.toLocaleString("ar-SA")} ريال سعودي` : `بأسعار تبدأ من ${minPrice.toLocaleString("ar-SA")} وتصل إلى ${maxPrice.toLocaleString("ar-SA")} ريال سعودي`)
       : "بأسعار منافسة مدروسة ومحدثة";
 
-    const title = "حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت";
+    const title = "متجر كلاش أوف كلانس | بيع وشراء حسابات كلاش — كلاش ماركت";
     const description = "تصفح أكبر متجر لبيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج. قريات تاون هول 14 إلى 18 ماكس وشبه ماكس بأسعار منافسة وتسليم يدوي فوري وتأمين Supercell ID وضمان موثق.";
 
     const canonicalPath = "https://api.clashmarket.online/clash-of-clans";
