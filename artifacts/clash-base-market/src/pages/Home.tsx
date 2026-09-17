@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { useGetFeaturedAccounts, useListAccounts, useListBlogPosts } from "@workspace/api-client-react";
+import { useGetFeaturedAccounts, useListBlogPosts } from "@workspace/api-client-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Testimonials } from "@/components/Testimonials";
 import { SEO } from "../components/SEO";
@@ -10,10 +11,22 @@ export default function Home() {
   // 1. استدعاء الـ Hooks داخل نطاق الدالة مع عزل البيانات بدقة
   const { data: cocFeatured, isLoading: loadingCocFeatured } = useGetFeaturedAccounts({ game: "clash-of-clans" });
   const { data: crFeatured, isLoading: loadingCrFeatured } = useGetFeaturedAccounts({ game: "clash-royale" });
-  const { data: latestAccounts, isLoading: loadingLatest } = useListAccounts({ limit: 6 });
   const { data: blogPosts, isLoading: loadingBlogs } = useListBlogPosts({ limit: 3 });
 
-  const allFeatured = [...(cocFeatured || []), ...(crFeatured || [])];
+  const allFeatured = useMemo(() => {
+    const combined = [...(cocFeatured || []), ...(crFeatured || [])];
+    const statusWeight: Record<string, number> = {
+      available: 1,
+      reserved: 2,
+      sold: 3,
+    };
+    return combined.sort((a, b) => {
+      const wA = statusWeight[a.status] || 99;
+      const wB = statusWeight[b.status] || 99;
+      if (wA !== wB) return wA - wB;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }, [cocFeatured, crFeatured]);
   const homeJsonLd = [
     {
       "@context": "https://schema.org",

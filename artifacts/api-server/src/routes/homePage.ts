@@ -12,6 +12,18 @@ const statusPriorityOrder = sql`CASE
   ELSE 4 
 END ASC`;
 
+function formatCloudinaryUrl(url: string | undefined | null): string {
+  if (!url) return "";
+  if (url.includes("res.cloudinary.com") && url.includes("/upload/")) {
+    let formatted = url.replace(/\.(heic|heif)$/i, ".jpg");
+    if (!formatted.includes("/f_auto") && !formatted.includes("/q_auto")) {
+      formatted = formatted.replace("/upload/", "/upload/f_auto,q_auto/");
+    }
+    return formatted;
+  }
+  return url;
+}
+
 function accountCardHtml(a: {
   slug: string;
   title: string;
@@ -19,7 +31,8 @@ function accountCardHtml(a: {
   images: string[] | null;
   status?: string | null;
 }) {
-  const img = a.images && a.images.length > 0 ? a.images[0] : "";
+  const rawImg = a.images && a.images.length > 0 ? a.images[0] : "";
+  const img = formatCloudinaryUrl(rawImg);
   const isSold = a.status === "sold";
   const isReserved = a.status === "reserved";
   const badgeHtml = isSold
@@ -30,7 +43,10 @@ function accountCardHtml(a: {
   return `
     <a class="card" href="/account/${escapeHtml(a.slug)}" style="${isSold ? "opacity:0.88;" : ""} position:relative;">
       ${badgeHtml}
-      ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(a.title)}" loading="lazy" />` : ""}
+      <div style="position:relative; width:100%; height:180px; overflow:hidden; background:#0f172a;">
+        ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(a.title)}" loading="lazy" style="width:100%; height:180px; object-fit:cover; display:block;" />` : ""}
+        ${isSold ? `<div style="position:absolute; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center;"><span style="background:#dc2626; color:#ffffff; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transform:rotate(-4deg); border:1px solid #ef4444;">تم البيع</span></div>` : ""}
+      </div>
       <div class="card-body">
         <div class="card-title">${escapeHtml(a.title)}</div>
         <div class="card-price">${Number(a.price).toLocaleString("ar-SA")} ر.س</div>

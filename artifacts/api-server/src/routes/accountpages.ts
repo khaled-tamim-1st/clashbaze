@@ -29,8 +29,10 @@ function formatPrice(value: string): string {
   return Number(value).toLocaleString("ar-SA");
 }
 
-function whatsappLink(title: string, whatsappMessage: string | null, accountId?: number, slug?: string): string {
-  const message = `أريد شراء حساب ${whatsappMessage || title}`;
+function whatsappLink(title: string, whatsappMessage: string | null, accountId?: number, slug?: string, isSold: boolean = false): string {
+  const message = isSold
+    ? `مرحباً، أستفسر عن توفر حساب مشابه لـ ${whatsappMessage || title}`
+    : `أريد شراء حساب ${whatsappMessage || title}`;
   const params = new URLSearchParams();
   if (accountId) params.set("accountId", String(accountId));
   if (slug) params.set("accountSlug", slug);
@@ -214,7 +216,7 @@ router.get("/account/:slug", async (req, res) => {
       ${specsHtml ? `<div class="specs">${specsHtml}</div>` : ""}
       ${account.description ? `<div class="content" style="margin-bottom:24px; color: #cbd5e1; line-height: 1.9;">${escapeHtml(account.description)}</div>` : ""}
       
-      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage, account.id, account.slug))}" target="_blank" rel="noopener noreferrer" style="${account.status === 'sold' ? 'background:#334155; border:1px solid #475569;' : ''}">${account.status === 'sold' ? 'الحساب مباع - طلب حساب مشابه عبر الواتساب' : 'شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)'}</a>
+      <a class="cta" href="${escapeHtml(whatsappLink(account.title, account.whatsappMessage, account.id, account.slug, account.status === "sold"))}" target="_blank" rel="noopener noreferrer" style="${account.status === 'sold' ? 'background:#334155; border:1px solid #475569;' : ''}">${account.status === 'sold' ? 'الحساب مباع - طلب حساب مشابه عبر الواتساب' : 'شراء الآن عبر الواتساب (تسليم يدوي وفوري مباشر)'}</a>
       <div style="text-align: center; margin-top: 10px; font-size: 0.85rem;">
         <a href="/guarantee" style="color: #94a3b8; text-decoration: underline;">🛡️ مشمول بالضمان الذهبي وحماية المشتري (اضغط للتفاصيل)</a>
       </div>

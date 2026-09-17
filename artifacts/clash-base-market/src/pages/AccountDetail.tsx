@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -17,6 +18,21 @@ export default function AccountDetail() {
   const { data: account, isLoading } = useGetAccount(slug);
   const { data: relatedAccounts, isLoading: loadingRelated } = useGetRelatedAccounts(slug);
   const { formatPrice } = useCurrency();
+
+  const sortedRelated = useMemo(() => {
+    if (!relatedAccounts) return [];
+    const statusWeight: Record<string, number> = {
+      available: 1,
+      reserved: 2,
+      sold: 3,
+    };
+    return [...relatedAccounts].sort((a, b) => {
+      const wA = statusWeight[a.status] || 99;
+      const wB = statusWeight[b.status] || 99;
+      if (wA !== wB) return wA - wB;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }, [relatedAccounts]);
 
   if (isLoading) {
     return (
@@ -254,11 +270,11 @@ export default function AccountDetail() {
           </div>
         </div>
 
-        {relatedAccounts && relatedAccounts.length > 0 && (
+        {sortedRelated && sortedRelated.length > 0 && (
           <section className="pt-16 border-t border-border">
             <h2 className="text-2xl font-bold mb-8">حسابات مشابهة</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedAccounts.map(related => (
+              {sortedRelated.map(related => (
                 <AccountCard key={related.id} account={related} />
               ))}
             </div>

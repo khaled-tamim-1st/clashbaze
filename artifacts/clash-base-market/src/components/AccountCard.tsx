@@ -155,7 +155,7 @@ export function AccountCard({ account }: { account: Account }) {
             cta="product_card"
             accountId={account.id}
             accountSlug={account.slug}
-            text={account.status === "sold" ? `مرحباً، أستفسر عن توفر حساب مشابه لـ ${account.title}` : message}
+            text={account.status === "sold" ? `مرحباً، أستفسر عن توفر حساب مشابه لـ ${account.whatsappMessage || account.title} (${priceFormatted})` : message}
             target="_blank"
             rel="noopener noreferrer"
           >
