@@ -30,7 +30,11 @@ export function breadcrumbJsonLd(
       "@type": "ListItem",
       position: i + 1,
       name: item.name,
-      item: SITE_URL ? `${SITE_URL}${item.path}` : item.path,
+      item: item.path.startsWith("http")
+        ? item.path
+        : SITE_URL
+          ? `${SITE_URL}${item.path}`
+          : item.path,
     })),
   };
 }
@@ -60,9 +64,12 @@ export function pageShell(opts: {
   noindex?: boolean;
   ogType?: string;
 }) {
-  const canonicalUrl = SITE_URL
-    ? `${SITE_URL}${opts.canonicalPath}`
-    : opts.canonicalPath;
+  const canonicalUrl =
+    opts.canonicalPath && /^https?:\/\//i.test(opts.canonicalPath)
+      ? opts.canonicalPath
+      : SITE_URL
+        ? `${SITE_URL}${opts.canonicalPath}`
+        : opts.canonicalPath;
 
   // لو لم يتم تمرير صورة (أو كانت رابطًا نسبيًا)، استخدم صورة الموقع الافتراضية المطلقة
   // ملاحظة: WhatsApp/Facebook crawlers لا تنفذ JavaScript ولا تقبل روابط نسبية لـ og:image
@@ -200,6 +207,7 @@ export function pageShell(opts: {
     }
     h1 { font-size: 2rem; font-weight: 800; margin-bottom: 16px; color: #f8fafc; }
     h2 { font-size: 1.5rem; font-weight: 700; margin-top: 36px; margin-bottom: 16px; color: #f8fafc; }
+    h3 { font-size: 1.25rem; font-weight: 700; margin-top: 24px; margin-bottom: 12px; color: #f1f5f9; }
     p { color: #94a3b8; font-size: 1.05rem; }
     .breadcrumbs { font-size: 0.9rem; color: #64748b; margin-bottom: 20px; }
     .breadcrumbs a { color: #94a3b8; }

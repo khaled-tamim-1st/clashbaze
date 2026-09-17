@@ -144,7 +144,7 @@ router.get("/sitemap.xml", async (req, res) => {
       }),
       urlEntry("/clash-of-clans", {
         imageUrl: `${SITE_URL}/thumbnail.png`,
-        imageTitle: "حسابات كلاش أوف كلانس للبيع",
+        imageTitle: "حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت",
       }),
       urlEntry("/clash-of-clans/town-hall-18", {
         imageUrl: `${SITE_URL}/banners/th18-banner.png`,

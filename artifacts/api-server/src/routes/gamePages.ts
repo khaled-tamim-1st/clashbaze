@@ -9,15 +9,30 @@ function accountCardHtml(a: {
   slug: string;
   title: string;
   price: string | number;
+  oldPrice?: string | number | null;
   images: string[] | null;
   featured?: boolean | null;
+  townHall?: number | null;
+  arena?: string | null;
+  game?: string | null;
+  status?: string | null;
 }) {
   const img = a.images && a.images.length > 0 ? a.images[0] : "";
+  const thText = a.townHall ? `تاون هول ${a.townHall}` : a.arena ? `${a.arena}` : "";
+  const statusText = a.status === "available" ? "متاح للشراء" : a.status === "reserved" ? "محجوز" : "مباع";
+  const altText = a.townHall
+    ? `قرية كلاش أوف كلانس تاون هول ${a.townHall} - ${escapeHtml(a.title)}`
+    : `حساب ${escapeHtml(a.title)}`;
+
   return `
-    <a class="card" href="/account/${escapeHtml(a.slug)}">
-      ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(a.title)}" loading="lazy" />` : ""}
+    <a class="card" href="/account/${escapeHtml(a.slug)}" title="${escapeHtml(a.title)}">
+      ${img ? `<img src="${escapeHtml(img)}" alt="${altText}" loading="lazy" />` : ""}
       <div class="card-body">
-        ${a.featured ? `<span class="featured-badge">⭐ حساب مميز</span>` : ""}
+        <div style="display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
+          ${a.featured ? `<span class="featured-badge" style="margin:0;">⭐ حساب مميز</span>` : ""}
+          ${thText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#1e3a8a; color:#bfdbfe; border:1px solid #2563eb;">${thText}</span>` : ""}
+          <span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#065f46; color:#a7f3d0; border:1px solid #059669;">${statusText}</span>
+        </div>
         <div class="card-title">${escapeHtml(a.title)}</div>
         <div class="card-price">${Number(a.price).toLocaleString("ar-SA")} ر.س</div>
       </div>
@@ -30,22 +45,22 @@ function townHallBannersHtml() {
     <div style="margin:24px 0 36px; display:flex; flex-direction:column; gap:20px;">
       <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
         <a href="/clash-of-clans/town-hall-18" style="display:block;">
-          <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
+          <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع - قريات تاون 18 ماكس" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
         </a>
       </div>
       <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
         <a href="/clash-of-clans/town-hall-17" style="display:block;">
-          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
+          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع - قريات تاون 17 ماكس وشبه ماكس" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="eager" />
         </a>
       </div>
       <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
         <a href="/clash-of-clans/town-hall-16" style="display:block;">
-          <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
+          <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع - قريات تاون 16 بدفاعات مدمجة" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
         </a>
       </div>
       <div style="border:1px solid #334155; border-radius:12px; overflow:hidden; box-shadow:0 4px 6px -1px rgba(0,0,0,0.2);">
         <a href="/clash-of-clans/town-hall-15" style="display:block;">
-          <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
+          <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع - قريات تاون 15 بأسعار اقتصادية" width="1024" height="393" style="width:100%; height:auto; display:block; aspect-ratio:1024/393; object-fit:cover;" loading="lazy" />
         </a>
       </div>
     </div>
@@ -486,8 +501,8 @@ router.get("/clash-of-clans", async (req, res) => {
       ? `
         <div style="margin: 28px 0 40px; padding: 24px; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 16px;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
-            <h2 style="margin:0; font-size:1.4rem; color:#f8fafc; display:flex; align-items:center; gap:10px;"><img src="/images/barbarian-king.png" alt="الملك البربري" width="36" height="36" style="width:36px; height:36px; object-fit:contain; vertical-align:middle;" /> حسابات كلاش أوف كلانس المميزة</h2>
-            <span style="color:#f59e0b; font-size:0.9rem; font-weight:600;">مختارة بعناية ومضمونة</span>
+            <h2 style="margin:0; font-size:1.4rem; color:#f8fafc; display:flex; align-items:center; gap:10px;"><img src="/images/barbarian-king.png" alt="الملك البربري - حسابات كلاش أوف كلانس المميزة" width="36" height="36" style="width:36px; height:36px; object-fit:contain; vertical-align:middle;" /> حسابات كلاش أوف كلانس المميزة</h2>
+            <span style="color:#f59e0b; font-size:0.9rem; font-weight:600;">مختارة بعناية ومفحوصة</span>
           </div>
           <div class="grid-list" style="margin:0;">${featuredAccounts.map(accountCardHtml).join("")}</div>
         </div>
@@ -496,26 +511,67 @@ router.get("/clash-of-clans", async (req, res) => {
 
     const accountsHtml = allAccounts.length
       ? `<div class="grid-list">${allAccounts.map(accountCardHtml).join("")}</div>`
-      : `<p>لا توجد حسابات كلاش أوف كلانس متاحة حالياً.</p>`;
+      : `<p style="padding:24px; background:#1e293b; border-radius:12px; border:1px solid #334155; text-align:center;">لا توجد حسابات كلاش أوف كلانس متاحة حالياً. يمكنك التواصل معنا عبر الواتساب للاستفسار عن القريات القادمة قريباً.</p>`;
 
-    const title = "متجر كلاش أوف كلانس | بيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج";
-    const description = "اشترِ حسابات وقرى كلاش أوف كلانس (تاون هول 14 إلى 18) بتسليم يدوي مباشر وضمان وفق سياسة المتجر. كلاش ماركت — متجر حسابات كلاش في السعودية والخليج.";
+    const title = "حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت";
+    const description = "تصفح أكبر متجر لبيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج. قريات تاون هول 14 إلى 18 ماكس وشبه ماكس بأسعار منافسة وتسليم يدوي فوري وتأمين Supercell ID وضمان موثق.";
+
+    const canonicalPath = "https://api.clashmarket.online/clash-of-clans";
 
     const breadcrumbItems = [
-      { name: SITE_NAME, path: "/" },
-      { name: "حسابات كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "كلاش ماركت", path: "https://www.clashmarket.online/" },
+      { name: "حسابات كلاش أوف كلانس", path: "https://api.clashmarket.online/clash-of-clans" },
     ];
 
     const faqItems = [
-      { q: "كيف أشتري حساب كلاش أوف كلانس من كلاش ماركت؟", a: "اختر القرية المناسبة من القائمة، اضغط على زر الواتساب، ونتواصل معك مباشرة لإتمام نقل ملكية Supercell ID وتغيير البريد الإلكتروني وتأمين الحساب برقمك خلال دقائق." },
-      { q: "ما الذي يضمنه المتجر عند شراء حساب كلاش؟", a: "وفق سياسة المتجر، جميع الحسابات تخضع لفحص يدوي قبل البيع، ويتم تسليم الإيميل الأساسي مع تغيير كلمة السر وتفعيل حماية الحساب (Account Protection) على رقم المشتري." },
-      { q: "هل تتوفر حسابات بأسعار مختلفة تناسب الميزانيات المتوسطة؟", a: "نعم، تتراوح الحسابات بين تاون هول 14 وحتى تاون 18 بأسعار مختلفة." },
-      { q: "كم يستغرق تسليم الحساب بعد الدفع؟", a: "عادة يتم التسليم خلال دقائق من إتمام الدفع، حيث يتم نقل الإيميل وتأمين الحساب في جلسة واتساب واحدة مباشرة." },
-      { q: "هل يمكن دفع ثمن الحساب بالتقسيط؟", a: "نعم، يمكن ترتيب الدفع عبر تابي أو تمارا بالتنسيق المباشر مع إدارة المتجر عبر الواتساب." },
-      { q: "ما الفرق بين حساب ماكس وحساب شبه ماكس؟", a: "الحساب الماكس يكون فيه جميع المباني والقوات والأبطال والمعدات على أعلى مستوى متاح لتاون هوله. الحساب شبه الماكس قد تنقصه بعض التطويرات الأخيرة، لكنه يظل تنافسياً وبسعر أقل." },
+      {
+        q: "كيف أشتري حساب كلاش أوف كلانس من متجر كلاش ماركت؟",
+        a: "عملية الشراء في كلاش ماركت مباشرة وميسرة: تصفح الحسابات المعروضة في هذه الصفحة واختر القرية التي تناسب ميزانيتك ومستواك، ثم اضغط على زر التواصل عبر الواتساب. سيتواصل معك فريق خدمة العملاء للاتفاق على وسيلة الدفع (تحويل بنكي مباشر أو تقسيط ميسر عبر تابي وتمارا)، ثم نبدأ جلسة تسليم فورية لنقل ملكية بريد Supercell ID لبريدك الشخصي وتأمين الحساب برقمك وتسليمك رموز الاسترداد."
+      },
+      {
+        q: "أين أجد حسابات كلاش أوف كلانس للبيع موثوقة ومفحوصة؟",
+        a: "يقدم متجر كلاش ماركت منصة بيع وشراء متخصصة وموثوقة للاعبين في السعودية ودول الخليج العربي. تخضع كافة القريات والحسابات المعروضة لفحص يدوي دقيق للتأكد من نظافة سجل الحساب، وعدم وجود بلاغات أو نزاعات ملكية سابقة، والتحقق من تطويرات الأبطال والمعدات قبل إدراج الحساب للعرض."
+      },
+      {
+        q: "ما الفرق بين حساب كلاش ماكس وحساب شبه ماكس؟",
+        a: "الحساب الماكس (Full Max) يكون فيه كل مبنى دفاعي، وجدران القرية، والأبطال، والحيوانات الأليفة، والعتاد الملحمي، والجنود والتعويذات في المختبر مطورة للحد الأقصى المتاح لمستوى التاون هول. أما الحساب شبه الماكس (Semi Max) فيتميز بوجود التاون هول والأبطال والتشكيلات الهجومية الأساسية عند مستويات متقدمة جداً، بينما تتبقى ترقيات في بعض الجدران أو الدفاعات الثانوية، وهو ما يتيح اقتناء قرية قوية جداً بسعر اقتصادي منخفض."
+      },
+      {
+        q: "ما هي العوامل التي تحدد أسعار حسابات كلاش أوف كلانس؟",
+        a: "تتحدد أسعار حسابات وقرى كلاش أوف كلانس بناءً على: 1) مستوى التاون هول (حيث تمثل قريات تاون 18 و17 الفئة الأعلى قيمة). 2) مستويات الأبطال وتطويرات الحيوانات الأليفة. 3) مستويات عتاد الأبطال الملحمي والعادي (Hero Equipment) ورصيد الخامات. 4) التشكيلات المطورة في المختبر. 5) رصيد الجواهر والسكنات الحصرية وتصاميم القرى وثيمات الساحة (Sceneries)."
+      },
+      {
+        q: "ما الفرق بين حسابات تاون هول 18 وحسابات تاون هول 17؟",
+        a: "تاون هول 18 (TH18) هو المستوى الأحدث في كلاش أوف كلانس ويضم أعلى سقف لمستويات الأبطال والعتاد الملحمي وأقوى سلاح رئيسي للتاون، وهو الاختيار الأمثل للاعبين الراغبين بالمنافسة في قمة دوري الأساطير (Legend League) وبطولات CWL للمحترفين. أما تاون هول 17 فيقدم قوة نارية قريبة جداً مع دفاعات مدمجة متطورة ولكن بتكلفة شراء أقل تناسب أصحاب الميزانيات المتوسطة."
+      },
+      {
+        q: "كيف أختار حساب كلاش أوف كلانس المناسب لميزانيتي؟",
+        a: "حدد أولاً هدفك الأساسي: إذا كنت ترغب بالمنافسة الفورية في أعلى الدوريات فخيارك هو تاون 18 ماكس. أما إذا كنت تبحث عن أعلى كفاءة مقابل السعر، فإن تاون 17 أو تاون 16 شبه ماكس يوفران توازناً استثنائياً. وللمبتدئين أو الراغبين ببدء متوازن، فإن قريات تاون 15 و14 تقدم خياراً اقتصادياً ممتازاً يبدأ من أسعار ميسرة."
+      },
+      {
+        q: "ما هي البيانات التي يجب مراجعتها بدقة قبل شراء أي قرية كلاش؟",
+        a: "قبل إتمام الشراء، ننصح بمراجعة: مستوى التاون هول ونظافة القرية، مستويات الأبطال الأربعة الرئيسيين، مستويات المعدات الملحمية مثل القفاز العملاق والسهم المتجمد والكرة النارية، جاهزية جيوش الهجوم المفضلة لديك في المختبر، حالة ربط Supercell ID وإمكانية تغيير البريد، ورصيد الجواهر المتاح."
+      },
+      {
+        q: "هل تتوفر قريات وحسابات كلاش أوف كلانس بمستويات تاون هول مختلفة؟",
+        a: "نعم، يوفر متجر كلاش ماركت أقساماً مخصصة لمختلف مستويات التاون هول تشمل تاون هول 18، تاون هول 17، تاون هول 16، وتاون هول 15، مع إمكانية تصفح كل قسم بشكل مستقل واستعراض صور ومواصفات كل قرية بالتفصيل."
+      },
+      {
+        q: "كيف يتم نقل ملكية وتأمين حساب Supercell ID بعد الدفع؟",
+        a: "يتم نقل ملكية الحساب عبر جلسة تواصل مباشرة على الواتساب: يتم الدخول وتغيير البريد الإلكتروني المرتبط بـ Supercell ID إلى بريدك الشخصي، ثم يُطلب منك إدخال رمز التحقق لتأكيد الملكية، وتفعيل ميزة حماية الحساب (Account Protection) برقم هاتفك الجوال، وتزويدك برموز الاسترداد الاحتياطية (Recovery Codes) لضمان أمان كامل ومستقل للقرية."
+      },
+      {
+        q: "هل متجر كلاش ماركت جهة تابعة لشركة Supercell أو معتمدة منها؟",
+        a: "كلاش ماركت منصة وسيطة مستقلة تماماً وليست تابعة لشركة Supercell Oy ولا معتمدة أو مدعومة منها. شروط خدمة Supercell تحظر تداول ومشاركة الحسابات، ونحن نوضح ذلك بشفافية لكافة عملائنا مع تطبيق أدق إجراءات الفحص والتسليم اليدوي المباشر وتغيير البريد لضمان الشفافية والأمان وحماية حقوق الطرفين."
+      }
     ];
 
-    const faqHtml = faqItems.map(f => `<details style="border:1px solid #334155; border-radius:8px; margin-bottom:8px;"><summary style="padding:12px; cursor:pointer; font-weight:600; color:#f8fafc;">${escapeHtml(f.q)}</summary><p style="padding:0 12px 12px; color:#94a3b8; line-height:1.8;">${escapeHtml(f.a)}</p></details>`).join("");
+    const faqHtml = faqItems.map(f => `
+      <details style="border:1px solid #334155; border-radius:10px; margin-bottom:12px; background:rgba(30,41,59,0.5);">
+        <summary style="padding:16px; cursor:pointer; font-weight:700; color:#f8fafc; font-size:1.05rem;">${escapeHtml(f.q)}</summary>
+        <p style="padding:0 16px 16px; color:#94a3b8; line-height:1.9; margin:0;">${escapeHtml(f.a)}</p>
+      </details>
+    `).join("");
 
     const faqJsonLd = {
       "@context": "https://schema.org",
@@ -527,56 +583,305 @@ router.get("/clash-of-clans", async (req, res) => {
       })),
     };
 
+    const collectionJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: title,
+      description,
+      url: canonicalPath,
+      inLanguage: "ar-SA",
+      isPartOf: {
+        "@type": "WebSite",
+        name: SITE_NAME,
+        url: "https://www.clashmarket.online",
+      },
+    };
+
+    const storeJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      name: SITE_NAME,
+      url: "https://www.clashmarket.online",
+      logo: `${SITE_URL}/thumbnail.png`,
+      description: "متجر متخصص في بيع وشراء حسابات وقرى كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي بتسليم يدوي مباشر وضمان موثق.",
+      currenciesAccepted: "SAR",
+      paymentAccepted: "Bank Transfer, Tabby, Tamara",
+      areaServed: [
+        { "@type": "Country", "name": "Saudi Arabia" },
+        { "@type": "Country", "name": "United Arab Emirates" },
+        { "@type": "Country", "name": "Kuwait" },
+        { "@type": "Country", "name": "Qatar" },
+        { "@type": "Country", "name": "Bahrain" },
+        { "@type": "Country", "name": "Oman" },
+      ],
+    };
+
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
-      <h1>حسابات كلاش أوف كلانس للبيع</h1>
+      
+      <h1>حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت</h1>
+
       ${townHallBannersHtml()}
 
-      <h2>حسابات كلاش أوف كلانس المميزة</h2>
-      ${featuredAccounts.length ? featuredHtml : accountsHtml}
+      <!-- المقدمة الشاملة حول القسم والمخزون -->
+      <section style="margin: 28px 0 36px; line-height: 1.9;">
+        <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 16px;">
+          مرحباً بك في القسم الرئيسي لـ <strong>بيع وشراء حسابات كلاش أوف كلانس</strong> داخل <strong>متجر كلاش ماركت</strong> — وجهتك المتخصصة في المملكة العربية السعودية ودول الخليج العربي لاقتناء أقوى القريات الجاهزة والمفحوصة بعناية. سواء كنت تطمح للمنافسة المباشرة في أعلى مراتب دوري الأساطير (Legend League) باقتناء <em>قرية كلاش أوف كلانس تاون هول 18 ماكس</em>، أو ترغب في الحصول على حساب متقدم بسعر اقتصادي ميسر يجنبك سنوات طويلة من أوقات البناء وتكاليف ترقية الأبطال، فإن متجرنا يقدم لك تشكيلة منتقاة تلبي كافة الاحتياجات.
+        </p>
+        <p style="color: #94a3b8; margin-bottom: 16px;">
+          تتميز جميع <strong>حسابات كلاش أوف كلانس المعروضة للبيع</strong> بشفافية كاملة في سرد البيانات والمواصفات: مستوى التاون هول، مستويات الأبطال الستة (الملك البربري، الملكة رامية السهام، الحكيم الكبير، البطلة الملكية، أمير المينيون، ودوق التنين)، العتاد الملحمي والعادي (Hero Equipment)، مستويات ترقية القوات والتعويذات في المختبر، رصيد الجواهر، وسجل الحساب. كما نوفر خيارات سداد مرنة تشمل التحويل البنكي المباشر والتقسيط الميسر على 4 دفعات عبر تابي وتمارا، إلى جانب تسليم يدوي فوري ومباشر عبر الواتساب وفق سياسة المتجر المعتمدة.
+        </p>
+      </section>
 
-      <h2>ما الذي يحدد قيمة حساب كلاش أوف كلانس؟</h2>
-      <ul style="line-height:2;">
-        <li><strong>مستوى التاون هول</strong> — أعلى تاون حالياً هو TH18 الذي يضم أحدث الدفاعات والأبطال.</li>
-        <li><strong>مستوى الأبطال</strong> — اللعبة تحتوي على أبطال متعددي المهام: الملك، الملكة، الحكيم الكبير، والبطلة الملكية.</li>
-        <li><strong>معدات الأبطال (Hero Equipment)</strong> — تتراوح بين معدات عادية ومعدات ملحمية مطورة.</li>
-        <li><strong>التقدم التنافسي</strong> — الجواهر، السكنات، دوري الأساطير، وعاصمة الكلان.</li>
-      </ul>
-      <p>للتفاصيل: <a href="/blog/clash-of-clans-town-hall-levels-buying-guide" style="color:#f59e0b;">دليل مستويات التاون هول وأفضل قرية للشراء</a>.</p>
+      <!-- حسابات كلاش المميزة -->
+      ${featuredAccounts.length ? featuredHtml : ""}
 
-      <h2>قريات كلاش أوف كلانس — تصفح حسب تاون هول</h2>
-      <div style="display:flex; gap:12px; flex-wrap:wrap; margin:16px 0 28px;">
-        <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 18</a>
-        <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 17</a>
-        <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 16</a>
-        <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 15</a>
+      <!-- جميع الحسابات المتاحة للشراء الفوري -->
+      <section style="margin: 36px 0;">
+        <h2>جميع حسابات كلاش أوف كلانس المتاحة للشراء الفوري</h2>
+        <p style="color: #94a3b8; margin-bottom: 20px;">
+          استعرض أدناه قريات كلاش أوف كلانس المتوفرة حالياً في المخزون. تتضمن كل بطاقة تفاصيل المستوى، مستوى التاون هول، السعر بالريال السعودي، وحالة التوفر مع إمكانية الانتقال لصفحة الحساب التفصيلية:
+        </p>
+        ${accountsHtml}
+      </section>
+
+      <!-- حسابات كلاش أوف كلانس حسب تاون هول -->
+      <section style="margin: 44px 0;">
+        <h2>حسابات كلاش أوف كلانس حسب تاون هول</h2>
+        <p style="color: #94a3b8; margin-bottom: 20px;">
+          يمثل مستوى التاون هول (Town Hall) المعيار الرئيسي لتحديد القوة الهجومية والدفاعية لأي قرية في كلاش أوف كلانس. فيما يلي استعراض تفصيلي للفئات الرئيسية المتوفرة في المتجر، مع روابط مباشرة لتصفح قريات كل مستوى على حدة:
+        </p>
+
+        <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <h3 style="margin-top:0; color:#f8fafc;">حسابات تاون هول 18 (TH18 Max) — القمة التنافسية للعبة</h3>
+          <p style="color:#94a3b8; line-height:1.8;">
+            يمثل تاون هول 18 أحدث وأعلى مستوى تطوير في كلاش أوف كلانس (صدر أواخر عام 2025). يتيح هذا المستوى الاستفادة من أحدث الأسلحة الدفاعية المدمجة، وأعلى سقف لتطوير الأبطال والحيوانات الأليفة، بالإضافة إلى القدرة القصوى على دمج العتاد الملحمي المطور بالكامل. تناسب هذه الفئة محترفي بطولات Clan War Leagues التنافسية واللاعبين المتطلعين لتصدر تصنيف دوري الأساطير فوراً دون انتظار شهور من أعمال البناء.
+          </p>
+          <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:8px 18px; margin-top:8px;">استعراض حسابات تاون هول 18 ←</a>
+        </div>
+
+        <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <h3 style="margin-top:0; color:#f8fafc;">حسابات تاون هول 17 (TH17) — القوة النارية والتوازن التكتيكي</h3>
+          <p style="color:#94a3b8; line-height:1.8;">
+            تقدم قريات تاون هول 17 توليفة استثنائية تجمع بين الفعالية الحربية الهجومية العالية والدفاعات الصلبة مع تكلفة شراء معتدلة مقارنة بتاون 18. تشمل هذه القريات ترقيات قوية لمدفع النسر المدافع والأبراج المتعددة، وتتيح المشاركة بكفاءة ممتازة في حروب الكلانات الكبرى مع إمكانية الترقية لتاون 18 مستقبلاً بخطوات يسيرة.
+          </p>
+          <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:8px 18px; margin-top:8px;">استعراض حسابات تاون هول 17 ←</a>
+        </div>
+
+        <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <h3 style="margin-top:0; color:#f8fafc;">حسابات تاون هول 16 (TH16) — الدفاعات المدمجة ونظام المعدات الحديث</h3>
+          <p style="color:#94a3b8; line-height:1.8;">
+            شكّل تاون هول 16 نقلة محورية في تاريخ اللعبة بإدخال الدفاعات المدمجة مثل المدافع المرتدة (Ricochet Cannons) وأبراج السهام المتعددة (Multi-Archer Towers)، فضلاً عن تدشين نظام عتاد الأبطال (Hero Equipment). تمثل قريات TH16 الخيار الأنسب للاعبين الباحثين عن حساب منافس وبسعر اقتصادي في متناول الجميع.
+          </p>
+          <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:8px 18px; margin-top:8px;">استعراض حسابات تاون هول 16 ←</a>
+        </div>
+
+        <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <h3 style="margin-top:0; color:#f8fafc;">حسابات تاون هول 15 (TH15) وما قبله — انطلاقة اقتصادية ممتازة للمبتدئين</h3>
+          <p style="color:#94a3b8; line-height:1.8;">
+            إذا كنت عائداً للعبة كلاش أوف كلانس بعد انقطاع أو تبدأ مسيرتك التنافسية بميزانية محدودة، فإن قريات تاون هول 15 و14 توفر لك دفاعات قوية مثل برج التعويذات والمونوليث (Monolith) والأبطال الأربعة الأساسيين بأسعار اقتصادية تبدأ من مبالغ ميسرة للغاية.
+          </p>
+          <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:8px 18px; margin-top:8px;">استعراض حسابات تاون هول 15 ←</a>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:24px 0 12px;">
+          <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 18</a>
+          <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 17</a>
+          <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 16</a>
+          <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">قريات تاون هول 15</a>
+        </div>
+      </section>
+
+      <!-- بيع وشراء حسابات كلاش أوف كلانس: معايير فحص وتقييم الحساب -->
+      <section style="margin: 44px 0; line-height: 1.9;">
+        <h2>بيع وشراء حسابات كلاش أوف كلانس: معايير فحص وتقييم الحساب</h2>
+        <p style="color: #94a3b8;">
+          عند الإقبال على <strong>شراء حساب كلاش أوف كلانس</strong>، لا ينبغي الاكتفاء بالنظر إلى شكل القرية العام أو عدد الكؤوس فقط. هناك حزمة من المؤشرات الجوهرية التي تحدد القيمة الحقيقية للقرية وأداءها الفعلي في الحروب:
+        </p>
+
+        <ul style="line-height:2; color:#cbd5e1; margin:16px 0;">
+          <li>
+            <strong>مستوى التاون هول والبنية الدفاعية:</strong> الدفاعات المركزية (مدفع النسر، أبراج النار، أبراج الرميات المتعددة، المونوليث، وأبراج السم) تلعب الدور الحاسم في حماية النجوم ضد الهجمات التنافسية.
+          </li>
+          <li>
+            <strong>مستويات الأبطال (Heroes):</strong> تشكل ترقيات الأبطال — الملك البربري، الملكة رامية السهام، الحكيم الكبير، والبطلة الملكية — أكثر من 60% من قوة الهجوم الحربي. وصول الأبطال للحد الأقصى يوفر مئات الأيام من جرعات البناء وتجميد الأبطال.
+          </li>
+          <li>
+            <strong>معدات الأبطال (Hero Equipment):</strong> أصبح نظام العتاد هو المحرك الأساسي للفوز بالهجمات الثلاث نجوم. تنقسم المعدات إلى عادية (Common Equipment بحد أقصى مستوى 18) وملحمية (Epic Equipment مثل Giant Gauntlet و Frozen Arrow و Fireball و Rocket Boots بحد أقصى مستوى 27). تطلب ترقية العتاد كميات هائلة من الخامات (Ores) النادرة، مما يجعل الحسابات ذات العتاد الماكس ذات قيمة استثمارية ممتازة.
+          </li>
+          <li>
+            <strong>ترقيات المختبر (Laboratory) والحيوانات الأليفة (Pets):</strong> اكتمال ترقيات القوات الميتا مثل راكبي الجذور (Root Riders)، الرماة الخارقين، والتعويذات الأساسية، إلى جانب لفلات حيوانات الدعم كالثعلب الروحي (Spirit Fox) وديغي والفينيق.
+          </li>
+          <li>
+            <strong>رصيد الجواهر والسكنات والمظهر:</strong> توفر الجواهر المرصودة، السكنات الحصرية المكتسبة من تذاكر الذهب، وثيمات القرى النادرة (Sceneries) ميزة جمالية وراحة مستقبلية لتغيير الاسم وتسريع الترقيات.
+          </li>
+        </ul>
+
+        <p style="color:#94a3b8;">
+          للمزيد من الشرح التخصصي، ننصح بالاطلاع على <a href="/blog/clash-of-clans-town-hall-levels-buying-guide" style="color:#f59e0b; font-weight:600;">دليل مستويات التاون هول وأفضل قرية للشراء</a> المتوفر في مدونتنا.
+        </p>
+      </section>
+
+      <!-- كيف تختار حساب كلاش أوف كلانس المناسب لميزانيتك؟ -->
+      <section style="margin: 44px 0; line-height: 1.9;">
+        <h2>كيف تختار حساب كلاش أوف كلانس المناسب لميزانيتك؟</h2>
+        <p style="color: #94a3b8;">
+          اختيار القرية الملائمة يوازن بين متطلباتك الشخصية وميزانيتك المحددة. إليك المنهجية الموصى بها لاختيار الحساب الأمثل:
+        </p>
+
+        <ol style="line-height:2; color:#cbd5e1; margin:16px 0;">
+          <li><strong>حدد دورك في الكلان والحروب:</strong> إذا كنت تنوي خوض حروب CWL في تصنيفات الماستر والأبطال، فالأولوية تكون لحسابات TH17 أو TH18 لضمان صد الهجمات. أما للمشاركة العادية، فتاون 16 أو 15 يكفي وزيادة.</li>
+          <li><strong>قيّم جاهزية الأبطال قبل الجدران:</strong> ترقية الجدران تتطلب موارد فقط، بينما ترقية الأبطال تعطل قدرتك على الهجوم لشهور. احرص دائماً على اختيار قرية بأبطال مطورين حتى لو كانت بعض الجدران لم تكتمل بعد.</li>
+          <li><strong>اختر بين الماكس التام وشبه الماكس:</strong> الحساب شبه الماكس يمنحك 90-95% من قوة القرية بتكلفة توفر ما بين 30% إلى 40% من السعر، وهو خيار ذكي لمن يرغب بإكمال ما تبقى بنفسه.</li>
+          <li><strong>احسب القيمة مقابل الوقت:</strong> شراء قرية متقدمة بسعر يتراوح بين 170 إلى 720 ريال سعودي يوفر عليك ما يعادل 3 إلى 5 سنوات من ساعات البناء والتجميع اليومي المتواصل.</li>
+          <li><strong>تحقق من ضمان المتجر ونظافة البريد:</strong> الشراء من جهة موثوقة تطبق نقل ملكية Supercell ID وتفعيل حماية الحساب (Account Protection) يحميك من أي مخاطر استرجاع أو نزاع.</li>
+        </ol>
+      </section>
+
+      <!-- الفرق بين حساب كلاش ماكس وحساب شبه ماكس -->
+      <section style="margin: 44px 0; line-height: 1.9;">
+        <h2>الفرق بين حساب كلاش ماكس وحساب شبه ماكس</h2>
+        <p style="color: #94a3b8;">
+          يتكرر السؤال بين المشترين حول الفرق الجوهري بين قريات الماكس وقريات شبه الماكس. يوضح الجدول والتفاصيل التالية الفروقات العملية:
+        </p>
+
+        <div style="overflow-x:auto; margin: 20px 0;">
+          <table style="width:100%; border-collapse:collapse; background:#1e293b; border-radius:10px; overflow:hidden; border:1px solid #334155;">
+            <thead>
+              <tr style="background:#0f172a; border-bottom:1px solid #334155; text-align:right;">
+                <th style="padding:14px; color:#f8fafc;">المعيار</th>
+                <th style="padding:14px; color:#f59e0b;">حساب كلاش ماكس (Full Max)</th>
+                <th style="padding:14px; color:#38bdf8;">حساب كلاش شبه ماكس (Semi Max)</th>
+              </tr>
+            </thead>
+            <tbody style="color:#cbd5e1;">
+              <tr style="border-bottom:1px solid #334155;">
+                <td style="padding:12px; font-weight:700;">المباني الدفاعية</td>
+                <td style="padding:12px;">مكتملة بالكامل للحد الأقصى للتاون</td>
+                <td style="padding:12px;">الدفاعات الأساسية مكتملة مع بقاء دفاعات ثانوية</td>
+              </tr>
+              <tr style="border-bottom:1px solid #334155;">
+                <td style="padding:12px; font-weight:700;">الأبطال والعتاد</td>
+                <td style="padding:12px;">جميع الأبطال والعتاد الملحمي عند الحد الأقصى</td>
+                <td style="padding:12px;">الأبطال عند مستويات عالية مع ترقية العتاد الأساسي</td>
+              </tr>
+              <tr style="border-bottom:1px solid #334155;">
+                <td style="padding:12px; font-weight:700;">الأسوار والجدران</td>
+                <td style="padding:12px;">مكتملة ومطورة بالكامل للفل الأخير</td>
+                <td style="padding:12px;">جدران متقدمة مع وجود جزء يحتاج موارد إضافية</td>
+              </tr>
+              <tr style="border-bottom:1px solid #334155;">
+                <td style="padding:12px; font-weight:700;">الجهوزية الحربية</td>
+                <td style="padding:12px;">جاهزية فورية بنسبة 100% لأقوى البطولات</td>
+                <td style="padding:12px;">جاهزية حربية تتجاوز 90% لمعظم تشكيلات الميتا</td>
+              </tr>
+              <tr>
+                <td style="padding:12px; font-weight:700;">مستوى السعر</td>
+                <td style="padding:12px;">سعر ممتاز يعكس ندرة واكتمال الحساب</td>
+                <td style="padding:12px;">سعر اقتصادي منافس ومناسب لمختلف الميزانيات</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ما الذي يحدد أسعار حسابات كلاش أوف كلانس؟ -->
+      <section style="margin: 44px 0; line-height: 1.9;">
+        <h2>ما الذي يحدد أسعار حسابات كلاش أوف كلانس؟</h2>
+        <p style="color: #94a3b8;">
+          تعتمد سياسة التسعير في <strong>متجر كلاش ماركت</strong> على معايير موضوعية مستمدة مباشرة من مواصفات كل قرية كما هي مسجلة في قاعدة بيانات الحسابات:
+        </p>
+
+        <ul style="line-height:2; color:#cbd5e1; margin:16px 0;">
+          <li><strong>مستوى تاون هول والتقدم الزمني:</strong> الحسابات من مستوى تاون هول 18 تتطلب أعلى قدر من الاستثمار الزمني، وتتراوح أسعارها المعروضة حالياً بين 480 و720 ريال سعودي وفق درجة اكتمال الأبطال والمعدات.</li>
+          <li><strong>مستويات التاون هول الأسبق:</strong> قريات تاون هول 16 تعرض بأسعار اقتصادية تبدأ من نحو 170 ريال سعودي، مما يتيح دخولاً سريعاً للمستويات التنافسية بأقل تكلفة ممكنة.</li>
+          <li><strong>العتاد الملحمي وتطويرات الخامات:</strong> المعدات الملحمية مثل Gauntlet و Frozen Arrow تحتاج استثماراً مكثفاً في حروب Clan Wars لتجميع خامات Starry Ores، مما ينعكس مباشرة على قيمة القرية.</li>
+          <li><strong>الرصيد المالي المتاح والملحقات:</strong> عدد الجواهر غير المستهلكة، ومستوى القرية الليلية (Builder Base 2.0)، ومظهر القرية وعاصمتها يمثل قيمة مضافة حقيقية للمشتري.</li>
+        </ul>
+
+        <p style="color:#94a3b8;">
+          جميع الأسعار معلنة بالريال السعودي بكل شفافية على كل بطاقة حساب بدون أي رسوم خفية، مع إمكانية توزيع القيمة على 4 دفعات بدون فوائد عبر خدمتي تابي وتمارا بالتنسيق عبر الواتساب.
+        </p>
+      </section>
+
+      <!-- خطوات الفحص والتسليم والأمان في كلاش ماركت -->
+      <section style="margin: 44px 0; line-height: 1.9;">
+        <h2>خطوات الفحص والتسليم والأمان في كلاش ماركت</h2>
+        <p style="color: #94a3b8;">
+          نعتمد في كلاش ماركت آلية التسليم اليدوي المباشر خطوة بخطوة مع المشتري عبر محادثة واتساب مخصصة لضمان أقصى درجات الطمأنينة والأمان:
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin:24px 0;">
+          <div style="background:#1e293b; border:1px solid #334155; border-radius:12px; padding:18px;">
+            <div style="display:inline-block; width:32px; height:32px; background:#f59e0b; color:#0f172a; border-radius:50%; text-align:center; line-height:32px; font-weight:800; margin-bottom:12px;">1</div>
+            <h3 style="margin:0 0 8px; font-size:1.1rem; color:#f8fafc;">اختيار القرية والتواصل</h3>
+            <p style="color:#94a3b8; font-size:0.95rem; margin:0;">اختر الحساب المناسب لك من المتجر واضغط على زر التواصل بالواتساب، وسيقوم فريق الدعم بالرد الفوري وتأكيد توفر الحساب وتفاصيله.</p>
+          </div>
+
+          <div style="background:#1e293b; border:1px solid #334155; border-radius:12px; padding:18px;">
+            <div style="display:inline-block; width:32px; height:32px; background:#f59e0b; color:#0f172a; border-radius:50%; text-align:center; line-height:32px; font-weight:800; margin-bottom:12px;">2</div>
+            <h3 style="margin:0 0 8px; font-size:1.1rem; color:#f8fafc;">الاتفاق وسداد القيمة</h3>
+            <p style="color:#94a3b8; font-size:0.95rem; margin:0;">الاتفاق على وسيلة السداد المفضلة عبر التحويل البنكي المباشر أو التقسيط الميسر عبر تابي وتمارا على 4 دفعات.</p>
+          </div>
+
+          <div style="background:#1e293b; border:1px solid #334155; border-radius:12px; padding:18px;">
+            <div style="display:inline-block; width:32px; height:32px; background:#f59e0b; color:#0f172a; border-radius:50%; text-align:center; line-height:32px; font-weight:800; margin-bottom:12px;">3</div>
+            <h3 style="margin:0 0 8px; font-size:1.1rem; color:#f8fafc;">نقل بريد Supercell ID</h3>
+            <p style="color:#94a3b8; font-size:0.95rem; margin:0;">نقوم بتغيير البريد الإلكتروني المربوط بـ Supercell ID إلى بريدك الشخصي الخاص مباشرة واستلام رمز التحقق لتوثيق الملكية.</p>
+          </div>
+
+          <div style="background:#1e293b; border:1px solid #334155; border-radius:12px; padding:18px;">
+            <div style="display:inline-block; width:32px; height:32px; background:#f59e0b; color:#0f172a; border-radius:50%; text-align:center; line-height:32px; font-weight:800; margin-bottom:12px;">4</div>
+            <h3 style="margin:0 0 8px; font-size:1.1rem; color:#f8fafc;">تأمين الحساب برقم هاتفك</h3>
+            <p style="color:#94a3b8; font-size:0.95rem; margin:0;">تفعيل ميزة حماية الحساب (Account Protection) برقم هاتفك الشخصي وتسليمك رموز الاسترداد الاحتياطية (Recovery Codes).</p>
+          </div>
+        </div>
+
+        <p style="color:#94a3b8;">
+          للاطلاع على تفاصيل سياساتنا، راجع <a href="/guarantee" style="color:#f59e0b; font-weight:600;">وثيقة سياسة الضمان</a> و<a href="/how-it-works" style="color:#f59e0b; font-weight:600;">دليل طريقة الشراء والتسليم</a>، إضافة إلى شروحاتنا المتخصصة: <a href="/blog/how-to-change-supercell-id-email-guide" style="color:#f59e0b; font-weight:600;">دليل تغيير إيميل Supercell ID</a> و<a href="/blog/clash-of-clans-account-ban-reasons-protection-guide" style="color:#f59e0b; font-weight:600;">دليل حماية الحساب وتجنب الحظر</a>.
+        </p>
+      </section>
+
+      <!-- إشعار الاستقلالية وإخلاء المسؤولية القانونية بخصوص Supercell -->
+      <div style="margin: 36px 0; padding: 22px; background: rgba(30, 41, 59, 0.7); border: 1px solid #475569; border-radius: 12px; line-height: 1.8;">
+        <h3 style="margin-top:0; color:#f8fafc; font-size:1.15rem; display:flex; align-items:center; gap:8px;">
+          ⚖️ إشعار الاستقلالية والشفافية القانونية بخصوص شركة Supercell
+        </h3>
+        <p style="color:#94a3b8; font-size:0.95rem; margin-bottom:10px;">
+          يؤكد متجر <strong>كلاش ماركت (ClashMarket)</strong> أنه جهة ومنصة وسيطة مستقلة تماماً، ولا يتبع لشركة <strong>Supercell Oy</strong> ولا يحظى بأي رعاية أو ترخيص أو اعتماد رسمي منها بأي شكل من الأشكال. كافة العلامات التجارية والأسماء والشعارات والرسومات المتعلقة بلعبة Clash of Clans هي ملكية حصرية لشركة Supercell Oy.
+        </p>
+        <p style="color:#94a3b8; font-size:0.95rem; margin:0;">
+          تنص بنود وشروط خدمة شركة Supercell الحالية على حظر بيع وشراء ومشاركة حسابات الألعاب. نذكر هذه المعلومة بكل أمانة وشفافية لجميع عملائنا دون تضليل؛ ولا يدعي المتجر أن هذه العمليات مسموح بها من قِبل الشركة المطورة. دور كلاش ماركت ينحصر في كونه وسيطاً مستقلاً يقدم خدمات الفحص الفني اليدوي، والمساعدة في نقل ملكية البريد الإلكتروني، وتأمين الحسابات بالتعاون مع المشتري للحد من أي مخاطر تقنية وفق سياسة الضمان المحددة في الموقع.
+        </p>
       </div>
 
-      <h2>الفحص والتسليم وإجراءات الأمان</h2>
-      <ol style="line-height:2;">
-        <li>تختار القرية وتتواصل عبر الواتساب.</li>
-        <li>الاتفاق على طريقة الدفع (تحويل بنكي أو ترتيب التقسيط عبر تابي/تمارا).</li>
-        <li>نقل بريد Supercell ID إلى بريدك الشخصي.</li>
-        <li>تغيير كلمة السر وتفعيل حماية الحساب (Account Protection) برقمك.</li>
-        <li>تسلّم رموز الاسترداد (Recovery Codes).</li>
-      </ol>
-      <p>راجع <a href="/blog/how-to-change-supercell-id-email-guide" style="color:#f59e0b;">دليل تغيير إيميل Supercell ID</a> و<a href="/blog/clash-of-clans-account-ban-reasons-protection-guide" style="color:#f59e0b;">دليل حماية القرية وتجنب المخالفات</a>. اطلع على <a href="/guarantee" style="color:#f59e0b;">سياسة الضمان</a> و<a href="/how-it-works" style="color:#f59e0b;">طريقة الشراء والتسليم</a>.</p>
+      <!-- الأسئلة الشائعة حول حسابات كلاش أوف كلانس -->
+      <section style="margin: 44px 0;">
+        <h2>أسئلة شائعة حول حسابات كلاش أوف كلانس</h2>
+        <p style="color:#94a3b8; margin-bottom:20px;">
+          إليك إجابات شاملة ومباشرة على أكثر الاستفسارات والأسئلة الشائعة حول بيع وشراء قريات كلاش أوف كلانس وضماناتها وآلية نقل الملكية:
+        </p>
+        ${faqHtml}
+      </section>
 
-      <h2>أسئلة شائعة حول شراء حسابات كلاش أوف كلانس</h2>
-      ${faqHtml}
-
-      <div style="text-align:center; margin-top:40px;">
-        <a class="cta" href="/clash-royale" style="background:#2563eb; color:#fff; margin-left:12px;">تصفح حسابات كلاش رويال</a>
+      <!-- دعوة للتنقل وروابط أقسام المتجر -->
+      <div style="text-align:center; margin: 44px 0 24px; padding: 28px; background: #1e293b; border-radius: 16px; border: 1px solid #334155;">
+        <h3 style="margin-top:0; color:#f8fafc; font-size:1.3rem;">هل تلعب كلاش رويال أيضاً؟</h3>
+        <p style="color:#94a3b8; max-width:600px; margin:0 auto 16px;">
+          نوفر أيضاً تشكيلة واسعة من حسابات كلاش رويال بكروت وإيفو ماكس وتطورات متقدمة بتسليم فوري وضمان شامل.
+        </p>
+        <a class="cta" href="/clash-royale" style="background:#2563eb; color:#fff; font-size:1rem; padding:12px 24px;">تصفح حسابات كلاش رويال ←</a>
       </div>
+
       <p><a class="back-link" href="/">← العودة للصفحة الرئيسية</a></p>
     `;
 
     const html = pageShell({
       title,
       description,
-      canonicalPath: "/clash-of-clans",
+      canonicalPath,
       bodyHtml,
-      jsonLd: [breadcrumbJsonLd(breadcrumbItems), faqJsonLd, accountItemListJsonLd(title, allAccounts)].filter(Boolean) as object[],
+      jsonLd: [breadcrumbJsonLd(breadcrumbItems), collectionJsonLd, storeJsonLd, faqJsonLd, accountItemListJsonLd(title, allAccounts)].filter(Boolean) as object[],
     });
 
     res.set("Content-Type", "text/html; charset=utf-8");
