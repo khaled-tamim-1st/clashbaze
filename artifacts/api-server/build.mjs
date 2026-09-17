@@ -25,6 +25,7 @@ async function buildAll() {
       path.resolve(artifactDir, "src/refactor-blogs.ts"),
       path.resolve(artifactDir, "src/format-gamer-html.ts"),
       path.resolve(artifactDir, "src/format-saudi-clean.ts"),
+      path.resolve(artifactDir, "src/seed-new-accounts.ts"),
       path.resolve(artifactDir, "src/submit-indexnow.ts"),
     ],
     platform: "node",
