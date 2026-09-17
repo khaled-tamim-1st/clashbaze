@@ -1,7 +1,79 @@
 import { db, accountsTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
-const newAccounts = [
+export const allNewAccounts = [
+  // ==========================================
+  // Clash Royale Accounts
+  // ==========================================
+  {
+    title: "حساب كلاش رويال ليفل 12 مع 142 إيموت و15+ سكن برج نادر — Clash Royale",
+    slug: "cr-level12-up02q8jr",
+    game: "clash-royale",
+    price: "250.00",
+    oldPrice: "320.00",
+    images: [
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657386/IMG-20260917-WA0104_ztrfcu.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657386/IMG-20260917-WA0106_oh9cdg.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657385/IMG-20260917-WA0107_m0g60z.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657402/IMG-20260917-WA0108_bh4nnj.jpg"
+    ],
+    description: `حساب كلاش رويال مميز ليفل 12 (تاغ #UP02Q8JR) مع مخزون تعبيرات وسكنات أسطورية للبيع عبر متجر كلاش ماركت.
+🔹 المواصفات والمميزات: مستوى البرج 12 | أكثر من 4,125 انتصار في المعارك | 1,030 جوهرة جاهزة للاستخدام.
+🔹 التعبيرات والسكنات: 142 تعبير (Emotes) نادر وحصري بإطارات لامعة ومميزة + أكثر من 15 سكن برج (Tower Skins) أسطوري من مواسم كلاش السابقة.
+🔹 التطويرات والموارد: 42 قطعة تطور قوات وبواسل (فالكيري) | 8/8 جرعات ترقية سحرية (Max) | 21,744 نقطة نجوم (Star Points) | 53 شظية تجارة.
+🔹 الأمان والضمان: نقل رسمي وآمن لحساب Supercell ID بالكامل وتغيير الإيميل الأساسي وتأمين الحماية برقمك مع الضمان الذهبي المعتمد ضد السحب.
+🔹 التسليم والدفع: تسليم فوري وتواصل مباشر خلال 5 إلى 15 دقيقة عبر الواتساب، والدفع متاح عبر التحويل البنكي السعودي والتقسيط عبر تابي وتمارا.`,
+    status: "available",
+    townHall: null,
+    arena: "الساحة الأسطورية (Legendary Arena)",
+    trophies: 6500,
+    heroes: null,
+    gems: 1030,
+    skins: "15+ سكن برج نادر وحصري (Tower Skins)",
+    league: "دوري المنافسين",
+    evolutions: "تطويرات بواسل متقدمة وقطع فالكيري إيفو (42 قطعة)",
+    emotes: "142 تعبير نادر وحصري بإطارات متوهجة",
+    maxCards: 25,
+    whatsappMessage: "حساب كلاش رويال ليفل 12 تاغ UP02Q8JR بسعر 250",
+    featured: true
+  },
+  {
+    title: "حساب كلاش رويال ليفل 16 فل ماكس ليفل النخبة مع 33 ألف جوهرة — Clash Royale Elite",
+    slug: "cr-level16-max-8qgvcq99g",
+    game: "clash-royale",
+    price: "400.00",
+    oldPrice: "550.00",
+    images: [
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657367/IMG-20260917-WA0114_iqwxdb.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657366/IMG-20260917-WA0115_sruxp6.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657366/IMG-20260917-WA0116_ihirao.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657366/IMG-20260917-WA0117_cyvl78.jpg",
+      "https://res.cloudinary.com/doorrysnw/image/upload/v1789657366/IMG-20260917-WA0118_kfpmo1.jpg"
+    ],
+    description: `حساب كلاش رويال أسطوري ليفل 16 فل ماكس (Elite Level 16) مع ثروة هائلة من الجواهر للبيع عبر متجر كلاش ماركت.
+🔹 القوة والمواصفات: مستوى الملك والأبراج 16 (الحد الأقصى) | تشكيلة قتالية كاملة ليفل 16 إيليت ماكس (انفرنو دراجون إيفو، زاب إيفو، جيش الهياكل إيفو، العملاق الكهربائي، البرق) | أكثر من 6,370 فوز في المعارك.
+🔹 ثروة الموارد والجواهر: 33,160 جوهرة خضراء (قيمة الجواهر وحدها تفوق سعر الحساب بمراحل!) + 63,255 عملة ذهبية + 138,593 نقطة نجوم + 1,085,900 رمز نجمي ذهبي.
+🔹 التعبيرات والعناصر السحرية: 154 تعبير نادر وحصري بتأثيرات بصرية متوهجة | 8/8 جرعات ترقية ماكس | 21 بطاقة جوكر أسطورية (تجاوز الحد الأقصى) | 193 بطاقة جوكر ملحمية | 4 بطاقات جوكر أبطال | 176 شظية تجارة.
+🔹 الأمان والضمان: نقل ملكية رسمي وفوري لبريد Supercell ID المسجل مع تفعيل التحقق بخطوتين والضمان الذهبي الشامل مدى الحياة.
+🔹 التسليم والدفع: تسليم سريع ومباشر عبر الواتساب، متاح تحويل بنكي لكافة البنوك السعودية والخليجية والتقسيط عبر تابي وتمارا.`,
+    status: "available",
+    townHall: null,
+    arena: "الساحة الأسطورية (Legendary Arena)",
+    trophies: 9000,
+    heroes: null,
+    gems: 33160,
+    skins: "أبراج ليفل 16 ماكس النخبة ومجموعات سكنات حصرية",
+    league: "دوري الأبطال الأعظم (Ultimate Champion)",
+    evolutions: "تشكيلة إيفو متطورة (انفرنو دراجون، زاب، سكيليتون أرمي)",
+    emotes: "154 تعبير نادر وأسطوري بإطارات لامعة",
+    maxCards: 50,
+    whatsappMessage: "حساب كلاش رويال ليفل 16 ماكس 33 ألف جوهرة بسعر 400",
+    featured: true
+  },
+
+  // ==========================================
+  // Clash of Clans Accounts (Town Hall 18)
+  // ==========================================
   {
     title: "قرية كلاش أوف كلانس تاون هول 18 ليفل 263 — TH18",
     slug: "coc-th18-l263",
@@ -23,11 +95,15 @@ const newAccounts = [
 🔹 الدفع والتسليم: تسليم مباشر عبر الواتساب، ومتاح تحويل بنكي سعودي وخيارات التقسيط الميسر.`,
     status: "available",
     townHall: 18,
+    arena: null,
     trophies: 5120,
     heroes: "الملك 95 | الملكة 95 | الآمر 70 | البطلة 45",
     gems: 2850,
     skins: "سكنات أبطال مميزة ومؤثرات خاصة",
     league: "دوري الأساطير (Legend League)",
+    evolutions: null,
+    emotes: null,
+    maxCards: null,
     whatsappMessage: "قرية كلاش تاون 18 ليفل 263 سعر 490",
     featured: false
   },
@@ -54,11 +130,15 @@ const newAccounts = [
 🔹 الدفع والتسليم: تسليم فوري وتواصل مباشر خطوة بخطوة عبر الواتساب.`,
     status: "available",
     townHall: 18,
+    arena: null,
     trophies: 4950,
     heroes: "الملك 92 | الملكة 95 | الآمر 68 | البطلة 44",
     gems: 1950,
     skins: "مجموعة سكنات كلاش المشهورة وتصاميم مميزة",
     league: "دوري التايتن I (Titan League I)",
+    evolutions: null,
+    emotes: null,
+    maxCards: null,
     whatsappMessage: "قرية كلاش تاون 18 ليفل 257 سعر 450",
     featured: false
   },
@@ -84,11 +164,15 @@ const newAccounts = [
 🔹 التسليم والدفع: تسليم سريع ومباشر 5-15 دقيقة عبر الواتساب وخيارات دفع ميسرة.`,
     status: "available",
     townHall: 18,
+    arena: null,
     trophies: 5300,
     heroes: "الملك 95 | الملكة 95 | الآمر 70 | البطلة 45",
     gems: 3400,
     skins: "سكنات أبطال نادرة ومناظر قري أسطورية",
     league: "دوري الأساطير (Legend League)",
+    evolutions: null,
+    emotes: null,
+    maxCards: null,
     whatsappMessage: "قرية كلاش تاون 18 عرض 580 ريال",
     featured: true
   },
@@ -125,20 +209,24 @@ const newAccounts = [
 🔹 التسليم والدفع: تسليم فوري خلال دقائق عبر الواتساب مع خيارات الدفع والتقسيط عبر تابي وتمارا.`,
     status: "available",
     townHall: 18,
+    arena: null,
     trophies: 5650,
     heroes: "أبطال ماكس بالكامل (95 / 95 / 70 / 45) بأعلى مستوى",
     gems: 5200,
     skins: "تشكيلة متكاملة من السكنات الحصرية النادرة ومناظر القرية",
     league: "دوري الأساطير (Legend League)",
+    evolutions: null,
+    emotes: null,
+    maxCards: null,
     whatsappMessage: "قرية كلاش تاون 18 فل ماكس ليفل 270 سعر 850",
     featured: true
   }
 ];
 
 async function seed() {
-  console.log("🔄 جاري إدراج الحسابات الأربعة الجديدة في قاعدة البيانات...");
+  console.log("🔄 جاري إدراج/تحديث الحسابات الجديدة في قاعدة البيانات...");
 
-  for (const acc of newAccounts) {
+  for (const acc of allNewAccounts) {
     const existing = await db
       .select({ id: accountsTable.id })
       .from(accountsTable)
@@ -150,7 +238,7 @@ async function seed() {
         .update(accountsTable)
         .set(acc)
         .where(eq(accountsTable.slug, acc.slug));
-      console.log(`🔄 تم تحديث الحساب الحالي: ${acc.title}`);
+      console.log(`🔄 تم تحديث الحساب: ${acc.title}`);
     } else {
       await db.insert(accountsTable).values(acc);
       console.log(`✅ تم إضافة الحساب بنجاح: ${acc.title}`);
