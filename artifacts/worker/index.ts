@@ -52,7 +52,7 @@ export default {
     const context = analyzeRequest(request);
 
     // 1. /api/* و /go/* → دايمًا للـ VPS (بغض النظر عن الموقع أو نوع الزائر)
-    if (new URL(request.url).pathname.startsWith("/api/") || new URL(request.url).pathname.startsWith("/go/")) {
+    if (incomingUrl.pathname.startsWith("/api") || incomingUrl.pathname.startsWith("/go")) {
       return proxyTo(VPS_ORIGIN, request, context);
     }
 
@@ -139,10 +139,16 @@ async function proxyTo(
     redirect: "manual",
   };
 
-  // GET و HEAD لا يحتاجان body مع تفعيل الـ Cloudflare Edge Cache لتسريع الاستجابة لأقل من 100ms
+  const pathname = incomingUrl.pathname;
+  const isDynamicOrBypass =
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/go") ||
+    pathname.startsWith("/admin");
+
+  // GET و HEAD لا يحتاجان body مع تفعيل الـ Cloudflare Edge Cache للـ Static و SSR فقط
   if (request.method !== "GET" && request.method !== "HEAD") {
     init.body = request.body;
-  } else {
+  } else if (!isDynamicOrBypass) {
     init.cf = {
       cacheEverything: true,
       cacheTtl: 3600,
@@ -167,6 +173,19 @@ async function proxyTo(
         method: request.method,
         headers: vpsHeaders,
         redirect: "manual",
+      });
+    }
+
+    if (isDynamicOrBypass) {
+      const responseHeaders = new Headers(response.headers);
+      responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+      responseHeaders.set("Pragma", "no-cache");
+      responseHeaders.set("Expires", "0");
+      const hasNoBody = [101, 204, 205, 304].includes(response.status);
+      return new Response(hasNoBody ? null : response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: responseHeaders,
       });
     }
     

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminGuard } from "@/components/auth/AdminGuard";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import {
@@ -84,12 +84,39 @@ const statusLabel: Record<string, string> = { available: "متاح", reserved: "
 const statusColor: Record<string, string> = { available: "bg-green-500", reserved: "bg-yellow-500", sold: "bg-red-500" };
 
 export default function AdminAccounts() {
+  const queryClient = useQueryClient();
   const { data: accounts, isLoading, refetch } = useListAccounts();
   const { toast } = useToast();
 
-  const createMut = useMutation({ mutationFn: (data: AccountInput) => createAccount(data) });
-  const updateMut = useMutation({ mutationFn: ({ slug, data }: { slug: string; data: AccountUpdate }) => updateAccount(slug, data) });
-  const deleteMut = useMutation({ mutationFn: (slug: string) => deleteAccount(slug) });
+  const invalidateAccountQueries = (slug?: string) => {
+    queryClient.invalidateQueries({ queryKey: ["/api/accounts"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/accounts/featured"] });
+    if (slug) {
+      queryClient.invalidateQueries({ queryKey: [`/api/accounts/${slug}`] });
+    }
+  };
+
+  const createMut = useMutation({
+    mutationFn: (data: AccountInput) => createAccount(data),
+    onSuccess: () => {
+      invalidateAccountQueries();
+    },
+  });
+  const updateMut = useMutation({
+    mutationFn: ({ slug, data }: { slug: string; data: AccountUpdate }) => updateAccount(slug, data),
+    onSuccess: (_data, variables) => {
+      invalidateAccountQueries(variables.slug);
+      if (variables.data.slug && variables.data.slug !== variables.slug) {
+        invalidateAccountQueries(variables.data.slug);
+      }
+    },
+  });
+  const deleteMut = useMutation({
+    mutationFn: (slug: string) => deleteAccount(slug),
+    onSuccess: (_data, slug) => {
+      invalidateAccountQueries(slug);
+    },
+  });
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Account | null>(null);
@@ -105,9 +132,14 @@ export default function AdminAccounts() {
     try {
       if (editTarget) {
         await updateMut.mutateAsync({ slug: editTarget.slug, data: formToUpdate(form) });
+        invalidateAccountQueries(editTarget.slug);
+        if (form.slug && form.slug !== editTarget.slug) {
+          invalidateAccountQueries(form.slug);
+        }
         toast({ title: "تم التحديث بنجاح" });
       } else {
         await createMut.mutateAsync(formToInput(form));
+        invalidateAccountQueries(form.slug);
         toast({ title: "تمت الإضافة بنجاح" });
       }
       setDialogOpen(false);
@@ -121,6 +153,7 @@ export default function AdminAccounts() {
     if (!deleteTarget) return;
     try {
       await deleteMut.mutateAsync(deleteTarget.slug);
+      invalidateAccountQueries(deleteTarget.slug);
       toast({ title: "تم الحذف بنجاح" });
       setDeleteTarget(null);
       refetch();

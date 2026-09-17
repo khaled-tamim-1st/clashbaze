@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminGuard } from "@/components/auth/AdminGuard";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import {
@@ -57,12 +57,38 @@ function formToUpdate(f: FormData): BlogPostUpdate {
 }
 
 export default function AdminBlog() {
+  const queryClient = useQueryClient();
   const { data: posts, isLoading, refetch } = useListBlogPosts();
   const { toast } = useToast();
 
-  const createMut = useMutation({ mutationFn: (data: BlogPostInput) => createBlogPost(data) });
-  const updateMut = useMutation({ mutationFn: ({ slug, data }: { slug: string; data: BlogPostUpdate }) => updateBlogPost(slug, data) });
-  const deleteMut = useMutation({ mutationFn: (slug: string) => deleteBlogPost(slug) });
+  const invalidateBlogQueries = (slug?: string) => {
+    queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+    if (slug) {
+      queryClient.invalidateQueries({ queryKey: [`/api/blog/${slug}`] });
+    }
+  };
+
+  const createMut = useMutation({
+    mutationFn: (data: BlogPostInput) => createBlogPost(data),
+    onSuccess: () => {
+      invalidateBlogQueries();
+    },
+  });
+  const updateMut = useMutation({
+    mutationFn: ({ slug, data }: { slug: string; data: BlogPostUpdate }) => updateBlogPost(slug, data),
+    onSuccess: (_data, variables) => {
+      invalidateBlogQueries(variables.slug);
+      if (variables.data.slug && variables.data.slug !== variables.slug) {
+        invalidateBlogQueries(variables.data.slug);
+      }
+    },
+  });
+  const deleteMut = useMutation({
+    mutationFn: (slug: string) => deleteBlogPost(slug),
+    onSuccess: (_data, slug) => {
+      invalidateBlogQueries(slug);
+    },
+  });
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<BlogPost | null>(null);
@@ -78,9 +104,14 @@ export default function AdminBlog() {
     try {
       if (editTarget) {
         await updateMut.mutateAsync({ slug: editTarget.slug, data: formToUpdate(form) });
+        invalidateBlogQueries(editTarget.slug);
+        if (form.slug && form.slug !== editTarget.slug) {
+          invalidateBlogQueries(form.slug);
+        }
         toast({ title: "تم التحديث بنجاح" });
       } else {
         await createMut.mutateAsync(formToInput(form));
+        invalidateBlogQueries(form.slug);
         toast({ title: "تمت الإضافة بنجاح" });
       }
       setDialogOpen(false);
@@ -94,6 +125,7 @@ export default function AdminBlog() {
     if (!deleteTarget) return;
     try {
       await deleteMut.mutateAsync(deleteTarget.slug);
+      invalidateBlogQueries(deleteTarget.slug);
       toast({ title: "تم الحذف بنجاح" });
       setDeleteTarget(null);
       refetch();
