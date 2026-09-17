@@ -22,8 +22,20 @@ function accountCardHtml(a: {
     </a>`;
 }
 
+// In-memory HTML cache for homepage (60s TTL) to reduce TTFB to under 10ms
+let cachedHomeHtml: string | null = null;
+let cachedHomeTime = 0;
+const HOME_CACHE_TTL_MS = 60 * 1000;
+
 router.get("/", async (req, res) => {
   try {
+    const now = Date.now();
+    if (cachedHomeHtml && now - cachedHomeTime < HOME_CACHE_TTL_MS) {
+      res.set("Content-Type", "text/html; charset=utf-8");
+      res.set("X-Cache", "HIT");
+      res.send(cachedHomeHtml);
+      return;
+    }
     // 1. جلب البيانات باستخدام قيم enum الصحيحة في قاعدة البيانات ("clash-of-clans" و "clash-royale")
     const [cocAccounts, royaleAccounts, latestPosts] = await Promise.all([
       db
@@ -227,7 +239,11 @@ router.get("/", async (req, res) => {
       jsonLd,
     });
 
+    cachedHomeHtml = html;
+    cachedHomeTime = Date.now();
+
     res.set("Content-Type", "text/html; charset=utf-8");
+    res.set("X-Cache", "MISS");
     res.send(html);
   } catch (err: any) {
     req.log.error({ err }, "Failed to render home page");

@@ -48,6 +48,16 @@ app.use(express.urlencoded({ extended: true }));
 // 3. مسارات الـ API
 app.use("/api", router);
 
+// 3.5. تسريع الاستجابة وتحسين الـ TTFB عبر Edge Caching لمحركات البحث والزوار
+app.use((req, res, next) => {
+  if (req.method === "GET" || req.method === "HEAD") {
+    if (!req.path.startsWith("/api") && !req.path.startsWith("/admin")) {
+      res.set("Cache-Control", "public, max-age=120, s-maxage=3600, stale-while-revalidate=86400");
+    }
+  }
+  next();
+});
+
 // 4. تقديم صفحات الـ HTML المباشرة فوراً
 app.use(homePageRouter);
 app.use(gamePagesRouter);

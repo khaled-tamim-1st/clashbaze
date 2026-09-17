@@ -133,15 +133,20 @@ async function proxyTo(
   // تعيين الـ Host header بدقة ليطابق الدومين الهدف حتى يتعرف عليه Cloudflare
   headers.set("Host", targetUrl.host);
 
-  const init: RequestInit = {
+  const init: RequestInit & { cf?: any } = {
     method: request.method,
     headers,
     redirect: "manual",
   };
 
-  // GET و HEAD لا يحتاجان body
+  // GET و HEAD لا يحتاجان body مع تفعيل الـ Cloudflare Edge Cache لتسريع الاستجابة لأقل من 100ms
   if (request.method !== "GET" && request.method !== "HEAD") {
     init.body = request.body;
+  } else {
+    init.cf = {
+      cacheEverything: true,
+      cacheTtl: 3600,
+    };
   }
 
   try {
