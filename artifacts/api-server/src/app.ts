@@ -1,4 +1,5 @@
 import express, { type Express } from "express";
+import path from "node:path";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import router from "./routes";
@@ -60,6 +61,12 @@ app.use("/api", router);
 
 // مسار التتبع المباشر لروابط الواتساب
 app.use(whatsappTrackingRouter);
+
+// تقديم الملفات الثابتة والصور (banners, images, favicon) لضمان عدم حدوث خطأ 404 للصور على الـ VPS
+const publicDistDir = path.resolve(process.cwd(), "artifacts/clash-base-market/dist/public");
+const publicSrcDir = path.resolve(process.cwd(), "artifacts/clash-base-market/public");
+app.use(express.static(publicDistDir));
+app.use(express.static(publicSrcDir));
 
 // 3.5. تسريع الاستجابة وتحسين الـ TTFB عبر Edge Caching لمحركات البحث والزوار
 app.use((req, res, next) => {

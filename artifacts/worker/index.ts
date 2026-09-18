@@ -158,6 +158,7 @@ async function proxyTo(
     init.cf = {
       cacheEverything: true,
       cacheTtl: 3600,
+      cacheTtlByStatus: { "200-299": 3600, "400-599": 0 },
     };
   } else {
     init.cf = {
@@ -170,6 +171,21 @@ async function proxyTo(
   try {
     const response = await fetch(targetUrl.toString(), init);
     
+    // إذا كانت الاستجابة 404 وقادمة من الـ VPS، نتأكد أنها ليست كاش قديم عن طريق استعلام حي مباشر
+    if (response.status === 404 && origin === VPS_ORIGIN) {
+      const freshTargetUrl = new URL(targetUrl.toString());
+      freshTargetUrl.searchParams.set("_cf_fresh", Date.now().toString());
+      const freshResponse = await fetch(freshTargetUrl.toString(), {
+        method: request.method,
+        headers: init.headers,
+        redirect: "manual",
+        cf: { cacheMode: "no-store", cacheEverything: false },
+      });
+      if (freshResponse.ok) {
+        return freshResponse;
+      }
+    }
+
     // إذا أرجع الـ Frontend Worker خطأ 404 أو فشل وكان الطلب لصفحة عادية (وليس ملف static)، نحوّل تلقائياً للـ VPS
     if (
       (!response.ok || response.status === 404) &&

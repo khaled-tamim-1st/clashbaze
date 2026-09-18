@@ -143,7 +143,7 @@ router.get("/blog/:slug", async (req, res) => {
         نُشر بتاريخ: ${new Date(post.createdAt).toLocaleDateString("ar-SA", { year: 'numeric', month: 'long', day: 'numeric' })} | بواسطة فريق ${escapeHtml(SITE_NAME)}
       </div>
       <article class="content" style="color: #e2e8f0; line-height: 2; font-size: 1.1rem;">
-        ${post.content}
+        ${post.content.replace(/<h1(\s+[^>]*)?>([\s\S]*?)<\/h1>/gi, "<h2$1>$2</h2>")}
       </article>
       ${relatedHtml}
       <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #334155;">

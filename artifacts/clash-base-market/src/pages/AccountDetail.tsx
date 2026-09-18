@@ -73,32 +73,11 @@ export default function AccountDetail() {
 
   const productJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "ItemPage",
     name: account.title,
     description: seoDescription,
     image: account.images && account.images.length > 0 ? account.images : ["https://www.clashmarket.online/thumbnail.png"],
-    brand: {
-      "@type": "Brand",
-      name: "Supercell",
-    },
-    category: gameLabel,
-    offers: {
-      "@type": "Offer",
-      price: account.price,
-      priceCurrency: "SAR",
-      priceValidUntil: "2026-12-31",
-      itemCondition: "https://schema.org/UsedCondition",
-      availability:
-        account.status === "available"
-          ? "https://schema.org/InStock"
-          : "https://schema.org/OutOfStock",
-      url: `https://www.clashmarket.online/account/${account.slug}`,
-      seller: {
-        "@type": "Organization",
-        name: "كلاش ماركت",
-        url: "https://www.clashmarket.online",
-      },
-    },
+    url: `https://www.clashmarket.online/account/${account.slug}`,
   };
 
   const breadcrumbItems = [

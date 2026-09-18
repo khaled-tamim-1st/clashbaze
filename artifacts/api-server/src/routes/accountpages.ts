@@ -145,38 +145,20 @@ router.get("/account/:slug", async (req, res) => {
       .map((img) => `<img src="${escapeHtml(img)}" alt="${escapeHtml(account.title)}" loading="lazy" />`)
       .join("\n");
 
-    const description = account.description
-      ? `شراء ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش ماركت. ${account.description.slice(0, 70)}... تسليم فوري وضمان شامل.`
-      : `شراء ${account.title} بسعر ${formatPrice(account.price)} ر.س من متجر كلاش ماركت في السعودية والخليج مع تسليم فوري وضمان شامل.`;
+    const rawDesc = account.description ? account.description.replace(/\s+/g, " ").trim() : "";
+    const prefix = `شراء ${account.title} (${formatPrice(account.price)} ر.س). `;
+    const suffix = " تسليم فوري وضمان شامل.";
+    const maxMid = Math.max(0, 155 - prefix.length - suffix.length);
+    const mid = rawDesc ? (rawDesc.slice(0, maxMid).trim() + "... ") : "";
+    const description = `${prefix}${mid}${suffix}`.slice(0, 155);
 
     const jsonLd = {
       "@context": "https://schema.org",
-      "@type": "Product",
+      "@type": "ItemPage",
       name: account.title,
       description,
       image: formattedImages.length > 0 ? formattedImages : [`${SITE_URL}/thumbnail.png`],
-      brand: {
-        "@type": "Brand",
-        name: "Supercell",
-      },
-      category: gameLabel,
-      offers: {
-        "@type": "Offer",
-        price: account.price,
-        priceCurrency: "SAR",
-        priceValidUntil: "2026-12-31",
-        itemCondition: "https://schema.org/UsedCondition",
-        availability:
-          account.status === "available"
-            ? "https://schema.org/InStock"
-            : "https://schema.org/OutOfStock",
-        url: SITE_URL ? `${SITE_URL}/account/${account.slug}` : `/account/${account.slug}`,
-        seller: {
-          "@type": "Organization",
-          name: SITE_NAME,
-          url: SITE_URL || "https://www.clashmarket.online",
-        },
-      },
+      url: SITE_URL ? `${SITE_URL}/account/${account.slug}` : `/account/${account.slug}`,
     };
 
     const breadcrumbItems = [
@@ -239,9 +221,16 @@ router.get("/account/:slug", async (req, res) => {
       ${relatedHtml}
     `;
 
-    const pageTitle = account.title.includes("متجر كلاش")
-      ? account.title
-      : `${account.title} | متجر كلاش ماركت`;
+    const titleSuffix = " | كلاش ماركت";
+    let pageTitle = account.title;
+    if (pageTitle.includes("كلاش ماركت") || pageTitle.includes("متجر كلاش")) {
+      pageTitle = pageTitle.slice(0, 60);
+    } else if ((pageTitle + titleSuffix).length <= 60) {
+      pageTitle = pageTitle + titleSuffix;
+    } else {
+      const maxBase = 60 - titleSuffix.length;
+      pageTitle = pageTitle.slice(0, maxBase).trim() + titleSuffix;
+    }
 
     const html = pageShell({
       title: pageTitle,
