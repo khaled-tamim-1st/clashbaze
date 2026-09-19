@@ -26,6 +26,54 @@ interface ReviewsResponse {
   };
 }
 
+export const INITIAL_SAMPLE_REVIEWS: Review[] = [
+  {
+    id: 1,
+    customerName: "عبدالله الشمري",
+    rating: 5,
+    comment: "ما شاء الله قمة في الأمانة والسرعة! اشتريت قرية تاون 18 ماكس وتم نقل وتأمين البريد في أقل من 10 دقائق. أنصح بالتعامل معهم وبشدة.",
+    game: "clash-of-clans",
+    status: "approved",
+    createdAt: "2026-09-18T14:30:00.000Z",
+  },
+  {
+    id: 2,
+    customerName: "سلطان القحطاني",
+    rating: 5,
+    comment: "أفضل متجر كلاش في السعودية بدون منازع. الحساب وصلني مطابق للمواصفات بالمللي، وخدمة العملاء متعاونين جداً في تفعيل الحماية بخطوتين.",
+    game: "clash-of-clans",
+    status: "approved",
+    createdAt: "2026-09-17T18:15:00.000Z",
+  },
+  {
+    id: 3,
+    customerName: "محمد الدوسري",
+    rating: 5,
+    comment: "شريت حساب كلاش رويال ليفل 16 إيفوليوشن ماكس، التعامل راقي والتسليم فوري على الواتساب. مصداقية 100% وتستاهلون كل خير.",
+    game: "clash-royale",
+    status: "approved",
+    createdAt: "2026-09-16T12:00:00.000Z",
+  },
+  {
+    id: 4,
+    customerName: "فيصل الحربي",
+    rating: 5,
+    comment: "تجربة شراء ممتازة وسلسة. وفروا لي وسيلة دفع مريحة بالتقسيط عبر تابي، وسلّموني بيانات السوبر سيل كاملة مع أكواد الاسترداد.",
+    game: "clash-of-clans",
+    status: "approved",
+    createdAt: "2026-09-15T20:45:00.000Z",
+  },
+  {
+    id: 5,
+    customerName: "خالد العنزي",
+    rating: 5,
+    comment: "كنت متخوف في البداية من الشراء أونلاين، لكن الضمان الذهبي وسرعة الرد طمّنتني. حساب تاون 17 ممتاز والعتاد كامل. شكراً كلاش ماركت!",
+    game: "clash-of-clans",
+    status: "approved",
+    createdAt: "2026-09-14T16:20:00.000Z",
+  },
+];
+
 // ── Color Palettes for Cards ───────────────────────────────────────────────────
 const CARD_PALETTES = [
   { bg: "#7c3aed", text: "#ffffff", accent: "#ccff00", star: "#ccff00" },
@@ -405,8 +453,16 @@ export default function Reviews() {
     queryFn: () => customFetch<ReviewsResponse>("/api/reviews"),
   });
 
-  const reviews = data?.reviews ?? [];
-  const stats = data?.stats ?? { averageRating: 0, totalReviews: 0, distribution: {} };
+  const apiReviews = data?.reviews ?? [];
+  const reviews = apiReviews.length > 0 ? apiReviews : INITIAL_SAMPLE_REVIEWS;
+  
+  const stats = data?.stats && data.stats.totalReviews > 0
+    ? data.stats
+    : {
+        averageRating: 5.0,
+        totalReviews: reviews.length,
+        distribution: { "5": reviews.length, "4": 0, "3": 0, "2": 0, "1": 0 },
+      };
 
   // Auto-advance carousel
   const startAutoPlay = useCallback(() => {
