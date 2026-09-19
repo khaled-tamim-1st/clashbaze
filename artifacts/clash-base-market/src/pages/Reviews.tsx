@@ -139,11 +139,9 @@ function StarDisplay({ rating, color = "#f59e0b", size = 18 }: { rating: number;
 // ── Review Card ────────────────────────────────────────────────────────────────
 function ReviewCard({
   review,
-  palette,
   isActive,
 }: {
   review: Review;
-  palette: typeof CARD_PALETTES[0];
   isActive: boolean;
 }) {
   const date = new Date(review.createdAt);
@@ -151,54 +149,33 @@ function ReviewCard({
 
   return (
     <div
-      className="relative flex-shrink-0 rounded-[28px] overflow-hidden transition-all duration-300 ease-out select-none border"
+      className="relative flex-shrink-0 rounded-2xl p-6 bg-card border border-border transition-all duration-300 select-none flex flex-col justify-between"
       style={{
-        width: "330px",
-        height: "500px",
-        background: palette.bg,
-        color: palette.text,
-        borderColor: palette.border,
-        transform: isActive ? "scale(1.03)" : "scale(0.94)",
-        opacity: isActive ? 1 : 0.7,
-        boxShadow: isActive ? "0 20px 40px -10px rgba(0,0,0,0.3)" : "0 8px 20px -5px rgba(0,0,0,0.1)",
+        width: "320px",
+        height: "260px",
+        boxShadow: isActive ? "0 10px 25px -5px rgba(0,0,0,0.08)" : "0 2px 8px rgba(0,0,0,0.04)",
       }}
     >
-      <FloatingShapes palette={palette} />
+      {/* Review Text */}
+      <p className="text-foreground text-sm font-normal leading-relaxed line-clamp-4 text-right mb-4">
+        {review.comment}
+      </p>
 
-      <div className="relative z-10 flex flex-col h-full p-7">
-        {/* Header */}
-        <div className="flex items-center gap-3.5 mb-6">
-          <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-black shrink-0 shadow-sm"
-            style={{ background: palette.accent, color: "#ffffff" }}
-          >
-            {review.customerName.charAt(0)}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-base leading-tight truncate">{review.customerName}</p>
-            <div className="flex items-center gap-1.5 mt-1">
-              <CheckCircle2 size={14} style={{ color: palette.accent }} />
-              <span className="text-xs font-medium" style={{ color: palette.badgeText }}>مشتري موثق</span>
-            </div>
-          </div>
+      {/* Customer Info & Stars at Bottom */}
+      <div className="pt-4 border-t border-border/60 flex items-center gap-3" dir="rtl">
+        <div className="w-11 h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold shrink-0 border border-primary/20">
+          {review.customerName.charAt(0)}
         </div>
-
-        {/* Stars (RTL aligned right) */}
-        <div className="mb-5 flex justify-start">
-          <StarDisplay rating={review.rating} color={palette.star} size={22} />
-        </div>
-
-        {/* Comment */}
-        <blockquote className="flex-1 text-lg font-medium leading-relaxed" style={{ fontFamily: "'Tajawal', sans-serif" }}>
-          &ldquo;{review.comment}&rdquo;
-        </blockquote>
-
-        {/* Footer */}
-        <div className="mt-auto pt-4 border-t flex items-center justify-between" style={{ borderColor: `${palette.border}80` }}>
-          <span className="text-xs opacity-60">{dateStr}</span>
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: palette.badgeBg, color: palette.badgeText }}>
-            طلب مكتمل
-          </span>
+        <div className="flex-1 min-w-0 text-right">
+          <div className="flex items-center gap-1 mb-1">
+            <StarDisplay rating={review.rating} size={14} />
+          </div>
+          <p className="font-bold text-xs text-foreground truncate">{review.customerName}</p>
+          <div className="flex items-center gap-1.5 mt-0.5 text-[11px] text-muted-foreground">
+            <span>مشتري معتمد</span>
+            <span>•</span>
+            <span>{dateStr}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -516,21 +493,7 @@ export default function Reviews() {
       <Navbar />
 
       {/* Hero Section */}
-      <main className="flex-1 py-10">
-        {/* Title */}
-        <div className="text-center px-4 mb-8">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold mb-3 border border-primary/20">
-            <Sparkles size={13} />
-            <span>تجارب حقيقية من مجتمع اللاعبين</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-tight">
-            آراء عملاء <span className="text-primary">كلاش ماركت</span>
-          </h1>
-          <p className="text-muted-foreground mt-3 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-            تقييمات موثوقة من مشترين استلموا حساباتهم بأمان وسرعة وضمان شامل.
-          </p>
-        </div>
-
+      <main className="flex-1 py-8">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -538,91 +501,142 @@ export default function Reviews() {
         ) : reviews.length === 0 ? (
           <EmptyState onOpenDrawer={() => setDrawerOpen(true)} />
         ) : (
-          <>
-            {/* Stats */}
-            <StatsBar stats={stats} />
+          <div className="max-w-6xl mx-auto px-4 py-6">
+            {/* The Main Frame Card (White rounded card on soft background like reference) */}
+            <div className="bg-card rounded-[32px] border border-border/80 shadow-sm p-6 md:p-10">
+              
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                {/* 1. Left Feature Card (lg:col-span-5) - Brand Image & Text */}
+                <div className="lg:col-span-5 rounded-[24px] relative overflow-hidden flex flex-col justify-between p-8 text-white min-h-[480px] lg:min-h-[520px] bg-gradient-to-b from-[#2e1065] via-[#1e1b4b] to-[#0f172a] border border-primary/20 shadow-md">
+                  {/* Subtle ambient lighting */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary/30 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Smooth Carousel */}
-            <div className="relative pb-6 overflow-hidden max-w-7xl mx-auto px-4">
-              <div
-                ref={scrollRef}
-                onScroll={handleScroll}
-                onMouseDown={handleMouseDown}
-                onMouseLeave={handleMouseLeave}
-                onMouseUp={handleMouseUp}
-                onMouseMove={handleMouseMove}
-                className="flex items-center gap-4 overflow-x-auto py-8 px-4 select-none cursor-grab active:cursor-grabbing no-scrollbar"
-                style={{
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                }}
-              >
-                {reviews.map((review, idx) => (
-                  <div
-                    key={review.id}
-                    onClick={() => scrollToIndex(idx)}
-                    className="shrink-0 transition-transform duration-300"
-                    style={{ scrollSnapAlign: "center" }}
-                  >
-                    <ReviewCard
-                      review={review}
-                      palette={CARD_PALETTES[idx % CARD_PALETTES.length]}
-                      isActive={idx === activeIndex}
+                  {/* Top Badge */}
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-bold border border-white/15">
+                      <Sparkles size={12} className="text-amber-400" />
+                      <span>كلاش ماركت الأصلي</span>
+                    </div>
+                  </div>
+
+                  {/* Character Illustration in Center */}
+                  <div className="relative z-10 flex-1 flex items-center justify-center my-4">
+                    <img
+                      src="/images/barbarian-king.png"
+                      alt="كلاش ماركت"
+                      className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                ))}
-              </div>
 
-              {/* Nav Arrows & Dots */}
-              {reviews.length > 1 && (
-                <div className="flex items-center justify-center gap-4 mt-2" dir="rtl">
-                  <button
-                    onClick={goPrev}
-                    aria-label="السابق"
-                    className="p-3 rounded-full bg-card border border-border shadow-sm hover:bg-muted text-foreground transition-all hover:scale-105"
-                  >
-                    <ArrowRight size={18} />
-                  </button>
+                  {/* Centered Editorial Quote & Leave a Review link (matching reference text) */}
+                  <div className="relative z-10 text-center">
+                    <p className="text-white/95 text-base md:text-lg font-bold leading-relaxed mb-4 max-w-xs mx-auto">
+                      كل تقييم هو انعكاس لثقة مجتمع اللاعبين بنا: أمان تام، سرعة واهتمام بأدق التفاصيل
+                    </p>
+                    <button
+                      onClick={() => setDrawerOpen(true)}
+                      className="text-xs font-bold text-amber-300 hover:text-amber-200 underline underline-offset-8 transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <Star size={13} className="fill-current" />
+                      <span>أضف تقييمك الآن</span>
+                    </button>
+                  </div>
+                </div>
 
-                  {/* Dots */}
-                  <div className="flex items-center gap-2">
-                    {reviews.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => scrollToIndex(idx)}
-                        aria-label={`تقييم ${idx + 1}`}
-                        className={`rounded-full transition-all duration-300 ${
-                          idx === activeIndex ? "w-7 h-2 bg-primary" : "w-2 h-2 bg-border hover:bg-muted-foreground"
-                        }`}
-                      />
-                    ))}
+                {/* 2. Right Side (lg:col-span-7) */}
+                <div className="lg:col-span-7 flex flex-col justify-between gap-6">
+                  
+                  {/* Top Header Block (matching "Real Stories. Real Impact.") */}
+                  <div className="text-right pt-2" dir="rtl">
+                    <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tight leading-tight mb-2">
+                      تجارب حقيقية. ثقة تصنع الفارق.
+                    </h1>
+                    <p className="text-muted-foreground text-sm leading-relaxed max-w-lg">
+                      اقرأ تجارب المشترين الذين وثقوا في متجر كلاش ماركت لتسليم ونقل حساباتهم بأمان وضمان رسمي.
+                    </p>
                   </div>
 
-                  <button
-                    onClick={goNext}
-                    aria-label="التالي"
-                    className="p-3 rounded-full bg-card border border-border shadow-sm hover:bg-muted text-foreground transition-all hover:scale-105"
-                  >
-                    <ArrowLeft size={18} />
-                  </button>
+                  {/* Bottom Carousel Block */}
+                  <div className="relative mt-2">
+                    <div
+                      ref={scrollRef}
+                      onScroll={handleScroll}
+                      onMouseDown={handleMouseDown}
+                      onMouseLeave={handleMouseLeave}
+                      onMouseUp={handleMouseUp}
+                      onMouseMove={handleMouseMove}
+                      className="flex items-center gap-5 overflow-x-auto py-2 px-1 select-none cursor-grab active:cursor-grabbing no-scrollbar"
+                      style={{
+                        scrollbarWidth: "none",
+                        msOverflowStyle: "none",
+                        scrollSnapType: "x mandatory",
+                        WebkitOverflowScrolling: "touch",
+                      }}
+                    >
+                      {reviews.map((review, idx) => (
+                        <div
+                          key={review.id}
+                          onClick={() => scrollToIndex(idx)}
+                          className="shrink-0 transition-transform duration-300"
+                          style={{ scrollSnapAlign: "start" }}
+                        >
+                          <ReviewCard
+                            review={review}
+                            isActive={idx === activeIndex}
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Navigation Arrows on the Bottom-Right (as in reference) */}
+                    {reviews.length > 1 && (
+                      <div className="flex items-center justify-end gap-2.5 mt-6 px-1" dir="ltr">
+                        <button
+                          onClick={goPrev}
+                          aria-label="السابق"
+                          className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-muted transition-all active:scale-95"
+                        >
+                          <ArrowLeft size={17} />
+                        </button>
+                        <button
+                          onClick={goNext}
+                          aria-label="التالي"
+                          className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-muted transition-all active:scale-95"
+                        >
+                          <ArrowRight size={17} />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
                 </div>
-              )}
+
+              </div>
+
             </div>
 
-            {/* CTA */}
-            <div className="text-center py-8">
-              <p className="text-muted-foreground text-sm mb-3">جربت التعامل معنا؟ رأيك يصنع الفرق</p>
+            {/* Bottom Full-Width CTA (تحت دا كلو الـ CTA) */}
+            <div className="mt-8 rounded-[28px] p-8 bg-card border border-border shadow-sm text-center flex flex-col items-center">
+              <div className="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-3">
+                <Star size={22} className="fill-[#f59e0b] text-[#f59e0b]" />
+              </div>
+              <h2 className="text-xl md:text-2xl font-black text-foreground mb-2">
+                شاركونا تقييمكم لمتجر كلاش ماركت
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-md mx-auto mb-5 leading-relaxed">
+                رأيك يساعدنا في الاستمرار بتقديم أفضل خدمة وأعلى مستويات الأمان لمجتمع اللاعبين.
+              </p>
               <button
                 onClick={() => setDrawerOpen(true)}
                 className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-all duration-200 hover:scale-105 shadow-md shadow-primary/20 inline-flex items-center gap-2"
               >
-                <Star size={17} className="fill-[#f59e0b] text-[#f59e0b]" />
-                شاركنا تجربتك
+                <Star size={16} className="fill-[#f59e0b] text-[#f59e0b]" />
+                <span>أضف تقييمك الآن</span>
               </button>
             </div>
-          </>
+          </div>
         )}
       </main>
 
