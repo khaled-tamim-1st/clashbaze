@@ -27,53 +27,7 @@ interface ReviewsResponse {
   };
 }
 
-export const INITIAL_SAMPLE_REVIEWS: Review[] = [
-  {
-    id: 1,
-    customerName: "عبدالله الشمري",
-    rating: 5,
-    comment: "ما شاء الله قمة في الأمانة والسرعة! اشتريت قرية تاون 18 ماكس وتم نقل وتأمين البريد في أقل من 10 دقائق. أنصح بالتعامل معهم وبشدة.",
-    game: "clash-of-clans",
-    status: "approved",
-    createdAt: "2026-09-18T14:30:00.000Z",
-  },
-  {
-    id: 2,
-    customerName: "سلطان القحطاني",
-    rating: 5,
-    comment: "أفضل متجر كلاش في السعودية بدون منازع. الحساب وصلني مطابق للمواصفات بالمللي، وخدمة العملاء متعاونين جداً في تفعيل الحماية بخطوتين.",
-    game: "clash-of-clans",
-    status: "approved",
-    createdAt: "2026-09-17T18:15:00.000Z",
-  },
-  {
-    id: 3,
-    customerName: "محمد الدوسري",
-    rating: 5,
-    comment: "شريت حساب كلاش رويال ليفل 16 إيفوليوشن ماكس، التعامل راقي والتسليم فوري على الواتساب. مصداقية 100% وتستاهلون كل خير.",
-    game: "clash-royale",
-    status: "approved",
-    createdAt: "2026-09-16T12:00:00.000Z",
-  },
-  {
-    id: 4,
-    customerName: "فيصل الحربي",
-    rating: 5,
-    comment: "تجربة شراء ممتازة وسلسة. وفروا لي وسيلة دفع مريحة بالتقسيط عبر تابي، وسلّموني بيانات السوبر سيل كاملة مع أكواد الاسترداد.",
-    game: "clash-of-clans",
-    status: "approved",
-    createdAt: "2026-09-15T20:45:00.000Z",
-  },
-  {
-    id: 5,
-    customerName: "خالد العنزي",
-    rating: 5,
-    comment: "كنت متخوف في البداية من الشراء أونلاين، لكن الضمان الذهبي وسرعة الرد طمّنتني. حساب تاون 17 ممتاز والعتاد كامل. شكراً كلاش ماركت!",
-    game: "clash-of-clans",
-    status: "approved",
-    createdAt: "2026-09-14T16:20:00.000Z",
-  },
-];
+export const INITIAL_SAMPLE_REVIEWS: Review[] = [];
 
 // ── Color Palettes for Cards (Brand ClashMarket Identity) ──────────────────────
 const CARD_PALETTES = [
@@ -381,37 +335,6 @@ function StatsBar({ stats }: { stats: ReviewsResponse["stats"] }) {
   );
 }
 
-// ── Empty State ────────────────────────────────────────────────────────────────
-function EmptyState({ onOpenDrawer }: { onOpenDrawer: () => void }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 gap-6 text-center">
-      {/* Abstract illustration */}
-      <div className="relative w-40 h-40">
-        <div className="absolute inset-0 rounded-full bg-[#7c3aed]/10 animate-pulse" />
-        <div className="absolute top-2 right-2 w-16 h-16 rounded-full bg-[#ccff00]/20" />
-        <div className="absolute bottom-4 left-4 w-10 h-10 rotate-45 bg-[#ec4899]/15" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Sparkles size={48} className="text-[#7c3aed]" />
-        </div>
-      </div>
-
-      <div>
-        <h2 className="text-2xl font-black text-[#09090b] mb-2">كن أول من يشاركنا تجربته</h2>
-        <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-          لم يُضاف أي تقييم حتى الآن. شاركنا رأيك وساعد مجتمع اللاعبين في اتخاذ قراراتهم.
-        </p>
-      </div>
-
-      <button
-        onClick={onOpenDrawer}
-        className="px-8 py-4 rounded-2xl bg-[#7c3aed] text-white font-bold text-base hover:bg-[#6d28d9] transition-all duration-200 hover:scale-105 shadow-lg shadow-[#7c3aed]/25 flex items-center gap-2"
-      >
-        <Star size={18} className="fill-[#ccff00] text-[#ccff00]" />
-        شاركنا تجربتك
-      </button>
-    </div>
-  );
-}
 
 // ── Main Page ──────────────────────────────────────────────────────────────────
 export default function Reviews() {
@@ -427,15 +350,14 @@ export default function Reviews() {
     queryFn: () => customFetch<ReviewsResponse>("/api/reviews"),
   });
 
-  const apiReviews = data?.reviews ?? [];
-  const reviews = apiReviews.length > 0 ? apiReviews : INITIAL_SAMPLE_REVIEWS;
+  const reviews = data?.reviews ?? [];
   
   const stats = data?.stats && data.stats.totalReviews > 0
     ? data.stats
     : {
         averageRating: 5.0,
         totalReviews: reviews.length,
-        distribution: { "5": reviews.length, "4": 0, "3": 0, "2": 0, "1": 0 },
+        distribution: { "5": 0, "4": 0, "3": 0, "2": 0, "1": 0 },
       };
 
   const handleScroll = () => {
@@ -505,25 +427,29 @@ export default function Reviews() {
       name: "كلاش ماركت",
       url: "https://www.clashmarket.online",
       image: "https://www.clashmarket.online/thumbnail.png",
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: stats.averageRating.toFixed(1),
-        bestRating: "5",
-        worstRating: "1",
-        ratingCount: stats.totalReviews || 1,
-      },
-      review: reviews.slice(0, 10).map((r) => ({
-        "@type": "Review",
-        author: { "@type": "Person", name: r.customerName },
-        datePublished: r.createdAt,
-        reviewBody: r.comment,
-        reviewRating: {
-          "@type": "Rating",
-          ratingValue: r.rating,
-          bestRating: "5",
-          worstRating: "1"
-        }
-      }))
+      ...(stats.totalReviews > 0
+        ? {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: stats.averageRating.toFixed(1),
+              bestRating: "5",
+              worstRating: "1",
+              ratingCount: stats.totalReviews,
+            },
+            review: reviews.slice(0, 10).map((r) => ({
+              "@type": "Review",
+              author: { "@type": "Person", name: r.customerName },
+              datePublished: r.createdAt,
+              reviewBody: r.comment,
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: r.rating,
+                bestRating: "5",
+                worstRating: "1",
+              },
+            })),
+          }
+        : {})
     },
     {
       "@context": "https://schema.org",
@@ -581,8 +507,6 @@ export default function Reviews() {
           <div className="flex items-center justify-center py-20">
             <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
-        ) : reviews.length === 0 ? (
-          <EmptyState onOpenDrawer={() => setDrawerOpen(true)} />
         ) : (
           <div className="max-w-6xl mx-auto px-4 py-6">
             {/* The Main Frame Card (White rounded card on soft background like reference) */}
@@ -641,49 +565,70 @@ export default function Reviews() {
                     </p>
                   </div>
 
-                  {/* Bottom Carousel Block */}
-                  <div className="relative mt-2">
-                    <div
-                      ref={scrollRef}
-                      onScroll={handleScroll}
-                      onMouseDown={handleMouseDown}
-                      onMouseLeave={handleMouseLeave}
-                      onMouseUp={handleMouseUp}
-                      onMouseMove={handleMouseMove}
-                      className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 select-none cursor-grab active:cursor-grabbing"
-                      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                    >
-                      {reviews.map((r, i) => (
-                        <ReviewCard key={r.id} review={r} isActive={i === activeIndex} />
-                      ))}
+                  {/* Bottom Carousel Block or Empty State */}
+                  {reviews.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 px-6 rounded-2xl border border-dashed border-border bg-muted/20 text-center my-auto">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-3">
+                        <Star size={24} className="fill-amber-400 text-amber-400" />
+                      </div>
+                      <p className="font-bold text-foreground text-base mb-1.5 font-['Tajawal',sans-serif]">
+                        لا توجد تقييمات منشورة حالياً
+                      </p>
+                      <p className="text-xs text-muted-foreground mb-4 max-w-xs leading-relaxed font-['Tajawal',sans-serif]">
+                        كن أول من يشارك تجربته مع متجر كلاش ماركت بعد استلام حسابك.
+                      </p>
+                      <button
+                        onClick={() => setDrawerOpen(true)}
+                        className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-all shadow-sm inline-flex items-center gap-2"
+                      >
+                        <Star size={14} className="fill-amber-400 text-amber-400" />
+                        <span>أضف تقييمك الآن</span>
+                      </button>
                     </div>
-
-                    {/* Navigation Arrows Row at bottom-right of the carousel */}
-                    <div className="flex items-center justify-between pt-2">
-                      {/* Left side: indicators / helper */}
-                      <div className="text-xs text-muted-foreground font-medium" dir="rtl">
-                        اسحب الكروت أو استخدم الأسهم للتصفح
+                  ) : (
+                    <div className="relative mt-2">
+                      <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
+                        onMouseDown={handleMouseDown}
+                        onMouseLeave={handleMouseLeave}
+                        onMouseUp={handleMouseUp}
+                        onMouseMove={handleMouseMove}
+                        className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 select-none cursor-grab active:cursor-grabbing"
+                        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                      >
+                        {reviews.map((r, i) => (
+                          <ReviewCard key={r.id} review={r} isActive={i === activeIndex} />
+                        ))}
                       </div>
 
-                      {/* Right side: Arrow Buttons */}
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={goPrev}
-                          aria-label="السابق"
-                          className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all active:scale-95 shadow-sm"
-                        >
-                          <ArrowRight size={16} />
-                        </button>
-                        <button
-                          onClick={goNext}
-                          aria-label="التالي"
-                          className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all active:scale-95 shadow-sm"
-                        >
-                          <ArrowLeft size={16} />
-                        </button>
+                      {/* Navigation Arrows Row at bottom-right of the carousel */}
+                      <div className="flex items-center justify-between pt-2">
+                        {/* Left side: indicators / helper */}
+                        <div className="text-xs text-muted-foreground font-medium" dir="rtl">
+                          اسحب الكروت أو استخدم الأسهم للتصفح
+                        </div>
+
+                        {/* Right side: Arrow Buttons */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={goPrev}
+                            aria-label="السابق"
+                            className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all active:scale-95 shadow-sm"
+                          >
+                            <ArrowRight size={16} />
+                          </button>
+                          <button
+                            onClick={goNext}
+                            aria-label="التالي"
+                            className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all active:scale-95 shadow-sm"
+                          >
+                            <ArrowLeft size={16} />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                 </div>
 
