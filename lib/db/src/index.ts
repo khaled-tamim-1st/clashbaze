@@ -10,3 +10,4 @@ export const db = drizzle(pool, { schema });
 
 export * from "./schema";
 export * from "./init-whatsapp-tables";
+export * from "./init-reviews-tables";
