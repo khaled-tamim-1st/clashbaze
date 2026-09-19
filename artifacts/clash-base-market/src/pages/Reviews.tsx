@@ -235,7 +235,8 @@ function ReviewDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-card border-l border-border shadow-2xl transition-transform duration-300 ease-out ${
+        style={{ fontFamily: "'Tajawal', sans-serif" }}
+        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-card border-l border-border shadow-2xl transition-transform duration-300 ease-out font-['Tajawal',sans-serif] ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -489,7 +490,7 @@ export default function Reviews() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground font-['Tajawal',sans-serif]" style={{ fontFamily: "'Tajawal', sans-serif" }}>
       <Navbar />
 
       {/* Hero Section */}
