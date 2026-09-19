@@ -523,11 +523,11 @@ export default function Reviews() {
                   </div>
 
                   {/* Character Illustration in Center */}
-                  <div className="relative z-10 flex-1 flex items-center justify-center my-4">
+                  <div className="relative z-10 flex-1 flex items-center justify-center my-3">
                     <img
                       src="/images/mini-pekka.png"
                       alt="ميني بيكا - كلاش ماركت"
-                      className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500"
+                      className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 max-h-[320px] object-contain drop-shadow-[0_20px_25px_rgba(0,0,0,0.55)] transform hover:scale-105 transition-transform duration-500"
                     />
                   </div>
 
