@@ -3,8 +3,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { customFetch } from "@workspace/api-client-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Star, ArrowLeft, ArrowRight, X, Send, CheckCircle2, Sparkles } from "lucide-react";
+import { Star, ArrowLeft, ArrowRight, X, Send, CheckCircle2, Sparkles, ShieldCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { SEO } from "@/components/SEO";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 interface Review {
@@ -489,8 +490,89 @@ export default function Reviews() {
     scrollRef.current.scrollLeft = scrollLeftRef.current - walk;
   };
 
+  const reviewsJsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "كلاش ماركت", item: "https://www.clashmarket.online/" },
+        { "@type": "ListItem", position: 2, name: "آراء العملاء", item: "https://www.clashmarket.online/reviews" }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      name: "كلاش ماركت",
+      url: "https://www.clashmarket.online",
+      image: "https://www.clashmarket.online/thumbnail.png",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: stats.averageRating.toFixed(1),
+        bestRating: "5",
+        worstRating: "1",
+        ratingCount: stats.totalReviews || 1,
+      },
+      review: reviews.slice(0, 10).map((r) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: r.customerName },
+        datePublished: r.createdAt,
+        reviewBody: r.comment,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: r.rating,
+          bestRating: "5",
+          worstRating: "1"
+        }
+      }))
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "هل متجر كلاش ماركت موثوق وآمن للتعامل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، متجر كلاش ماركت هو متجر موثوق في السعودية ودول الخليج لشراء ونقل حسابات كلاش أوف كلانس وكلاش رويال بأمان. جميع العمليات تتم بإشراف يدوي مباشر عبر الواتساب مع توثيق رسمي وضمان كامل."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "ما هو الضمان الذهبي لحسابات كلاش ماركت؟ وماذا يشمل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "يشمل الضمان الذهبي حماية كاملة بنسبة 100% ضد السحب أو الاسترجاع مدى الحياة، مع تسليم البريد الإلكتروني الأساسي النظيف، ونقل ملكية السوبر سيل آيدي وتفعيل التحقق بخطوتين برقم المشتري الخاص."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "كيف أضمن عدم استرجاع الحساب بعد الشراء؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "يتم تسليمك البريد الأساسي مع تغيير كامل لبيانات الاسترداد، حذف الأجهزة المرتبطة السابقة، وتوليد أكواد استرداد جديدة مخصصة لك فقط، مما يمنحك الملكية الحصرية والآمنة."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "هل التقييمات المعروضة في كلاش ماركت حقيقية؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، جميع التقييمات المعروضة هي تجارب حقيقية موثقة من مشترين ولاعبين استلموا حساباتهم وتم التحقق من اكتمال طلباتهم بنجاح."
+          }
+        }
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-['Tajawal',sans-serif]" style={{ fontFamily: "'Tajawal', sans-serif" }}>
+      <SEO
+        title="آراء وتقييمات متجر كلاش | هل متجر كلاش موثوق؟ ضمان وأمان الحسابات"
+        description="اقرأ تقييمات وآراء مشتري متجر كلاش ماركت الموثقة. هل متجر كلاش ماركت موثوق؟ تعرف على سياسة الضمان الذهبي الشامل ضد السحب، سرعة التسليم الفوري، وتجارب اللاعبين في السعودية والخليج."
+        url="https://www.clashmarket.online/reviews"
+        jsonLd={reviewsJsonLd}
+      />
       <Navbar />
 
       {/* Hero Section */}
@@ -518,7 +600,7 @@ export default function Reviews() {
                   <div className="relative z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-bold border border-white/15">
                       <Sparkles size={12} className="text-amber-400" />
-                      <span>كلاش ماركت الأصلي</span>
+                      <span>كلاش ماركت</span>
                     </div>
                   </div>
 
@@ -568,48 +650,39 @@ export default function Reviews() {
                       onMouseLeave={handleMouseLeave}
                       onMouseUp={handleMouseUp}
                       onMouseMove={handleMouseMove}
-                      className="flex items-center gap-5 overflow-x-auto py-2 px-1 select-none cursor-grab active:cursor-grabbing no-scrollbar"
-                      style={{
-                        scrollbarWidth: "none",
-                        msOverflowStyle: "none",
-                        scrollSnapType: "x mandatory",
-                        WebkitOverflowScrolling: "touch",
-                      }}
+                      className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 select-none cursor-grab active:cursor-grabbing"
+                      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                     >
-                      {reviews.map((review, idx) => (
-                        <div
-                          key={review.id}
-                          onClick={() => scrollToIndex(idx)}
-                          className="shrink-0 transition-transform duration-300"
-                          style={{ scrollSnapAlign: "start" }}
-                        >
-                          <ReviewCard
-                            review={review}
-                            isActive={idx === activeIndex}
-                          />
-                        </div>
+                      {reviews.map((r, i) => (
+                        <ReviewCard key={r.id} review={r} isActive={i === activeIndex} />
                       ))}
                     </div>
 
-                    {/* Navigation Arrows on the Bottom-Right (as in reference) */}
-                    {reviews.length > 1 && (
-                      <div className="flex items-center justify-end gap-2.5 mt-6 px-1" dir="ltr">
+                    {/* Navigation Arrows Row at bottom-right of the carousel */}
+                    <div className="flex items-center justify-between pt-2">
+                      {/* Left side: indicators / helper */}
+                      <div className="text-xs text-muted-foreground font-medium" dir="rtl">
+                        اسحب الكروت أو استخدم الأسهم للتصفح
+                      </div>
+
+                      {/* Right side: Arrow Buttons */}
+                      <div className="flex items-center gap-2">
                         <button
                           onClick={goPrev}
                           aria-label="السابق"
-                          className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-muted transition-all active:scale-95"
+                          className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all active:scale-95 shadow-sm"
                         >
-                          <ArrowLeft size={17} />
+                          <ArrowRight size={16} />
                         </button>
                         <button
                           onClick={goNext}
                           aria-label="التالي"
-                          className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-muted transition-all active:scale-95"
+                          className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-secondary transition-all active:scale-95 shadow-sm"
                         >
-                          <ArrowRight size={17} />
+                          <ArrowLeft size={16} />
                         </button>
                       </div>
-                    )}
+                    </div>
                   </div>
 
                 </div>

@@ -42,7 +42,7 @@ export default function Home() {
       name: "كلاش ماركت",
       url: "https://www.clashmarket.online/",
       logo: "https://www.clashmarket.online/thumbnail.png",
-      description: "متجر كلاش ماركت الأول لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. متجر كلاش موثوق بتسليم فوري وضمان شامل.",
+      description: "متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. تسليم فوري وضمان شامل.",
       areaServed: [
         { "@type": "Country", name: "Saudi Arabia" },
         { "@type": "Country", name: "United Arab Emirates" },
@@ -77,18 +77,42 @@ export default function Home() {
         },
         {
           "@type": "Question",
-          name: "ما هي طرق الدفع المتاحة في السعودية ودول الخليج؟",
+          name: "هل متجر كلاش ماركت موثوق وآمن؟",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "نقبل التحويل البنكي المباشر للحسابات السعودية والخليجية، بالإضافة إلى إمكانية الدفع والتقسيط عبر تابي (Tabby) وتمارا (Tamara)؛ حيث يتم الاتفاق على الطريقة المناسبة والتسليم يدوياً ومباشرة عبر الواتساب بكل سهولة وأمان."
+            text: "نعم، متجر كلاش ماركت هو متجر موثوق في السعودية والخليج لبيع وشراء حسابات الألعاب. جميع التعاملات تتم يدوياً وبشكل مباشر مع إدارة المتجر عبر الواتساب، وتخضع الحسابات لفحص أمني شامل قبل العرض، مع تسليم فوري وتوثيق رسمي."
           }
         },
         {
           "@type": "Question",
-          name: "هل الحسابات المعروضة في كلاش ماركت مضمونة؟",
+          name: "ما هو الضمان الذهبي لحسابات كلاش؟ وماذا يغطي؟",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "نعم، جميع الحسابات مملوكة ومفحوصة يدوياً ومشمولة بوثيقة الضمان الذهبي ضد السحب أو الاسترجاع مدى الحياة، مع تسليم الإيميل الأساسي النظيف."
+            text: "نقدم وثيقة الضمان الذهبي الشاملة التي تضمن الحساب بنسبة 100% ضد السحب أو الاسترجاع. يتم تسليم الحساب ببريد إلكتروني نظيف ومخصص، مع نقل كامل لبيانات سوبر سيل وتفعيل أرقام الأمان والتحقق بخطوتين لتصبح الملكية كاملة للمشتري."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "كيف أضمن عدم استرجاع أو سحب الحساب بعد الشراء؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نضمن حقك عبر إجراءات أمنية صارمة: نقل ملكية بريد السوبر سيل آيدي (Supercell ID)، تغيير كافة بيانات الاسترداد، حذف الأجهزة المرتبطة السابقة، وتزويدك بأكواد استرداد احتياطية خاصة بك مع دعم فني مستمر."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "كيف تتم عملية شراء ونقل حساب كلاش أوف كلانس أو كلاش رويال؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "بعد اختيار الحساب المناسب، تضغط على زر شراء عبر الواتساب، نتواصل معك مباشرة من إدارة المتجر ويتم نقل ملكية السوبر سيل آيدي (Supercell ID) وتغيير البريد الإلكتروني وتفعيل الحماية بخطوتين برقمك فوراً وبأمان 100%."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "ما هي طرق الدفع المتاحة في السعودية ودول الخليج؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نقبل التحويل البنكي المباشر للحسابات السعودية والخليجية، بالإضافة إلى إمكانية الدفع والتقسيط عبر تابي (Tabby) وتمارا (Tamara)؛ حيث يتم الاتفاق على الطريقة المناسبة والتسليم يدوياً ومباشرة عبر الواتساب بكل سهولة وأمان."
           }
         },
         {
@@ -116,7 +140,7 @@ export default function Home() {
       {/* 2. إعدادات SEO الخاصة بالصفحة الرئيسية */}
       <SEO 
         title="متجر كلاش | حسابات كلاش اوف كلانس وكلاش رويال للبيع"
-        description="متجر كلاش ماركت الأول لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. متجر كلاش موثوق بتسليم فوري وضمان شامل."
+        description="متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. تسليم فوري وضمان شامل."
         url="https://www.clashmarket.online/"
         image="https://www.clashmarket.online/thumbnail.png"
         jsonLd={homeJsonLd}
@@ -227,16 +251,24 @@ export default function Home() {
               </h2>
               <div className="space-y-4">
                 <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
+                  <summary className="font-semibold text-foreground text-base md:text-lg">س: هل متجر كلاش ماركت موثوق وآمن للشراء؟</summary>
+                  <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">نعم، متجر كلاش ماركت هو متجر موثوق في السعودية والخليج لبيع وشراء حسابات الألعاب. جميع المعاملات تتم يدوياً وبإشراف مباشر عبر الواتساب مع إدارة المتجر، وتخضع الحسابات لفحص أمني شامل قبل العرض، مع تسليم فوري وتوثيق رسمي.</p>
+                </details>
+                <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
+                  <summary className="font-semibold text-foreground text-base md:text-lg">س: ما هو الضمان الذهبي لحسابات كلاش؟ وماذا يغطي؟</summary>
+                  <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">نقدم وثيقة الضمان الذهبي الشاملة التي تضمن الحساب بنسبة 100% ضد السحب أو الاسترجاع. يتم تسليم الحساب ببريد إلكتروني نظيف ومخصص، مع نقل كامل لبيانات سوبر سيل وتفعيل أرقام الأمان والتحقق بخطوتين لتصبح الملكية كاملة للمشتري مدى الحياة.</p>
+                </details>
+                <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
+                  <summary className="font-semibold text-foreground text-base md:text-lg">س: كيف أضمن عدم استرجاع أو سحب الحساب بعد الشراء؟</summary>
+                  <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">نضمن حقك عبر إجراءات أمنية صارمة: نقل ملكية بريد السوبر سيل آيدي (Supercell ID)، تغيير كافة بيانات الاسترداد، حذف الأجهزة المرتبطة السابقة، وتزويدك بأكواد استرداد احتياطية خاصة بك مع دعم فني مستمر.</p>
+                </details>
+                <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
                   <summary className="font-semibold text-foreground text-base md:text-lg">س: كيف تتم عملية شراء ونقل حساب كلاش أوف كلانس أو كلاش رويال؟</summary>
                   <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">بعد اختيار الحساب المناسب، تضغط على زر شراء عبر الواتساب، نتواصل معك مباشرة من إدارة المتجر ويتم نقل ملكية السوبر سيل آيدي (Supercell ID) وتغيير البريد الإلكتروني وتفعيل الحماية بخطوتين برقمك فوراً وبأمان 100%.</p>
                 </details>
                 <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
                   <summary className="font-semibold text-foreground text-base md:text-lg">س: ما هي طرق الدفع المتاحة في السعودية ودول الخليج؟</summary>
                   <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">نقبل التحويل البنكي المباشر للحسابات السعودية والخليجية، بالإضافة إلى إمكانية الدفع والتقسيط عبر تابي (Tabby) وتمارا (Tamara)؛ حيث يتم الاتفاق على الطريقة المناسبة والتسليم يدوياً ومباشرة عبر الواتساب بكل سهولة وأمان.</p>
-                </details>
-                <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
-                  <summary className="font-semibold text-foreground text-base md:text-lg">س: هل الحسابات المعروضة في كلاش ماركت مضمونة؟</summary>
-                  <p className="mt-3 text-muted-foreground text-sm md:text-base leading-relaxed">نعم، جميع الحسابات مملوكة ومفحوصة يدوياً ومشمولة بوثيقة الضمان الذهبي ضد السحب أو الاسترجاع مدى الحياة، مع تسليم الإيميل الأساسي النظيف.</p>
                 </details>
                 <details className="border border-border/70 rounded-xl p-4 bg-background/50 cursor-pointer">
                   <summary className="font-semibold text-foreground text-base md:text-lg">س: كم يستغرق تسليم الحساب بعد إتمام الدفع؟</summary>
