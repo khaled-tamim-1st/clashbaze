@@ -215,15 +215,15 @@ async function proxyTo(
       responseHeaders.delete("Age");
       responseHeaders.delete("CF-Cache-Status");
       responseHeaders.delete("cf-cache-status");
-      const hasNoBody = [101, 204, 205, 304].includes(response.status);
-      return new Response(hasNoBody ? null : response.body, {
+      const customResponse = new Response(hasNoBody ? null : response.body, {
         status: response.status,
         statusText: response.statusText,
         headers: responseHeaders,
       });
+      return ensureCanonicalHost(customResponse);
     }
     
-    return response;
+    return ensureCanonicalHost(response);
   } catch (_err) {
     // في حال حدوث أي خطأ في الاتصال بالفرونت، الـ VPS يعمل كـ Fallback فوري
     if (origin === FRONTEND_ORIGIN && !STATIC_ASSET_REGEX.test(incomingUrl.pathname)) {
@@ -240,4 +240,43 @@ async function proxyTo(
     }
     throw _err;
   }
+}
+
+/**
+ * يضمن تحويل أي رابط canonical أو og:url أو twitter:url يشير إلى نطاق api.clashmarket.online
+ * إلى النطاق الرئيسي الرسمي https://www.clashmarket.online لحماية الـ SEO ومنع مشاكل الفهرسة في Bing/Google.
+ */
+function ensureCanonicalHost(res: Response): Response {
+  const contentType = res.headers.get("content-type") || "";
+  if (!contentType.includes("text/html")) {
+    return res;
+  }
+
+  // @ts-ignore
+  return new HTMLRewriter()
+    .on('link[rel="canonical"]', {
+      element(el: any) {
+        const href = el.getAttribute("href");
+        if (href && href.includes("api.clashmarket.online")) {
+          el.setAttribute("href", href.replace("https://api.clashmarket.online", "https://www.clashmarket.online"));
+        }
+      },
+    })
+    .on('meta[property="og:url"]', {
+      element(el: any) {
+        const content = el.getAttribute("content");
+        if (content && content.includes("api.clashmarket.online")) {
+          el.setAttribute("content", content.replace("https://api.clashmarket.online", "https://www.clashmarket.online"));
+        }
+      },
+    })
+    .on('meta[name="twitter:url"]', {
+      element(el: any) {
+        const content = el.getAttribute("content");
+        if (content && content.includes("api.clashmarket.online")) {
+          el.setAttribute("content", content.replace("https://api.clashmarket.online", "https://www.clashmarket.online"));
+        }
+      },
+    })
+    .transform(res);
 }

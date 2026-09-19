@@ -84,7 +84,7 @@ const routesToAudit = [
     expectedH1: "حسابات كلاش أوف كلانس للبيع والشراء",
     expectedTitle: "حسابات كلاش أوف كلانس للبيع والشراء | متجر كلاش ماركت",
     expectedDesc: "تصفح أكبر متجر لبيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج. قريات تاون هول 14 إلى 18 ماكس وشبه ماكس بأسعار منافسة وتسليم يدوي فوري وتأمين Supercell ID وضمان موثق.",
-    expectedCanonical: "https://api.clashmarket.online/clash-of-clans",
+    expectedCanonical: `${SITE_URL}/clash-of-clans`,
     game: "clash-of-clans",
   },
   {
