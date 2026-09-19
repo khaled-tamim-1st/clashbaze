@@ -81,7 +81,7 @@ function accountCardHtml(a: {
       </div>
       <div class="card-body">
         <div style="display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; align-items:center;">
-          ${a.featured ? `<span class="featured-badge" style="margin:0;">⭐ مميز</span>` : ""}
+          ${a.featured ? `<span class="featured-badge" style="margin:0;">مميز</span>` : ""}
           ${thText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#1e3a8a; color:#bfdbfe; border:1px solid #2563eb;">${thText}</span>` : ""}
           ${maxTag ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#78350f; color:#fde68a; border:1px solid #d97706;">${maxTag}</span>` : ""}
           ${levelText ? `<span style="display:inline-block; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700; background:#334155; color:#f1f5f9; border:1px solid #475569;">${escapeHtml(levelText)}</span>` : ""}

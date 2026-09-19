@@ -200,7 +200,7 @@ function ReviewDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           <div className="flex items-center justify-between px-6 py-5 border-b border-border">
             <div>
               <h2 className="text-xl font-bold text-foreground">شاركنا تجربتك</h2>
-              <p className="text-xs text-muted-foreground mt-0.5">رأيك يهمنا ويساعد مجتمع اللاعبين ⭐</p>
+              <p className="text-xs text-muted-foreground mt-0.5">رأيك يهمنا ويساعد مجتمع اللاعبين في تقييم الخدمة</p>
             </div>
             <button onClick={handleClose} className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors">
               <X size={18} />
