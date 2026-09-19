@@ -20,6 +20,8 @@ import Dashboard from "@/pages/admin/Dashboard";
 import AdminAccounts from "@/pages/admin/AdminAccounts";
 import AdminBlog from "@/pages/admin/AdminBlog";
 import WhatsAppAnalytics from "@/pages/admin/WhatsAppAnalytics";
+import Reviews from "@/pages/Reviews";
+import AdminReviews from "@/pages/admin/AdminReviews";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,12 +54,14 @@ function Router() {
       <Route path="/guarantee" component={Guarantee} />
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/about" component={About} />
+      <Route path="/reviews" component={Reviews} />
       <Route path="/login" component={Login} />
 
       <Route path="/admin" component={Dashboard} />
       <Route path="/admin/whatsapp" component={WhatsAppAnalytics} />
       <Route path="/admin/accounts" component={AdminAccounts} />
       <Route path="/admin/blog" component={AdminBlog} />
+      <Route path="/admin/reviews" component={AdminReviews} />
 
       <Route component={NotFound} />
     </Switch>

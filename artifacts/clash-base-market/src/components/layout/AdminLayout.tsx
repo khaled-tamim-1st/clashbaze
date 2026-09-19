@@ -9,6 +9,7 @@ const sidebarLinks = [
   { href: "/admin/whatsapp", label: "تحليلات الواتساب" },
   { href: "/admin/accounts", label: "الحسابات" },
   { href: "/admin/blog", label: "المدونة" },
+  { href: "/admin/reviews", label: "التقييمات" },
 ];
 
 function SidebarLinks({ onNavigate }: { onNavigate?: () => void }) {

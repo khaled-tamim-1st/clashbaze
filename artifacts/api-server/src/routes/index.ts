@@ -5,6 +5,7 @@ import blogRouter from "./blog";
 import adminRouter from "./admin";
 import whatsappTrackingRouter from "./whatsappTracking";
 import adminWhatsAppRouter from "./adminWhatsApp";
+import reviewsRouter from "./reviews";
 
 const router: IRouter = Router();
 
@@ -14,5 +15,6 @@ router.use(blogRouter);
 router.use(adminRouter);
 router.use(whatsappTrackingRouter);
 router.use(adminWhatsAppRouter);
+router.use(reviewsRouter);
 
 export default router;

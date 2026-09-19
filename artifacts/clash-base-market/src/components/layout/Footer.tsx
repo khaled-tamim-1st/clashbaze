@@ -19,6 +19,7 @@ export function Footer() {
               <li><Link href="/clash-royale" className="hover:text-primary">حسابات كلاش رويال</Link></li>
               <li><Link href="/blog" className="hover:text-primary">مدونة كلاش ماركت</Link></li>
               <li><Link href="/about" className="hover:text-primary">كلاش ماركت / من نحن</Link></li>
+              <li><Link href="/reviews" className="hover:text-primary">آراء العملاء</Link></li>
             </ul>
           </div>
           <div>

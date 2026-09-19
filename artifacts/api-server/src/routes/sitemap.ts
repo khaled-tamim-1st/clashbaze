@@ -183,6 +183,10 @@ router.get("/sitemap.xml", async (req, res) => {
         imageUrl: `${SITE_URL}/thumbnail.png`,
         imageTitle: "كلاش ماركت — من نحن",
       }),
+      urlEntry("/reviews", {
+        imageUrl: `${SITE_URL}/thumbnail.png`,
+        imageTitle: "آراء وتقييمات عملاء كلاش ماركت",
+      }),
     ];
 
 function formatCloudinaryUrl(url: string | undefined | null): string {

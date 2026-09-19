@@ -417,6 +417,7 @@ export function pageShell(opts: {
         <a href="/clash-of-clans">كلاش أوف كلانس</a>
         <a href="/clash-royale">كلاش رويال</a>
         <a href="/blog">المدونة</a>
+        <a href="/reviews">آراء العملاء</a>
       </nav>
     </div>
   </header>
@@ -428,6 +429,7 @@ export function pageShell(opts: {
       <a href="/clash-of-clans">حسابات كلاش أوف كلانس</a>
       <a href="/clash-royale">حسابات كلاش رويال</a>
       <a href="/blog">المدونة</a>
+      <a href="/reviews">آراء العملاء</a>
       <a href="/about">كلاش ماركت / من نحن</a>
       <span style="color:#334155;">|</span>
       <a href="/guarantee">سياسة الضمان</a>

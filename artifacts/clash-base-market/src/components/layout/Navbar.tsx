@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/clash-of-clans", label: "كلاش أوف كلانس" },
   { href: "/clash-royale", label: "كلاش رويال" },
   { href: "/blog", label: "المدونة" },
+  { href: "/reviews", label: "آراء العملاء" },
 ];
 
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";

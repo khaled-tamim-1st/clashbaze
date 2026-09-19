@@ -8,6 +8,7 @@ import blogPagesRouter from "./routes/blogpages";
 import gamePagesRouter from "./routes/gamePages";
 import accountPagesRouter from "./routes/accountpages";
 import policyPagesRouter from "./routes/policyPages";
+import reviewPagesRouter from "./routes/reviewPages";
 
 import whatsappTrackingRouter from "./routes/whatsappTracking";
 import sitemapRouter from "./routes/sitemap";
@@ -84,6 +85,7 @@ app.use(gamePagesRouter);
 app.use(blogPagesRouter);
 app.use(accountPagesRouter);
 app.use(policyPagesRouter);
+app.use(reviewPagesRouter);
 
 app.use(sitemapRouter);
 
