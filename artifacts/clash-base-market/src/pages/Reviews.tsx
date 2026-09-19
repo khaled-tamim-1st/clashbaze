@@ -74,14 +74,13 @@ export const INITIAL_SAMPLE_REVIEWS: Review[] = [
   },
 ];
 
-// ── Color Palettes for Cards ───────────────────────────────────────────────────
+// ── Color Palettes for Cards (Brand ClashMarket Identity) ──────────────────────
 const CARD_PALETTES = [
-  { bg: "#7c3aed", text: "#ffffff", accent: "#ccff00", star: "#ccff00" },
-  { bg: "#022c22", text: "#ffffff", accent: "#ec4899", star: "#f59e0b" },
-  { bg: "#ccff00", text: "#09090b", accent: "#7c3aed", star: "#ea580c" },
-  { bg: "#db2777", text: "#ffffff", accent: "#ccff00", star: "#fde68a" },
-  { bg: "#1e1b4b", text: "#d1fae5", accent: "#f97316", star: "#f97316" },
-  { bg: "#ea580c", text: "#ffffff", accent: "#022c22", star: "#fde68a" },
+  { bg: "#2e1065", text: "#ffffff", border: "#4c1d95", accent: "#a855f7", star: "#f59e0b", badgeBg: "rgba(168, 85, 247, 0.18)", badgeText: "#d8b4fe" },
+  { bg: "#1e1b4b", text: "#ffffff", border: "#312e81", accent: "#818cf8", star: "#f59e0b", badgeBg: "rgba(129, 140, 248, 0.18)", badgeText: "#c7d2fe" },
+  { bg: "#3b0764", text: "#ffffff", border: "#581c87", accent: "#c084fc", star: "#fbbf24", badgeBg: "rgba(192, 132, 252, 0.18)", badgeText: "#e9d5ff" },
+  { bg: "#0f172a", text: "#ffffff", border: "#1e293b", accent: "#38bdf8", star: "#f59e0b", badgeBg: "rgba(56, 189, 248, 0.18)", badgeText: "#bae6fd" },
+  { bg: "#172554", text: "#ffffff", border: "#1e3a8a", accent: "#60a5fa", star: "#f59e0b", badgeBg: "rgba(96, 165, 250, 0.18)", badgeText: "#bfdbfe" },
 ];
 
 // ── Decorative Shapes ──────────────────────────────────────────────────────────
@@ -102,7 +101,7 @@ function FloatingShapes({ palette }: { palette: typeof CARD_PALETTES[0] }) {
 function InteractiveStars({ rating, onRate, size = 28 }: { rating: number; onRate: (r: number) => void; size?: number }) {
   const [hovered, setHovered] = useState(0);
   return (
-    <div className="flex items-center gap-1" dir="ltr">
+    <div className="flex items-center gap-1.5" dir="rtl">
       {[1, 2, 3, 4, 5].map((i) => (
         <button
           key={i}
@@ -129,9 +128,9 @@ function InteractiveStars({ rating, onRate, size = 28 }: { rating: number; onRat
 // ── Static Star Display ────────────────────────────────────────────────────────
 function StarDisplay({ rating, color = "#f59e0b", size = 18 }: { rating: number; color?: string; size?: number }) {
   return (
-    <div className="flex items-center gap-0.5" dir="ltr">
+    <div className="flex items-center gap-1" dir="rtl">
       {[1, 2, 3, 4, 5].map((i) => (
-        <Star key={i} size={size} style={{ color }} className={i <= rating ? "fill-current" : "fill-transparent opacity-40"} />
+        <Star key={i} size={size} style={{ color }} className={i <= rating ? "fill-current" : "fill-transparent opacity-30"} />
       ))}
     </div>
   );
@@ -152,58 +151,54 @@ function ReviewCard({
 
   return (
     <div
-      className="relative flex-shrink-0 rounded-[28px] overflow-hidden transition-all duration-500 ease-out select-none"
+      className="relative flex-shrink-0 rounded-[28px] overflow-hidden transition-all duration-300 ease-out select-none border"
       style={{
-        width: "320px",
-        height: "520px",
+        width: "330px",
+        height: "500px",
         background: palette.bg,
         color: palette.text,
-        transform: isActive ? "scale(1.05)" : "scale(0.92)",
-        opacity: isActive ? 1 : 0.65,
-        boxShadow: isActive ? "0 25px 60px rgba(0,0,0,0.3)" : "0 8px 24px rgba(0,0,0,0.12)",
+        borderColor: palette.border,
+        transform: isActive ? "scale(1.03)" : "scale(0.94)",
+        opacity: isActive ? 1 : 0.7,
+        boxShadow: isActive ? "0 20px 40px -10px rgba(0,0,0,0.3)" : "0 8px 20px -5px rgba(0,0,0,0.1)",
       }}
     >
       <FloatingShapes palette={palette} />
 
       <div className="relative z-10 flex flex-col h-full p-7">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3.5 mb-6">
           <div
-            className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-black"
-            style={{ background: palette.accent, color: palette.bg }}
+            className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-black shrink-0 shadow-sm"
+            style={{ background: palette.accent, color: "#ffffff" }}
           >
             {review.customerName.charAt(0)}
           </div>
-          <div>
-            <p className="font-bold text-base leading-tight">{review.customerName}</p>
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-base leading-tight truncate">{review.customerName}</p>
             <div className="flex items-center gap-1.5 mt-1">
-              <CheckCircle2 size={13} style={{ color: palette.accent }} />
-              <span className="text-xs opacity-70">مشتري موثق</span>
+              <CheckCircle2 size={14} style={{ color: palette.accent }} />
+              <span className="text-xs font-medium" style={{ color: palette.badgeText }}>مشتري موثق</span>
             </div>
           </div>
         </div>
 
-        {/* Stars */}
-        <div className="mb-5">
+        {/* Stars (RTL aligned right) */}
+        <div className="mb-5 flex justify-start">
           <StarDisplay rating={review.rating} color={palette.star} size={22} />
         </div>
 
         {/* Comment */}
-        <blockquote className="flex-1 text-xl font-bold leading-relaxed" style={{ fontFamily: "'Noto Sans Arabic', sans-serif" }}>
-          &ldquo;{review.comment.length > 160 ? review.comment.slice(0, 157) + "..." : review.comment}&rdquo;
+        <blockquote className="flex-1 text-lg font-medium leading-relaxed" style={{ fontFamily: "'Tajawal', sans-serif" }}>
+          &ldquo;{review.comment}&rdquo;
         </blockquote>
 
         {/* Footer */}
-        <div className="mt-auto pt-4 flex items-center justify-between">
-          <span className="text-xs opacity-50">{dateStr}</span>
-          {review.game && (
-            <span
-              className="text-xs px-2 py-0.5 rounded-full font-semibold"
-              style={{ background: `${palette.accent}30`, color: palette.accent }}
-            >
-              {review.game === "clash-of-clans" ? "CoC" : "CR"}
-            </span>
-          )}
+        <div className="mt-auto pt-4 border-t flex items-center justify-between" style={{ borderColor: `${palette.border}80` }}>
+          <span className="text-xs opacity-60">{dateStr}</span>
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: palette.badgeBg, color: palette.badgeText }}>
+            طلب مكتمل
+          </span>
         </div>
       </div>
     </div>
@@ -263,19 +258,19 @@ function ReviewDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-[#0f172a] border-l border-[#1e293b] shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-card border-l border-border shadow-2xl transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-[#1e293b]">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-border">
             <div>
-              <h2 className="text-xl font-black text-white">شاركنا تجربتك</h2>
-              <p className="text-sm text-gray-400 mt-0.5">رأيك يصنع الفرق ⭐</p>
+              <h2 className="text-xl font-bold text-foreground">شاركنا تجربتك</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">رأيك يهمنا ويساعد مجتمع اللاعبين ⭐</p>
             </div>
-            <button onClick={handleClose} className="p-2 rounded-lg hover:bg-[#1e293b] transition-colors">
-              <X size={20} className="text-gray-400" />
+            <button onClick={handleClose} className="p-2 rounded-lg hover:bg-muted text-muted-foreground transition-colors">
+              <X size={18} />
             </button>
           </div>
 
@@ -283,64 +278,66 @@ function ReviewDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           <div className="flex-1 overflow-y-auto px-6 py-6">
             {submitted ? (
               <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
-                <div className="w-20 h-20 rounded-full bg-[#ccff00]/10 flex items-center justify-center">
-                  <CheckCircle2 size={40} className="text-[#ccff00]" />
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <CheckCircle2 size={36} className="text-primary" />
                 </div>
-                <h3 className="text-2xl font-black text-white">شكراً لك!</h3>
-                <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-                  تم إرسال تقييمك بنجاح. سيظهر بعد المراجعة والاعتماد من فريق كلاش ماركت.
+                <h3 className="text-xl font-bold text-foreground">شكراً لك!</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+                  تم إرسال تقييمك بنجاح. سيظهر بعد الاعتماد من إدارة كلاش ماركت.
                 </p>
                 <button
                   onClick={handleClose}
-                  className="mt-4 px-6 py-3 rounded-xl bg-[#7c3aed] text-white font-bold text-sm hover:bg-[#6d28d9] transition-colors"
+                  className="mt-4 px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors"
                 >
                   إغلاق
                 </button>
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">الاسم *</label>
+                  <label className="block text-sm font-semibold text-foreground mb-1.5">الاسم الكريم *</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="اسمك أو الاسم المستعار"
-                    className="w-full px-4 py-3 rounded-xl bg-[#1e293b] border border-[#334155] text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent transition-all text-sm"
+                    placeholder="اسمك أو اللقب"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   />
                 </div>
 
                 {/* Stars */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-3">التقييم *</label>
-                  <InteractiveStars rating={rating} onRate={setRating} size={36} />
+                  <label className="block text-sm font-semibold text-foreground mb-2">تقييمك *</label>
+                  <div className="flex justify-start">
+                    <InteractiveStars rating={rating} onRate={setRating} size={32} />
+                  </div>
                 </div>
 
                 {/* Comment */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">تجربتك *</label>
+                  <label className="block text-sm font-semibold text-foreground mb-1.5">تفاصيل التجربة *</label>
                   <textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    placeholder="شاركنا تفاصيل تجربتك مع كلاش ماركت..."
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-xl bg-[#1e293b] border border-[#334155] text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent transition-all text-sm resize-none"
+                    placeholder="شاركنا رأيك في سرعة التسليم، التعامل، حالة الحساب..."
+                    rows={4}
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm resize-none"
                   />
-                  <p className="text-xs text-gray-500 mt-1">{comment.length}/500</p>
+                  <p className="text-xs text-muted-foreground mt-1">{comment.length}/500</p>
                 </div>
 
                 {/* Contact (optional) */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">
-                    رقم الواتساب أو الإيميل <span className="text-gray-500">(اختياري)</span>
+                  <label className="block text-sm font-semibold text-foreground mb-1.5">
+                    رقم الواتساب <span className="text-muted-foreground text-xs">(اختياري للتحقق)</span>
                   </label>
                   <input
                     type="text"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    placeholder="للتحقق فقط ولن يظهر للعامة"
-                    className="w-full px-4 py-3 rounded-xl bg-[#1e293b] border border-[#334155] text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent transition-all text-sm"
+                    placeholder="للتحقق الإداري فقط ولن يظهر للعامة"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   />
                 </div>
               </div>
@@ -349,21 +346,17 @@ function ReviewDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 
           {/* Footer */}
           {!submitted && (
-            <div className="px-6 py-4 border-t border-[#1e293b]">
+            <div className="px-6 py-4 border-t border-border">
               <button
                 onClick={() => submitMutation.mutate()}
                 disabled={!canSubmit || submitMutation.isPending}
-                className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{
-                  background: canSubmit ? "#7c3aed" : "#334155",
-                  color: canSubmit ? "#ffffff" : "#94a3b8",
-                }}
+                className="w-full py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {submitMutation.isPending ? (
                   <span className="animate-pulse">جاري الإرسال...</span>
                 ) : (
                   <>
-                    <Send size={16} />
+                    <Send size={15} />
                     <span>إرسال التقييم</span>
                   </>
                 )}
@@ -380,27 +373,27 @@ function ReviewDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 function StatsBar({ stats }: { stats: ReviewsResponse["stats"] }) {
   return (
     <div className="flex flex-col items-center gap-4 mb-8">
-      <div className="flex items-center gap-3">
-        <span className="text-5xl font-black text-[#09090b]">{stats.averageRating.toFixed(1)}</span>
-        <div className="flex flex-col">
+      <div className="flex items-center gap-3" dir="rtl">
+        <span className="text-5xl font-black text-foreground">{stats.averageRating.toFixed(1)}</span>
+        <div className="flex flex-col items-start">
           <StarDisplay rating={Math.round(stats.averageRating)} size={20} />
-          <span className="text-sm text-gray-500 mt-1">{stats.totalReviews} تقييم</span>
+          <span className="text-xs text-muted-foreground mt-1 font-medium">{stats.totalReviews} تقييم موثق</span>
         </div>
       </div>
 
       {/* Distribution Bars */}
-      <div className="w-full max-w-xs space-y-1.5">
+      <div className="w-full max-w-xs space-y-1.5" dir="rtl">
         {[5, 4, 3, 2, 1].map((star) => {
           const count = stats.distribution[String(star)] || 0;
           const pct = stats.totalReviews > 0 ? (count / stats.totalReviews) * 100 : 0;
           return (
             <div key={star} className="flex items-center gap-2 text-xs">
-              <span className="w-4 text-gray-500 font-semibold">{star}</span>
-              <Star size={12} className="fill-[#f59e0b] text-[#f59e0b]" />
-              <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-[#f59e0b] rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
+              <span className="w-4 text-muted-foreground font-semibold text-center">{star}</span>
+              <Star size={12} className="fill-[#f59e0b] text-[#f59e0b] shrink-0" />
+              <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-amber-500 rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
               </div>
-              <span className="w-6 text-left text-gray-400">{count}</span>
+              <span className="w-6 text-muted-foreground text-left font-medium">{count}</span>
             </div>
           );
         })}
@@ -445,8 +438,10 @@ function EmptyState({ onOpenDrawer }: { onOpenDrawer: () => void }) {
 export default function Reviews() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isDownRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
 
   const { data, isLoading } = useQuery<ReviewsResponse>({
     queryKey: ["/api/reviews"],
@@ -464,56 +459,81 @@ export default function Reviews() {
         distribution: { "5": reviews.length, "4": 0, "3": 0, "2": 0, "1": 0 },
       };
 
-  // Auto-advance carousel
-  const startAutoPlay = useCallback(() => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    if (reviews.length <= 1) return;
-    autoPlayRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % reviews.length);
-    }, 4500);
-  }, [reviews.length]);
-
-  useEffect(() => {
-    startAutoPlay();
-    return () => { if (autoPlayRef.current) clearInterval(autoPlayRef.current); };
-  }, [startAutoPlay]);
-
-  const goTo = (idx: number) => {
-    setActiveIndex(idx);
-    startAutoPlay();
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const el = scrollRef.current;
+    const cardWidth = 346; // 330px card + 16px gap
+    const index = Math.round(el.scrollLeft / cardWidth);
+    setActiveIndex(Math.max(0, Math.min(reviews.length - 1, index)));
   };
 
-  const goPrev = () => goTo(activeIndex > 0 ? activeIndex - 1 : reviews.length - 1);
-  const goNext = () => goTo(activeIndex < reviews.length - 1 ? activeIndex + 1 : 0);
+  const scrollToIndex = (idx: number) => {
+    if (!scrollRef.current) return;
+    const cardWidth = 346;
+    scrollRef.current.scrollTo({
+      left: idx * cardWidth,
+      behavior: "smooth",
+    });
+    setActiveIndex(idx);
+  };
 
-  // Touch/drag support
-  const touchStartX = useRef(0);
-  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) { diff > 0 ? goNext() : goPrev(); }
+  const goNext = () => {
+    const nextIdx = activeIndex < reviews.length - 1 ? activeIndex + 1 : 0;
+    scrollToIndex(nextIdx);
+  };
+
+  const goPrev = () => {
+    const prevIdx = activeIndex > 0 ? activeIndex - 1 : reviews.length - 1;
+    scrollToIndex(prevIdx);
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    isDownRef.current = true;
+    startXRef.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeftRef.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isDownRef.current = false;
+  };
+
+  const handleMouseUp = () => {
+    isDownRef.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDownRef.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5; // multiplier for sensitivity
+    scrollRef.current.scrollLeft = scrollLeftRef.current - walk;
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#F1F5EF" }}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Navbar />
 
       {/* Hero Section */}
-      <main className="flex-1">
+      <main className="flex-1 py-10">
         {/* Title */}
-        <div className="text-center pt-12 pb-6 px-4">
-          <h1 className="text-4xl md:text-5xl font-black text-[#09090b] tracking-tight leading-tight">
-            آراء عملاء<br />
-            <span className="text-[#7c3aed]">كلاش ماركت</span>
+        <div className="text-center px-4 mb-8">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold mb-3 border border-primary/20">
+            <Sparkles size={13} />
+            <span>تجارب حقيقية من مجتمع اللاعبين</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-tight">
+            آراء عملاء <span className="text-primary">كلاش ماركت</span>
           </h1>
-          <p className="text-gray-500 mt-3 text-base max-w-md mx-auto">
-            تقييمات حقيقية من مشترين حقيقيين — شفافية كاملة بدون تجميل.
+          <p className="text-muted-foreground mt-3 text-sm md:text-base max-w-md mx-auto leading-relaxed">
+            تقييمات موثوقة من مشترين استلموا حساباتهم بأمان وسرعة وضمان شامل.
           </p>
         </div>
 
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-10 h-10 border-4 border-[#7c3aed] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : reviews.length === 0 ? (
           <EmptyState onOpenDrawer={() => setDrawerOpen(true)} />
@@ -522,19 +542,30 @@ export default function Reviews() {
             {/* Stats */}
             <StatsBar stats={stats} />
 
-            {/* Carousel */}
-            <div className="relative pb-12 overflow-hidden">
+            {/* Smooth Carousel */}
+            <div className="relative pb-6 overflow-hidden max-w-7xl mx-auto px-4">
               <div
-                ref={carouselRef}
-                className="flex items-center justify-center gap-4 md:gap-6 px-4 py-8 transition-transform duration-500 ease-out"
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
+                ref={scrollRef}
+                onScroll={handleScroll}
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                className="flex items-center gap-4 overflow-x-auto py-8 px-4 select-none cursor-grab active:cursor-grabbing no-scrollbar"
                 style={{
-                  transform: `translateX(calc(${(reviews.length > 1 ? (reviews.length / 2 - activeIndex) * 340 : 0) - (reviews.length > 1 ? 170 : 0)}px))`,
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                  scrollSnapType: "x mandatory",
+                  WebkitOverflowScrolling: "touch",
                 }}
               >
                 {reviews.map((review, idx) => (
-                  <div key={review.id} onClick={() => goTo(idx)} className="cursor-pointer">
+                  <div
+                    key={review.id}
+                    onClick={() => scrollToIndex(idx)}
+                    className="shrink-0 transition-transform duration-300"
+                    style={{ scrollSnapAlign: "center" }}
+                  >
                     <ReviewCard
                       review={review}
                       palette={CARD_PALETTES[idx % CARD_PALETTES.length]}
@@ -544,14 +575,15 @@ export default function Reviews() {
                 ))}
               </div>
 
-              {/* Nav Arrows */}
+              {/* Nav Arrows & Dots */}
               {reviews.length > 1 && (
-                <div className="flex items-center justify-center gap-4 mt-2">
+                <div className="flex items-center justify-center gap-4 mt-2" dir="rtl">
                   <button
                     onClick={goPrev}
-                    className="p-3 rounded-full bg-white/80 hover:bg-white shadow-lg transition-all hover:scale-110"
+                    aria-label="السابق"
+                    className="p-3 rounded-full bg-card border border-border shadow-sm hover:bg-muted text-foreground transition-all hover:scale-105"
                   >
-                    <ArrowRight size={20} className="text-[#09090b]" />
+                    <ArrowRight size={18} />
                   </button>
 
                   {/* Dots */}
@@ -559,9 +591,10 @@ export default function Reviews() {
                     {reviews.map((_, idx) => (
                       <button
                         key={idx}
-                        onClick={() => goTo(idx)}
+                        onClick={() => scrollToIndex(idx)}
+                        aria-label={`تقييم ${idx + 1}`}
                         className={`rounded-full transition-all duration-300 ${
-                          idx === activeIndex ? "w-8 h-2.5 bg-[#7c3aed]" : "w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400"
+                          idx === activeIndex ? "w-7 h-2 bg-primary" : "w-2 h-2 bg-border hover:bg-muted-foreground"
                         }`}
                       />
                     ))}
@@ -569,22 +602,23 @@ export default function Reviews() {
 
                   <button
                     onClick={goNext}
-                    className="p-3 rounded-full bg-white/80 hover:bg-white shadow-lg transition-all hover:scale-110"
+                    aria-label="التالي"
+                    className="p-3 rounded-full bg-card border border-border shadow-sm hover:bg-muted text-foreground transition-all hover:scale-105"
                   >
-                    <ArrowLeft size={20} className="text-[#09090b]" />
+                    <ArrowLeft size={18} />
                   </button>
                 </div>
               )}
             </div>
 
             {/* CTA */}
-            <div className="text-center py-10">
-              <p className="text-gray-500 text-sm mb-3">جربت خدماتنا؟ رأيك يصنع الفرق</p>
+            <div className="text-center py-8">
+              <p className="text-muted-foreground text-sm mb-3">جربت التعامل معنا؟ رأيك يصنع الفرق</p>
               <button
                 onClick={() => setDrawerOpen(true)}
-                className="px-8 py-4 rounded-2xl bg-[#7c3aed] text-white font-bold text-base hover:bg-[#6d28d9] transition-all duration-200 hover:scale-105 shadow-lg shadow-[#7c3aed]/25 inline-flex items-center gap-2"
+                className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-all duration-200 hover:scale-105 shadow-md shadow-primary/20 inline-flex items-center gap-2"
               >
-                <Star size={18} className="fill-[#ccff00] text-[#ccff00]" />
+                <Star size={17} className="fill-[#f59e0b] text-[#f59e0b]" />
                 شاركنا تجربتك
               </button>
             </div>
