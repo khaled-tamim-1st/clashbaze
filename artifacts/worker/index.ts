@@ -215,6 +215,7 @@ async function proxyTo(
       responseHeaders.delete("Age");
       responseHeaders.delete("CF-Cache-Status");
       responseHeaders.delete("cf-cache-status");
+      const hasNoBody = [101, 204, 205, 304].includes(response.status);
       const customResponse = new Response(hasNoBody ? null : response.body, {
         status: response.status,
         statusText: response.statusText,
