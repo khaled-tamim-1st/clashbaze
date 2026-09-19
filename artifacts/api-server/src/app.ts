@@ -66,8 +66,8 @@ app.use(whatsappTrackingRouter);
 // تقديم الملفات الثابتة والصور (banners, images, favicon) لضمان عدم حدوث خطأ 404 للصور على الـ VPS
 const publicDistDir = path.resolve(process.cwd(), "artifacts/clash-base-market/dist/public");
 const publicSrcDir = path.resolve(process.cwd(), "artifacts/clash-base-market/public");
-app.use(express.static(publicDistDir));
-app.use(express.static(publicSrcDir));
+app.use(express.static(publicDistDir, { index: false }));
+app.use(express.static(publicSrcDir, { index: false }));
 
 // 3.5. تسريع الاستجابة وتحسين الـ TTFB عبر Edge Caching لمحركات البحث والزوار
 app.use((req, res, next) => {

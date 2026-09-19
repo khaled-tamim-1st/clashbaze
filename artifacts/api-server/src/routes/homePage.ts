@@ -1,9 +1,17 @@
 import { Router } from "express";
-import { db, accountsTable, blogTable } from "@workspace/db";
+import { db, accountsTable, blogTable, reviewsTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
 import { escapeHtml, pageShell, SITE_NAME, SITE_URL } from "../lib/pageshell";
 
 const router = Router();
+
+function miniStars(rating: number) {
+  const star = `<svg width="15" height="15" viewBox="0 0 20 20" style="width:15px;height:15px;display:inline-block;vertical-align:middle;color:#f59e0b;fill:#f59e0b;" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>`;
+  let res = `<span style="display:inline-flex;gap:3px;align-items:center;">`;
+  for (let i = 0; i < rating; i++) res += star;
+  res += `</span>`;
+  return res;
+}
 
 const statusPriorityOrder = sql`CASE 
   WHEN ${accountsTable.status} = 'available' THEN 1 
@@ -72,7 +80,7 @@ router.get("/", async (req, res) => {
       return;
     }
     // 1. جلب البيانات باستخدام قيم enum الصحيحة في قاعدة البيانات ("clash-of-clans" و "clash-royale")
-    const [cocAccounts, royaleAccounts, latestPosts] = await Promise.all([
+    const [cocAccounts, royaleAccounts, latestPosts, approvedReviews] = await Promise.all([
       db
         .select()
         .from(accountsTable)
@@ -86,6 +94,12 @@ router.get("/", async (req, res) => {
         .orderBy(statusPriorityOrder, desc(accountsTable.featured), desc(accountsTable.id))
         .limit(6),
       db.select().from(blogTable).orderBy(desc(blogTable.createdAt)).limit(3),
+      db
+        .select()
+        .from(reviewsTable)
+        .where(eq(reviewsTable.status, "approved"))
+        .orderBy(desc(reviewsTable.createdAt))
+        .limit(3),
     ]);
 
     const cocHtml = cocAccounts.length
@@ -197,11 +211,46 @@ router.get("/", async (req, res) => {
       }
     ];
 
-    const bodyHtml = `
-      <h1>متجر كلاش</h1>
-      <p>${description}</p>
+    const reviewsSection = approvedReviews.length
+      ? `
+      <section style="margin: 48px 0; background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <h2 style="margin:0; font-size:1.35rem;">آراء وتقييمات عملاء كلاش ماركت</h2>
+          <a href="/reviews" style="color:#f59e0b; font-weight:700; font-size:0.95rem;">عرض كافة التقييمات ←</a>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+          ${approvedReviews.map(r => `
+            <div style="background:#0f172a; border:1px solid #334155; border-radius:12px; padding:18px; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <span style="font-weight:700; color:#f8fafc; font-size:0.95rem;">${escapeHtml(r.customerName)}</span>
+                  ${miniStars(r.rating)}
+                </div>
+                <p style="color:#94a3b8; font-size:0.9rem; margin:0 0 12px; line-height:1.6;">"${escapeHtml(r.comment)}"</p>
+              </div>
+              <div style="color:#64748b; font-size:0.75rem;">
+                ${r.game === "clash-royale" ? "كلاش رويال" : "كلاش أوف كلانس"} • مشتري معتمد
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </section>`
+      : `
+      <section style="margin: 48px 0; background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; text-align:center;">
+        <h2 style="margin:0 0 8px; font-size:1.35rem;">آراء وتقييمات المشترين</h2>
+        <p style="color:#94a3b8; margin:0 0 16px; font-size:0.95rem;">تجارب حقيقية موثقة من مجتمع اللاعبين مع الضمان الذهبي وسرعة التسليم الفوري.</p>
+        <a href="/reviews" style="display:inline-block; background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); padding:8px 20px; border-radius:10px; font-weight:700; font-size:0.9rem;">استعرض صفحة آراء العملاء أو أضف تقييمك ←</a>
+      </section>`;
 
-      <h2>حسابات كلاش للبيع</h2>
+    const bodyHtml = `
+      <header style="margin-bottom: 32px; background:none; border:none; padding:0;">
+        <h1 style="font-size:2.2rem; font-weight:800; color:#f8fafc; margin-bottom:12px; line-height:1.3;">
+          متجر كلاش | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال
+        </h1>
+        <p style="font-size:1.05rem; color:#94a3b8; max-width:850px; line-height:1.8; margin:0;">
+          ${description}
+        </p>
+      </header>
 
       <section style="margin: 32px 0;">
         <h2>حسابات كلاش أوف كلانس للبيع</h2>
@@ -216,6 +265,8 @@ router.get("/", async (req, res) => {
         ${royaleHtml}
         <p><a href="/clash-royale" class="cta">استعراض كافة حسابات كلاش رويال ←</a></p>
       </section>
+
+      ${reviewsSection}
 
       <section style="margin: 48px 0; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px;">
         <h2>لماذا تختار كلاش ماركت في السعودية ودول الخليج؟</h2>
