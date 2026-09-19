@@ -525,8 +525,8 @@ export default function Reviews() {
                   {/* Character Illustration in Center */}
                   <div className="relative z-10 flex-1 flex items-center justify-center my-4">
                     <img
-                      src="/images/barbarian-king.png"
-                      alt="كلاش ماركت"
+                      src="/images/mini-pekka.png"
+                      alt="ميني بيكا - كلاش ماركت"
                       className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500"
                     />
                   </div>
@@ -551,10 +551,10 @@ export default function Reviews() {
                   
                   {/* Top Header Block (matching "Real Stories. Real Impact.") */}
                   <div className="text-right pt-2" dir="rtl">
-                    <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tight leading-tight mb-2">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-2.5 font-['Tajawal',sans-serif]" style={{ fontFamily: "'Tajawal', sans-serif" }}>
                       تجارب حقيقية. ثقة تصنع الفارق.
                     </h1>
-                    <p className="text-muted-foreground text-sm leading-relaxed max-w-lg">
+                    <p className="text-muted-foreground text-sm leading-relaxed max-w-lg font-['Tajawal',sans-serif]" style={{ fontFamily: "'Tajawal', sans-serif" }}>
                       اقرأ تجارب المشترين الذين وثقوا في متجر كلاش ماركت لتسليم ونقل حساباتهم بأمان وضمان رسمي.
                     </p>
                   </div>
