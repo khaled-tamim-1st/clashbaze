@@ -306,13 +306,154 @@ export async function trackAndBuildRedirect(
       logger.warn({ err }, "Failed to update daily aggregate");
     });
 
+    // Send instant Telegram alert to store owner (only for humans, non-blocking)
+    sendTelegramNotification({
+      trafficType,
+      isUniqueClick,
+      ctaId,
+      accountTitle: accountData?.title,
+      accountPrice: accountData?.price,
+      accountGame: accountData?.game,
+      accountTownHall: accountData?.townHall,
+      sourcePath: params.sourcePath || (params.sourcePage ? new URL(params.sourcePage, "https://www.clashmarket.online").pathname : null),
+      sourcePage: params.sourcePage,
+      referrer: params.referrer || (req.headers["referer"] as string) || null,
+      utmSource: params.utmSource,
+      utmCampaign: params.utmCampaign,
+      deviceType,
+      browser,
+      os,
+      country,
+    }).catch((err) => {
+      logger.warn({ err }, "Failed to dispatch Telegram notification");
+    });
+
     const redirectUrl = buildSafeWhatsAppDestination(targetNumber, messageText);
     return { redirectUrl, eventId: inserted[0]?.id };
   } catch (err) {
     logger.error({ err }, "WhatsApp tracking failed in trackAndBuildRedirect; executing fallback redirect");
+    // Send fallback Telegram notification even if database failed
+    sendTelegramNotification({
+      trafficType: "human",
+      isUniqueClick: true,
+      ctaId,
+      accountTitle: params.text || accountData?.title,
+      sourcePath: params.sourcePath,
+      deviceType: "mobile",
+    }).catch(() => {});
     // CRITICAL FALLBACK: Ensure the user still gets redirected to WhatsApp safely!
     const fallbackUrl = buildSafeWhatsAppDestination(targetNumber, messageText);
     return { redirectUrl: fallbackUrl };
+  }
+}
+
+interface TelegramAlertData {
+  trafficType: string;
+  isUniqueClick: boolean;
+  ctaId: string;
+  accountTitle?: string | null;
+  accountPrice?: string | null;
+  accountGame?: string | null;
+  accountTownHall?: number | null;
+  sourcePath?: string | null;
+  sourcePage?: string | null;
+  referrer?: string | null;
+  utmSource?: string | null;
+  utmCampaign?: string | null;
+  deviceType: string;
+  browser?: string | null;
+  os?: string | null;
+  country?: string | null;
+}
+
+function escapeTelegramHtml(str: string): string {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+export async function sendTelegramNotification(data: TelegramAlertData): Promise<void> {
+  // Never notify for bot crawlers (Google, Ahrefs, Semrush, etc.)
+  if (data.trafficType === "bot") {
+    return;
+  }
+
+  const token = process.env.TELEGRAM_BOT_TOKEN || "8749591269:AAHje4y08V_upNGA4vC1H-CjXXc1Mgvo9Po";
+  const chatId = process.env.TELEGRAM_CHAT_ID || "8200825798";
+
+  if (!token || !chatId) {
+    return;
+  }
+
+  const ctaLabels: Record<string, string> = {
+    product_card: "بطاقة المنتج (القائمة)",
+    product_detail: "صفحة المنتج (التفاصيل)",
+    product_detail_ssr: "صفحة المنتج (SSR)",
+    footer_contact: "تواصل الفوتر",
+    about_contact: "صفحة من نحن",
+    how_it_works_contact: "صفحة طريقة الشراء",
+    coc_hub_contact: "مركز كلاش أوف كلانس",
+    cr_hub_contact: "مركز كلاش رويال",
+    floating_button: "الزر العائم",
+    header_contact: "تواصل الهيدر",
+  };
+
+  const ctaName = ctaLabels[data.ctaId] || data.ctaId;
+  const timeStr = new Date().toLocaleTimeString("ar-SA", { timeZone: "Asia/Riyadh", hour: "2-digit", minute: "2-digit" });
+
+  let text = `🚨 <b>نقرة واتساب جديدة من عميل محتمل!</b>\n\n`;
+
+  if (data.accountTitle) {
+    const formattedPrice = data.accountPrice ? `${Number(data.accountPrice).toLocaleString("ar-SA")} ر.س` : "";
+    text += `📦 <b>المنتج:</b> ${escapeTelegramHtml(data.accountTitle)}\n`;
+    if (formattedPrice) {
+      text += `💰 <b>السعر:</b> ${formattedPrice}\n`;
+    }
+    if (data.accountTownHall) {
+      text += `🏰 <b>التاون هول:</b> تاون ${data.accountTownHall}\n`;
+    }
+  } else {
+    text += `💬 <b>نوع التواصل:</b> استفسار عام للمتجر\n`;
+  }
+
+  text += `🎯 <b>موضع الزر:</b> ${escapeTelegramHtml(ctaName)}\n`;
+  if (data.sourcePath) {
+    text += `📄 <b>الصفحة:</b> <code>${escapeTelegramHtml(data.sourcePath)}</code>\n`;
+  }
+
+  const trafficSource = data.utmSource
+    ? `${data.utmSource} (${data.utmCampaign || "حملة"})`
+    : (data.referrer ? "موقع مرجعي" : "زيارة مباشرة (Direct)");
+  text += `🌐 <b>المصدر:</b> ${escapeTelegramHtml(trafficSource)}\n`;
+
+  const deviceIcon = data.deviceType === "mobile" ? "📱 جوال" : (data.deviceType === "tablet" ? "📟 تابلت" : "💻 كمبيوتر");
+  const deviceDetail = [data.os, data.browser].filter(Boolean).join(" / ");
+  text += `📱 <b>الجهاز:</b> ${deviceIcon}${deviceDetail ? ` (${escapeTelegramHtml(deviceDetail)})` : ""}\n`;
+
+  if (data.country) {
+    text += `🌍 <b>الدولة:</b> ${escapeTelegramHtml(data.country)}\n`;
+  }
+
+  text += `⏰ <b>الوقت:</b> ${timeStr}\n`;
+  if (!data.isUniqueClick) {
+    text += `⚠️ <i>(تكرار سريع للنقر خلال 5 ثوانٍ)</i>\n`;
+  }
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: "HTML",
+        disable_web_page_preview: true,
+      }),
+    });
+    if (!res.ok) {
+      const errText = await res.text();
+      logger.warn({ errText }, "Telegram notification API responded with error");
+    }
+  } catch (err) {
+    logger.warn({ err }, "Failed to send Telegram notification");
   }
 }
 
