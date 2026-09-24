@@ -377,9 +377,10 @@ export async function sendTelegramNotification(data: TelegramAlertData): Promise
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN || "8749591269:AAHje4y08V_upNGA4vC1H-CjXXc1Mgvo9Po";
-  const chatId = process.env.TELEGRAM_CHAT_ID || "8200825798";
+  const rawChatIds = process.env.TELEGRAM_CHAT_ID || "8200825798";
+  const chatIds = rawChatIds.split(",").map((id) => id.trim()).filter(Boolean);
 
-  if (!token || !chatId) {
+  if (!token || chatIds.length === 0) {
     return;
   }
 
@@ -437,24 +438,28 @@ export async function sendTelegramNotification(data: TelegramAlertData): Promise
     text += `⚠️ <i>(تكرار سريع للنقر خلال 5 ثوانٍ)</i>\n`;
   }
 
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-      }),
-    });
-    if (!res.ok) {
-      const errText = await res.text();
-      logger.warn({ errText }, "Telegram notification API responded with error");
-    }
-  } catch (err) {
-    logger.warn({ err }, "Failed to send Telegram notification");
-  }
+  await Promise.allSettled(
+    chatIds.map(async (targetChatId) => {
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: targetChatId,
+            text,
+            parse_mode: "HTML",
+            disable_web_page_preview: true,
+          }),
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          logger.warn({ chatId: targetChatId, errText }, "Telegram notification API responded with error");
+        }
+      } catch (err) {
+        logger.warn({ chatId: targetChatId, err }, "Failed to send Telegram notification");
+      }
+    })
+  );
 }
 
 async function updateDailyAggregate(
