@@ -377,7 +377,7 @@ export async function sendTelegramNotification(data: TelegramAlertData): Promise
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN || "8749591269:AAHje4y08V_upNGA4vC1H-CjXXc1Mgvo9Po";
-  const rawChatIds = process.env.TELEGRAM_CHAT_ID || "8200825798";
+  const rawChatIds = process.env.TELEGRAM_CHAT_ID || "-1003919012213";
   const chatIds = rawChatIds.split(",").map((id) => id.trim()).filter(Boolean);
 
   if (!token || chatIds.length === 0) {
