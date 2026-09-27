@@ -123,16 +123,16 @@ router.get("/", async (req, res) => {
 
     const allAccounts = [...cocAccounts, ...royaleAccounts];
 
-    const title = `متجر كلاش | بيع وشراء حسابات كلاش في السعودية والخليج`;
+    const title = `متجر كلاش | أكبر سوق لبيع وشراء حسابات كلاش اوف كلانس وكلاش رويال`;
     const description =
-      "متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. تسليم فوري وضمان شامل.";
+      "أفضل متجر وسوق كلاش لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. قريات تاون 14 إلى 18 ماكس، تسليم فوري بالواتساب، وضمان ذهبي مع تقسيط تابي وتمارا.";
 
     const jsonLd = [
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: SITE_NAME,
-        alternateName: ["Clash Market", "متجر كلاش", "clashmarket.online"],
+        alternateName: ["Clash Market", "متجر كلاش", "سوق كلاش", "متجر كلاش اوف كلانس", "سوق كلاش اوف كلانس", "clashmarket.online"],
         url: SITE_URL || "https://www.clashmarket.online/",
         inLanguage: "ar-SA",
       },
@@ -155,7 +155,7 @@ router.get("/", async (req, res) => {
       {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        name: "أحدث حسابات كلاش للبيع في السعودية والخليج",
+        name: "أحدث حسابات وقريات كلاش للبيع في السعودية والخليج (سوق كلاش)",
         itemListElement: allAccounts.map((a, i) => ({
           "@type": "ListItem",
           position: i + 1,
@@ -245,7 +245,7 @@ router.get("/", async (req, res) => {
     const bodyHtml = `
       <header style="margin-bottom: 32px; background:none; border:none; padding:0;">
         <h1 style="font-size:2.2rem; font-weight:800; color:#f8fafc; margin-bottom:12px; line-height:1.3;">
-          متجر كلاش | بيع وشراء حسابات كلاش أوف كلانس وكلاش رويال
+          متجر كلاش | أكبر سوق لبيع وشراء حسابات كلاش اوف كلانس وكلاش رويال
         </h1>
         <p style="font-size:1.05rem; color:#94a3b8; max-width:850px; line-height:1.8; margin:0;">
           ${description}
@@ -253,10 +253,10 @@ router.get("/", async (req, res) => {
       </header>
 
       <section style="margin: 32px 0;">
-        <h2>حسابات كلاش أوف كلانس للبيع</h2>
+        <h2>حسابات وقريات كلاش اوف كلانس للبيع (سوق كلاش)</h2>
         <p>تصفح أقوى قريات كلاش تاون هول 15، 16، 17، و18 ماكس ليفل، أبطال ماكس، ودفاعات قوية جاهزة للحروب والدوريات في السعودية والخليج.</p>
         ${cocHtml}
-        <p><a href="/clash-of-clans" class="cta">استعراض كافة حسابات كلاش أوف كلانس ←</a></p>
+        <p><a href="/clash-of-clans" class="cta">استعراض كافة حسابات كلاش اوف كلانس في المتجر ←</a></p>
       </section>
 
       <section style="margin: 48px 0;">

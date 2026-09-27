@@ -49,6 +49,13 @@ export default {
       return Response.redirect(incomingUrl.toString(), 301);
     }
 
+    // 3. إزالة الشرطة المائلة الختامية (Trailing Slash) بـ 301 لمنع ازدواجية الصفحات
+    // مثلاً: /clash-of-clans/ تتحول بـ 301 إلى /clash-of-clans لتوحيد قوة الترتيب والظهور في جوجل
+    if (incomingUrl.pathname.length > 1 && incomingUrl.pathname.endsWith("/")) {
+      incomingUrl.pathname = incomingUrl.pathname.replace(/\/+$/, "");
+      return Response.redirect(incomingUrl.toString(), 301);
+    }
+
     const context = analyzeRequest(request);
 
     // 1. /api/* و /go/* → دايمًا للـ VPS (بغض النظر عن الموقع أو نوع الزائر)

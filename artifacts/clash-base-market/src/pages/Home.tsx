@@ -32,7 +32,7 @@ export default function Home() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: "كلاش ماركت",
-      alternateName: ["Clash Market", "متجر كلاش", "clashmarket.online"],
+      alternateName: ["Clash Market", "متجر كلاش", "سوق كلاش", "متجر كلاش اوف كلانس", "سوق كلاش اوف كلانس", "clashmarket.online"],
       url: "https://www.clashmarket.online/",
       inLanguage: "ar-SA",
     },
@@ -42,7 +42,7 @@ export default function Home() {
       name: "كلاش ماركت",
       url: "https://www.clashmarket.online/",
       logo: "https://www.clashmarket.online/thumbnail.png",
-      description: "متجر كلاش ماركت الموثوق لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. تسليم فوري وضمان شامل.",
+      description: "أفضل متجر وسوق كلاش لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. قريات تاون 14 إلى 18 ماكس، تسليم فوري بالواتساب، وضمان ذهبي مع تقسيط تابي وتمارا.",
       areaServed: [
         { "@type": "Country", name: "Saudi Arabia" },
         { "@type": "Country", name: "United Arab Emirates" },
@@ -55,7 +55,7 @@ export default function Home() {
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: "أحدث حسابات كلاش للبيع في السعودية والخليج",
+      name: "أحدث حسابات وقريات كلاش للبيع في السعودية والخليج (سوق كلاش)",
       itemListElement: allFeatured.map((a, i) => ({
         "@type": "ListItem",
         position: i + 1,

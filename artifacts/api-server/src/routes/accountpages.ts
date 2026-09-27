@@ -15,7 +15,7 @@ END ASC`;
 const WHATSAPP_NUMBER = process.env["WHATSAPP_NUMBER"] || "";
 
 const GAME_LABEL: Record<string, string> = {
-  "clash-of-clans": "كلاش أوف كلانس",
+  "clash-of-clans": "كلاش اوف كلانس",
   "clash-royale": "كلاش رويال",
 };
 
@@ -152,13 +152,37 @@ router.get("/account/:slug", async (req, res) => {
     const mid = rawDesc ? (rawDesc.slice(0, maxMid).trim() + "... ") : "";
     const description = `${prefix}${mid}${suffix}`.slice(0, 155);
 
-    const jsonLd = {
+    const availabilityUrl = account.status === "available"
+      ? "https://schema.org/InStock"
+      : account.status === "reserved"
+      ? "https://schema.org/PreOrder"
+      : "https://schema.org/SoldOut";
+
+    const productJsonLd = {
       "@context": "https://schema.org",
-      "@type": "ItemPage",
+      "@type": "Product",
       name: account.title,
       description,
       image: formattedImages.length > 0 ? formattedImages : [`${SITE_URL}/thumbnail.png`],
       url: SITE_URL ? `${SITE_URL}/account/${account.slug}` : `/account/${account.slug}`,
+      sku: `CM-${account.id}`,
+      brand: {
+        "@type": "Brand",
+        name: SITE_NAME,
+      },
+      offers: {
+        "@type": "Offer",
+        price: Number(account.price).toFixed(2),
+        priceCurrency: "SAR",
+        priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+        availability: availabilityUrl,
+        itemCondition: "https://schema.org/UsedCondition",
+        url: SITE_URL ? `${SITE_URL}/account/${account.slug}` : `/account/${account.slug}`,
+        seller: {
+          "@type": "Organization",
+          name: SITE_NAME,
+        },
+      },
     };
 
     const breadcrumbItems = [
@@ -238,7 +262,7 @@ router.get("/account/:slug", async (req, res) => {
       canonicalPath: `/account/${account.slug}`,
       ogImage: formattedImages[0] || null,
       bodyHtml,
-      jsonLd: [jsonLd, breadcrumbJsonLd(breadcrumbItems)],
+      jsonLd: [productJsonLd, breadcrumbJsonLd(breadcrumbItems)],
     });
 
     res.set("Content-Type", "text/html; charset=utf-8");

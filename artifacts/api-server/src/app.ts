@@ -48,6 +48,16 @@ app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 2.5. تحويل 301 إجباري لإزالة الشرطة المائلة الختامية (Trailing Slash) لتوحيد عناوين الـ SEO
+app.use((req, res, next) => {
+  if (req.path.length > 1 && req.path.endsWith("/")) {
+    const query = req.url.slice(req.path.length);
+    const safePath = req.path.slice(0, -1);
+    return res.redirect(301, safePath + query);
+  }
+  next();
+});
+
 // 3. مسارات الـ API - تعطيل التخزين المؤقت لضمان المزامنة الفورية للبيانات
 app.use("/api", (_req, res, next) => {
   res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");

@@ -544,14 +544,14 @@ router.get("/clash-of-clans", async (req, res) => {
       ? (minPrice === maxPrice ? `بسعر ${minPrice.toLocaleString("ar-SA")} ريال سعودي` : `بأسعار تبدأ من ${minPrice.toLocaleString("ar-SA")} وتصل إلى ${maxPrice.toLocaleString("ar-SA")} ريال سعودي`)
       : "بأسعار منافسة مدروسة ومحدثة";
 
-    const title = "متجر كلاش أوف كلانس | بيع وشراء حسابات كلاش — كلاش ماركت";
-    const description = "تصفح أكبر متجر لبيع وشراء حسابات كلاش أوف كلانس في السعودية والخليج. قريات تاون هول 14 إلى 18 ماكس بأسعار منافسة وتسليم فوري وتأمين Supercell ID وضمان موثق.";
+    const title = "متجر كلاش اوف كلانس | سوق بيع وشراء قريات كلاش ماكس — كلاش ماركت";
+    const description = "استكشف أكبر متجر وسوق كلاش اوف كلانس في السعودية والخليج. قريات تاون هول 15 إلى 18 ماكس بأسعار منافسة وتسليم فوري وتأمين Supercell ID وضمان موثق.";
 
     const canonicalPath = "/clash-of-clans";
 
     const breadcrumbItems = [
       { name: "الرئيسية", path: "/" },
-      { name: "حسابات كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "حسابات كلاش اوف كلانس", path: "/clash-of-clans" },
     ];
 
     const faqItems = [
@@ -650,7 +650,7 @@ router.get("/clash-of-clans", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       
-      <h1>حسابات كلاش أوف كلانس للبيع والشراء</h1>
+      <h1>متجر كلاش اوف كلانس | سوق بيع وشراء حسابات كلاش</h1>
 
       <!-- المقدمة الشاملة حول القسم والمخزون -->
       <section style="margin: 28px 0 36px; line-height: 1.9;">
@@ -936,8 +936,8 @@ router.get("/clash-royale", async (req, res) => {
       ? `<div class="grid-list">${allAccounts.map(accountCardHtml).join("")}</div>`
       : `<p>لا توجد حسابات كلاش رويال متاحة حالياً.</p>`;
 
-    const title = "متجر كلاش رويال | حسابات كلاش رويال للبيع — كلاش ماركت";
-    const description = "اشترِ حسابات كلاش رويال بكروت Level 16 وتطورات Evolutions بتسليم فوري وضمان شامل. كلاش ماركت — متجر حسابات كلاش رويال في السعودية والخليج.";
+    const title = "متجر كلاش رويال | سوق بيع وشراء حسابات كلاش رويال ماكس وإيفو — كلاش ماركت";
+    const description = "متجر وسوق كلاش رويال في السعودية والخليج: اشترِ حسابات كلاش رويال بكروت Level 16 وتطورات Evolutions بتسليم فوري وضمان شامل مع تقسيط تابي وتمارا.";
 
     const crBreadcrumbItems = [
       { name: SITE_NAME, path: "/" },
@@ -966,7 +966,7 @@ router.get("/clash-royale", async (req, res) => {
 
     const bodyHtml = `
       ${breadcrumbHtml(crBreadcrumbItems)}
-      <h1>حسابات كلاش رويال للبيع</h1>
+      <h1>متجر كلاش رويال | حسابات كلاش رويال للبيع والشراء</h1>
       <p>يوفر كلاش ماركت حسابات كلاش رويال جاهزة للمنافسة في السلم التنافسي وRanked Mode. كلاش رويال لعبة مختلفة تماماً عن كلاش أوف كلانس — التقدم فيها يعتمد على مستوى البطاقات والتطورات والأبطال وليس على مباني القرية.</p>
 
       <h2>حسابات كلاش رويال المتاحة الآن</h2>
