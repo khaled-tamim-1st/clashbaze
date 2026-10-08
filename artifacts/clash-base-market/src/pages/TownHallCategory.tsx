@@ -14,6 +14,7 @@ interface TownHallConfig {
   heading: string;
   description: string;
   banner: string;
+  bannerWebp: string;
   bannerAlt: string;
   intro: string;
   benefitsTitle: string;
@@ -28,6 +29,7 @@ const TH_CONFIGS: Record<TownHallLevel, TownHallConfig> = {
     heading: "حسابات كلاش أوف كلانس تاون هول 18 للبيع (TH18 Max)",
     description: "تصفح واشترِ حسابات وقريات كلاش أوف كلانس تاون هول 18 (TH18) ماكس بأحدث الدفاعات والأبطال الستة والمعدات المطورة بتسليم فوري وضمان كلاش ماركت.",
     banner: "/banners/th18-banner.png",
+    bannerWebp: "/banners/th18-banner.webp",
     bannerAlt: "حسابات كلاش أوف كلانس تاون هول 18 للبيع",
     intro: "مرحباً بك في القسم المخصص لقريات وحسابات كلاش أوف كلانس تاون هول 18 (Town Hall 18). يمثل TH18 أعلى مستوى تطوير حالياً في اللعبة، ويوفر للاعبين المحترفين أحدث الأسلحة الدفاعية، وأعلى مستويات الأبطال الستة، والعتاد الملحمي المطور بالكامل للمنافسة في قمة دوري الأساطير (Legend League) وبطولات Clan War Leagues التنافسية.",
     benefitsTitle: "لماذا تختار قرية كلاش أوف كلانس تاون 18 ماكس؟",
@@ -49,6 +51,7 @@ const TH_CONFIGS: Record<TownHallLevel, TownHallConfig> = {
     heading: "حسابات كلاش أوف كلانس تاون هول 17 للبيع (TH17 Max)",
     description: "اشترِ حسابات وقريات كلاش أوف كلانس تاون هول 17 (TH17) ماكس وشبه ماكس بأسعار منافسة وتسليم فوري مع نقل ملكية Supercell ID وضمان متجر كلاش ماركت.",
     banner: "/banners/th17-banner.png",
+    bannerWebp: "/banners/th17-banner.webp",
     bannerAlt: "حسابات كلاش أوف كلانس تاون هول 17 للبيع",
     intro: "استكشف أقوى قريات كلاش أوف كلانس تاون هول 17 (Town Hall 17). يعتبر TH17 خياراً استراتيجياً ممتازاً للاعبين الباحثين عن قرية متقدمة للغاية قادرة على التنافس في حروب القبائل الكبرى (CWL) دون دفع التكلفة المرتفعة جداً لأحدث تاون هول، مع مستويات أبطال عالية ومعدات قتالية فعالة.",
     benefitsTitle: "مميزات اقتناء قرية تاون هول 17",
@@ -70,6 +73,7 @@ const TH_CONFIGS: Record<TownHallLevel, TownHallConfig> = {
     heading: "حسابات كلاش أوف كلانس تاون هول 16 للبيع (TH16)",
     description: "تسوق حسابات كلاش أوف كلانس تاون هول 16 (TH16) بتصاميم دفاعية قوية وأبطال متقدمين ومعدات ملحمية بتسليم فوري وضمان كلاش ماركت المعتمد.",
     banner: "/banners/th16-banner.png",
+    bannerWebp: "/banners/th16-banner.webp",
     bannerAlt: "حسابات كلاش أوف كلانس تاون هول 16 للبيع",
     intro: "تصفح تشكيلة حسابات وقريات كلاش أوف كلانس تاون هول 16 (Town Hall 16). يقدم TH16 نقطة انطلاق مثالية ومتقدمة للاعبين الذين يبحثون عن قوة دفاعية قوية بالدفاعات المدمجة الجديدة ومعدات الأبطال الملحمية، مع الحفاظ على سعر اقتصادي ومناسب في متناول الجميع.",
     benefitsTitle: "لماذا يفضل الكثيرون شراء تاون هول 16؟",
@@ -91,6 +95,7 @@ const TH_CONFIGS: Record<TownHallLevel, TownHallConfig> = {
     heading: "حسابات كلاش أوف كلانس تاون هول 15 للبيع (TH15)",
     description: "تصفح واشترِ حسابات وقريات كلاش أوف كلانس تاون هول 15 (TH15) ماكس وشبه ماكس بأسعار اقتصادية ممتازة وتسليم فوري مع ضمان كلاش ماركت.",
     banner: "/banners/th15-banner.png",
+    bannerWebp: "/banners/th15-banner.webp",
     bannerAlt: "حسابات كلاش أوف كلانس تاون هول 15 للبيع",
     intro: "استكشف قريات وحسابات كلاش أوف كلانس تاون هول 15 (Town Hall 15). يمثل TH15 الخيار الاقتصادي الأكثر طلباً للاعبين الراغبين في دخول المستويات المتقدمة والاستمتاع بتطويرات السحر المتجمد وأبراج السم والأبطال الأربعة بأسعار في متناول الجميع.",
     benefitsTitle: "لماذا تختار قرية كلاش أوف كلانس تاون 15؟",
@@ -203,14 +208,19 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
         <section className="w-full py-4 md:py-8 bg-card/20 border-b border-border">
           <div className="container mx-auto px-3 sm:px-4 max-w-5xl">
             <div className="rounded-2xl overflow-hidden border border-border/80 shadow-lg">
-              <img
-                src={config.banner}
-                alt={config.bannerAlt}
-                width={1024}
-                height={528}
-                loading="eager"
-                className="w-full h-auto block aspect-[1024/528] object-contain"
-              />
+              <picture>
+                <source srcSet={config.bannerWebp} type="image/webp" />
+                <img
+                  src={config.banner}
+                  alt={config.bannerAlt}
+                  width={1024}
+                  height={528}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="w-full h-auto block aspect-[1024/528] object-contain"
+                />
+              </picture>
             </div>
           </div>
         </section>

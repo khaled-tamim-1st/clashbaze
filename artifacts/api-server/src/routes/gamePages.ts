@@ -163,7 +163,10 @@ router.get("/clash-of-clans/town-hall-18", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       <div style="margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid #334155;">
-        <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" />
+        <picture>
+          <source srcset="/banners/th18-banner.webp" type="image/webp">
+          <img src="/banners/th18-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 18 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" fetchpriority="high" loading="eager" decoding="async" />
+        </picture>
       </div>
       <h1>حسابات كلاش أوف كلانس تاون هول 18 للبيع (TH18 Max)</h1>
       <p>مرحباً بك في القسم المخصص لقريات وحسابات كلاش أوف كلانس تاون هول 18 (Town Hall 18). يمثل TH18 أعلى مستوى تطوير حالياً في اللعبة، ويوفر للاعبين المحترفين أحدث الأسلحة الدفاعية، وأعلى مستويات الأبطال الستة، والعتاد الملحمي المطور بالكامل للمنافسة في قمة دوري الأساطير (Legend League) وبطولات Clan War Leagues التنافسية.</p>
@@ -258,7 +261,10 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       <div style="margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid #334155;">
-        <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" />
+        <picture>
+          <source srcset="/banners/th17-banner.webp" type="image/webp">
+          <img src="/banners/th17-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 17 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" fetchpriority="high" loading="eager" decoding="async" />
+        </picture>
       </div>
       <h1>حسابات كلاش أوف كلانس تاون هول 17 للبيع (TH17 Max)</h1>
       <p>استكشف أقوى قريات كلاش أوف كلانس تاون هول 17 (Town Hall 17). يعتبر TH17 خياراً استراتيجياً ممتازاً للاعبين الباحثين عن قرية متقدمة للغاية قادرة على التنافس في حروب القبائل الكبرى (CWL) دون دفع التكلفة المرتفعة جداً لأحدث تاون هول، مع مستويات أبطال عالية ومعدات قتالية فعالة.</p>
@@ -353,7 +359,10 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       <div style="margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid #334155;">
-        <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" />
+        <picture>
+          <source srcset="/banners/th16-banner.webp" type="image/webp">
+          <img src="/banners/th16-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 16 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" fetchpriority="high" loading="eager" decoding="async" />
+        </picture>
       </div>
       <h1>حسابات كلاش أوف كلانس تاون هول 16 للبيع (TH16)</h1>
       <p>تصفح تشكيلة حسابات وقريات كلاش أوف كلانس تاون هول 16 (Town Hall 16). يقدم TH16 نقطة انطلاق مثالية ومتقدمة للاعبين الذين يبحثون عن قوة دفاعية قوية بالدفاعات المدمجة الجديدة ومعدات الأبطال الملحمية، مع الحفاظ على سعر اقتصادي ومناسب في متناول الجميع.</p>
@@ -448,7 +457,10 @@ router.get("/clash-of-clans/town-hall-15", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       <div style="margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid #334155;">
-        <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" />
+        <picture>
+          <source srcset="/banners/th15-banner.webp" type="image/webp">
+          <img src="/banners/th15-banner.png" alt="حسابات كلاش أوف كلانس تاون هول 15 للبيع" width="1024" height="393" style="width:100%; height:auto; display:block;" fetchpriority="high" loading="eager" decoding="async" />
+        </picture>
       </div>
       <h1>حسابات كلاش أوف كلانس تاون هول 15 للبيع (TH15)</h1>
       <p>استكشف قريات وحسابات كلاش أوف كلانس تاون هول 15 (Town Hall 15). يمثل TH15 الخيار الاقتصادي الأكثر طلباً للاعبين الراغبين في دخول المستويات المتقدمة والاستمتاع بتطويرات السحر المتجمد وأبراج السم والأبطال الأربعة بأسعار في متناول الجميع.</p>

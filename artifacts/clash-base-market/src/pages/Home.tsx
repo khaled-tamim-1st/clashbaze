@@ -155,53 +155,90 @@ export default function Home() {
 
           {/* Promo Banners */}
           <section className="w-full border-b border-border">
-            <img
-              src="/banners/payment-banner-methods.jpg"
-              alt="طرق دفع متنوعة تناسب احتياجك - Google Pay وتابي وباي بال وآبل باي وفيزا وتمارا وتحويل بنكي وماستركارد"
-              className="w-full h-auto object-cover block"
-              loading="lazy"
-            />
-            <img
-              src="/banners/payment-banner-tabby.jpg"
-              alt="قسط قريتك مع كلاش ماركت - تابي وتمارا"
-              className="w-full h-auto object-cover block"
-              loading="eager"
-            />
+            <picture>
+              <source srcSet="/banners/payment-banner-methods.webp" type="image/webp" />
+              <img
+                src="/banners/payment-banner-methods.jpg"
+                alt="طرق دفع متنوعة تناسب احتياجك - Google Pay وتابي وباي بال وآبل باي وفيزا وتمارا وتحويل بنكي وماستركارد"
+                width={1300}
+                height={500}
+                className="w-full h-auto object-cover block"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
+            <picture>
+              <source srcSet="/banners/payment-banner-tabby.webp" type="image/webp" />
+              <img
+                src="/banners/payment-banner-tabby.jpg"
+                alt="قسط قريتك مع كلاش ماركت - تابي وتمارا"
+                width={1300}
+                height={500}
+                className="w-full h-auto object-cover block"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
           </section>
 
           <section className="w-full border-b border-border">
             <Link href="/clash-of-clans">
-              <img
-                src="/banners/4.jpg"
-                alt="أفضل حسابات كلاش أوف كلانس بالسعودية"
-                className="w-full h-auto object-cover block"
-                loading="eager"
-              />
+              <picture>
+                <source srcSet="/banners/4.webp" type="image/webp" />
+                <img
+                  src="/banners/4.jpg"
+                  alt="أفضل حسابات كلاش أوف كلانس بالسعودية"
+                  width={2048}
+                  height={786}
+                  className="w-full h-auto object-cover block"
+                  loading="eager"
+                  decoding="async"
+                />
+              </picture>
             </Link>
             
             <Link href="/clash-royale">
-              <img
-                src="/banners/5.jpg"
-                alt="أفضل حسابات كلاش رويال بالسعودية"
-                className="w-full h-auto object-cover block"
-                loading="eager"
-              />
+              <picture>
+                <source srcSet="/banners/5.webp" type="image/webp" />
+                <img
+                  src="/banners/5.jpg"
+                  alt="أفضل حسابات كلاش رويال بالسعودية"
+                  width={2048}
+                  height={786}
+                  className="w-full h-auto object-cover block"
+                  loading="eager"
+                  decoding="async"
+                />
+              </picture>
             </Link>
           </section>
 
           <section className="w-full border-b border-border">
-            <img
-              src="/banners/6.png"
-              alt="عروض كلاش ماركت الحصرية"
-              className="w-full h-auto object-cover block"
-              loading="lazy"
-            />
-            <img
-              src="/banners/7.png"
-              alt="ضمان وآمان الحسابات مع كلاش ماركت"
-              className="w-full h-auto object-cover block"
-              loading="lazy"
-            />
+            <picture>
+              <source srcSet="/banners/6.webp" type="image/webp" />
+              <img
+                src="/banners/6.png"
+                alt="عروض كلاش ماركت الحصرية"
+                width={1300}
+                height={500}
+                className="w-full h-auto object-cover block"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
+            <picture>
+              <source srcSet="/banners/7.webp" type="image/webp" />
+              <img
+                src="/banners/7.png"
+                alt="ضمان وآمان الحسابات مع كلاش ماركت"
+                width={1300}
+                height={500}
+                className="w-full h-auto object-cover block"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
           </section>
 
           {/* Why Choose Us */}
