@@ -50,27 +50,25 @@ export function Footer() {
       </div>
 
       {/* WebinOO Dedicated Brand Attribution Bar */}
-      <div className="border-t border-[#a855f7]/20 bg-gradient-to-r from-[#241a2e] via-[#3b1559]/75 to-[#241a2e] py-3.5 px-4 text-center transition-all">
-        <a
-          href="https://webinoo.online"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center justify-center gap-2 text-xs md:text-sm transition-all duration-300"
-          style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
+      <div className="border-t border-border/40 bg-[#090d16] py-3 px-4 text-center">
+        <div 
+          className="inline-flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm text-slate-300"
+          style={{ fontFamily: "'IBM Plex Sans Arabic', 'Tajawal', sans-serif" }}
         >
-          <span className="text-[#c5b8ce] font-medium tracking-wide">
-            صُنع بإتقان بواسطة
-          </span>
-          <span
-            className="font-extrabold text-[#edc9fa] tracking-wider group-hover:text-[#ffffff] group-hover:drop-shadow-[0_0_12px_rgba(237,201,250,0.65)] transition-all duration-300 inline-flex items-center gap-1"
+          <span>صُنع بإتقان وشغف بواسطة</span>
+          <a
+            href="https://webinoo.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#6d28d9] hover:bg-[#7c3aed] text-white font-bold text-xs sm:text-sm tracking-wide shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.5)] hover:scale-105 transition-all duration-200"
             style={{ fontFamily: "'Manrope', sans-serif" }}
           >
-            webinOO
-            <span className="inline-block text-[#c084fc] group-hover:scale-110 transition-transform duration-300">
-              ⚡
-            </span>
+            WebinOO
+          </a>
+          <span className="text-slate-400 font-normal">
+            • حلول الويب وتصدر Google
           </span>
-        </a>
+        </div>
       </div>
     </footer>
   );
