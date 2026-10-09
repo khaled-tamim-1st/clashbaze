@@ -151,7 +151,7 @@ export function pageShell(opts: {
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@500;600;700&family=Manrope:wght@600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 
   ${jsonLd}
 
@@ -534,6 +534,12 @@ export function pageShell(opts: {
     </div>
     <div>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — متجر حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي</div>
   </footer>
+  <div style="background: linear-gradient(90deg, #241a2e, #3b1559, #241a2e); border-top: 1px solid rgba(168, 85, 247, 0.25); padding: 12px 16px; text-align: center;">
+    <a href="https://webinoo.online" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 0.88rem; text-decoration: none; color: #c5b8ce;">
+      <span>صُنع بإتقان بواسطة</span>
+      <span style="font-family: 'Manrope', sans-serif; font-weight: 800; color: #edc9fa; letter-spacing: 0.5px;">webinOO <span style="color:#c084fc;">⚡</span></span>
+    </a>
+  </div>
 </body>
 </html>`;
 }

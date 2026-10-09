@@ -48,6 +48,30 @@ export function Footer() {
           &copy; {new Date().getFullYear()} كلاش ماركت. جميع الحقوق محفوظة.
         </div>
       </div>
+
+      {/* WebinOO Dedicated Brand Attribution Bar */}
+      <div className="border-t border-[#a855f7]/20 bg-gradient-to-r from-[#241a2e] via-[#3b1559]/75 to-[#241a2e] py-3.5 px-4 text-center transition-all">
+        <a
+          href="https://webinoo.online"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center justify-center gap-2 text-xs md:text-sm transition-all duration-300"
+          style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
+        >
+          <span className="text-[#c5b8ce] font-medium tracking-wide">
+            صُنع بإتقان بواسطة
+          </span>
+          <span
+            className="font-extrabold text-[#edc9fa] tracking-wider group-hover:text-[#ffffff] group-hover:drop-shadow-[0_0_12px_rgba(237,201,250,0.65)] transition-all duration-300 inline-flex items-center gap-1"
+            style={{ fontFamily: "'Manrope', sans-serif" }}
+          >
+            webinOO
+            <span className="inline-block text-[#c084fc] group-hover:scale-110 transition-transform duration-300">
+              ⚡
+            </span>
+          </span>
+        </a>
+      </div>
     </footer>
   );
 }
