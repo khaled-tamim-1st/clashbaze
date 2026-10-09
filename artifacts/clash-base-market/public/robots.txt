@@ -6,3 +6,7 @@ Disallow: /admin/blog
 Disallow: /login
 
 Sitemap: https://www.clashmarket.online/sitemap.xml
+
+# AI / LLM Context Standard (https://llmstxt.org/)
+# LLMs: https://www.clashmarket.online/llms.txt
+# LLMs-Full: https://www.clashmarket.online/llms-full.txt

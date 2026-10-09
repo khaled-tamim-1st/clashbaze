@@ -63,8 +63,8 @@ export default {
       return proxyTo(VPS_ORIGIN, request, context);
     }
 
-    // 2. /sitemap.xml و /robots.txt → دايمًا للـ VPS (ديناميكي)
-    if (["/sitemap.xml", "/robots.txt"].includes(new URL(request.url).pathname)) {
+    // 2. /sitemap.xml و /robots.txt و /llms.txt و /llms-full.txt → دايمًا للـ VPS (ديناميكي)
+    if (["/sitemap.xml", "/robots.txt", "/llms.txt", "/llms-full.txt"].includes(new URL(request.url).pathname)) {
       return proxyTo(VPS_ORIGIN, request, context);
     }
 

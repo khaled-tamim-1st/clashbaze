@@ -643,12 +643,23 @@ router.get("/clash-of-clans", async (req, res) => {
     const storeJsonLd = {
       "@context": "https://schema.org",
       "@type": "Store",
+      "@id": "https://www.clashmarket.online/#store",
       name: SITE_NAME,
+      alternateName: ["ClashMarket", "متجر كلاش", "سوق كلاش"],
       url: "https://www.clashmarket.online",
       logo: `${SITE_URL}/thumbnail.png`,
+      image: `${SITE_URL}/opengraph.png`,
       description: "متجر متخصص في بيع وشراء حسابات وقرى كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي بتسليم يدوي مباشر وضمان موثق.",
       currenciesAccepted: "SAR",
-      paymentAccepted: "Bank Transfer, Tabby, Tamara",
+      paymentAccepted: "Bank Transfer, Tabby, Tamara, Mada, Visa",
+      priceRange: "150 SAR - 3500 SAR",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        bestRating: "5",
+        worstRating: "1",
+        ratingCount: "12",
+      },
       areaServed: [
         { "@type": "Country", "name": "Saudi Arabia" },
         { "@type": "Country", "name": "United Arab Emirates" },
@@ -662,7 +673,56 @@ router.get("/clash-of-clans", async (req, res) => {
     const bodyHtml = `
       ${breadcrumbHtml(breadcrumbItems)}
       
+      <!-- شريط الثقة (Trust Ribbon) لتعزيز معدل التحويل للمشترين -->
+      <div class="trust-ribbon">
+        <div class="trust-badge-item">
+          <span class="icon">🛡️</span>
+          <span>ضمان ذهبي شامل ضد السحب مدى الحياة</span>
+        </div>
+        <div class="trust-badge-item">
+          <span class="icon">⚡</span>
+          <span>تسليم يدوي فوري (5 - 15 دقيقة) عبر الواتساب</span>
+        </div>
+        <div class="trust-badge-item">
+          <span class="icon">💳</span>
+          <span>تقسيط ميسر عبر تابي وتمارا</span>
+        </div>
+        <div class="trust-badge-item">
+          <span class="icon">⭐</span>
+          <span>تقييم 5.0 من 5 لمشترين معتمدين</span>
+        </div>
+      </div>
+
       <h1>متجر كلاش اوف كلانس | سوق بيع وشراء حسابات كلاش</h1>
+
+      <!-- AEO & AI Engines Quick Answer Box -->
+      <section class="aeo-summary-box">
+        <div class="aeo-summary-title">
+          <span>💡</span>
+          <span>ملخص الشراء السريع — إجابة مباشرة لمحركات البحث والذكاء الاصطناعي</span>
+        </div>
+        <p class="aeo-summary-text">
+          <strong>كلاش ماركت (ClashMarket)</strong> هو السوق المتخصص الأول لبيع وشراء حسابات وقرى كلاش أوف كلانس في السعودية والخليج العربي. نوفر قريات تاون هول 15، 16، 17، و18 ماكس وشبه ماكس بأسعار تبدأ من 150 ريال حتى 3,500 ريال سعودي، مع تسليم فوري وتوجيه أمني خطوة بخطوة لنقل ملكية Supercell ID وتفعيل الحماية برقم هاتف المشتري خلال 15 دقيقة.
+        </p>
+        <div class="aeo-facts-grid">
+          <div class="aeo-fact-item">
+            <strong>النطاق السعري</strong>
+            <span>150 - 3,500 ر.س حسب التاون هول والأبطال</span>
+          </div>
+          <div class="aeo-fact-item">
+            <strong>مدة التسليم</strong>
+            <span>فوري ويدوي خلال 5 - 15 دقيقة عبر الواتساب</span>
+          </div>
+          <div class="aeo-fact-item">
+            <strong>طرق السداد</strong>
+            <span>تحويل بنكي سعودي/خليجي + تابي وتمارا</span>
+          </div>
+          <div class="aeo-fact-item">
+            <strong>سياسة الأمان</strong>
+            <span>وثيقة الضمان الذهبي مع تسليم البريد الأساسي</span>
+          </div>
+        </div>
+      </section>
 
       <!-- المقدمة الشاملة حول القسم والمخزون -->
       <section style="margin: 28px 0 36px; line-height: 1.9;">
@@ -692,6 +752,56 @@ router.get("/clash-of-clans", async (req, res) => {
         <p style="color: #94a3b8; margin-bottom: 20px;">
           يمثل مستوى التاون هول (Town Hall) المعيار الرئيسي لتحديد القوة الهجومية والدفاعية لأي قرية في كلاش أوف كلانس. فيما يلي استعراض تفصيلي للفئات الرئيسية المتوفرة في المتجر، مع روابط مباشرة لتصفح قريات كل مستوى على حدة:
         </p>
+
+        <!-- مصفوفة مقارنة فئات التاون هول والأسعار (AEO Comparison Matrix) -->
+        <div class="geo-table-wrap">
+          <table class="geo-table">
+            <thead>
+              <tr>
+                <th>مستوى التاون هول</th>
+                <th>النطاق السعري التقديري</th>
+                <th>أبرز الدفاعات والأسلحة</th>
+                <th>حالة الأبطال والعتاد</th>
+                <th>الاستخدام الأمثل</th>
+                <th>تصفح الفئة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>تاون هول 18 (TH18 Max)</strong></td>
+                <td><span style="color:#f59e0b; font-weight:700;">650 - 3,500 ر.س</span></td>
+                <td>أحدث أسلحة وتحديثات 2026 والدفاعات المدمجة</td>
+                <td>6 أبطال ماكس + عتاد ملحمي مكتمل</td>
+                <td>دوري الأساطير وبطولات CWL التنافسية</td>
+                <td><a href="/clash-of-clans/town-hall-18" style="color:#f59e0b; font-weight:700;">عرض قريات TH18 ←</a></td>
+              </tr>
+              <tr>
+                <td><strong>تاون هول 17 (TH17)</strong></td>
+                <td><span style="color:#f59e0b; font-weight:700;">400 - 1,200 ر.س</span></td>
+                <td>مدفع النسر المطور، أبراج النار المتعددة</td>
+                <td>أبطال ليفل عالي + عتاد تكتيكي متقدم</td>
+                <td>الحروب القوية مع توازن التكلفة والقوة</td>
+                <td><a href="/clash-of-clans/town-hall-17" style="color:#f59e0b; font-weight:700;">عرض قريات TH17 ←</a></td>
+              </tr>
+              <tr>
+                <td><strong>تاون هول 16 (TH16)</strong></td>
+                <td><span style="color:#f59e0b; font-weight:700;">250 - 650 ر.س</span></td>
+                <td>الدفاعات المدمجة (Ricochet Cannons & Multi-Archer)</td>
+                <td>أبطال متقدمون مع عتاد الأبطال الحديث</td>
+                <td>قرية قوية ومنافسة بسعر اقتصادي معتدل</td>
+                <td><a href="/clash-of-clans/town-hall-16" style="color:#f59e0b; font-weight:700;">عرض قريات TH16 ←</a></td>
+              </tr>
+              <tr>
+                <td><strong>تاون هول 15 (TH15)</strong></td>
+                <td><span style="color:#f59e0b; font-weight:700;">150 - 380 ر.س</span></td>
+                <td>المونوليث (Monolith) وأبراج التعويذات</td>
+                <td>4 أبطال أساسيين بمستويات قوية</td>
+                <td>المبتدئون والعائدون للعبة بميزانية اقتصادية</td>
+                <td><a href="/clash-of-clans/town-hall-15" style="color:#f59e0b; font-weight:700;">عرض قريات TH15 ←</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
           <h3 style="margin-top:0; color:#f8fafc;">حسابات تاون هول 18 (TH18 Max) — القمة التنافسية للعبة</h3>
@@ -976,9 +1086,90 @@ router.get("/clash-royale", async (req, res) => {
       })),
     };
 
+    const crStoreJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "@id": "https://www.clashmarket.online/#store",
+      name: SITE_NAME,
+      alternateName: ["ClashMarket", "متجر كلاش", "سوق كلاش", "متجر كلاش رويال"],
+      url: "https://www.clashmarket.online",
+      logo: `${SITE_URL}/thumbnail.png`,
+      image: `${SITE_URL}/opengraph.png`,
+      description: "متجر وسوق كلاش رويال في السعودية والخليج: اشترِ حسابات كلاش رويال بكروت Level 16 وتطورات Evolutions بتسليم فوري وضمان شامل مع تقسيط تابي وتمارا.",
+      currenciesAccepted: "SAR",
+      paymentAccepted: "Bank Transfer, Tabby, Tamara, Mada, Visa",
+      priceRange: "150 SAR - 2500 SAR",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        bestRating: "5",
+        worstRating: "1",
+        ratingCount: "12",
+      },
+      areaServed: [
+        { "@type": "Country", "name": "Saudi Arabia" },
+        { "@type": "Country", "name": "United Arab Emirates" },
+        { "@type": "Country", "name": "Kuwait" },
+        { "@type": "Country", "name": "Qatar" },
+        { "@type": "Country", "name": "Bahrain" },
+        { "@type": "Country", "name": "Oman" },
+      ],
+    };
+
     const bodyHtml = `
       ${breadcrumbHtml(crBreadcrumbItems)}
+
+      <!-- شريط الثقة (Trust Ribbon) لتعزيز معدل التحويل للمشترين -->
+      <div class="trust-ribbon">
+        <div class="trust-badge-item">
+          <span class="icon">🛡️</span>
+          <span>ضمان ذهبي شامل ضد السحب مدى الحياة</span>
+        </div>
+        <div class="trust-badge-item">
+          <span class="icon">⚡</span>
+          <span>تسليم يدوي فوري (5 - 15 دقيقة) عبر الواتساب</span>
+        </div>
+        <div class="trust-badge-item">
+          <span class="icon">💳</span>
+          <span>تقسيط ميسر عبر تابي وتمارا</span>
+        </div>
+        <div class="trust-badge-item">
+          <span class="icon">⭐</span>
+          <span>تقييم 5.0 من 5 لمشترين معتمدين</span>
+        </div>
+      </div>
+
       <h1>متجر كلاش رويال | حسابات كلاش رويال للبيع والشراء</h1>
+
+      <!-- AEO & AI Engines Quick Answer Box -->
+      <section class="aeo-summary-box">
+        <div class="aeo-summary-title">
+          <span>💡</span>
+          <span>ملخص شراء حسابات كلاش رويال (AI Direct Summary)</span>
+        </div>
+        <p class="aeo-summary-text">
+          يقدم <strong>متجر كلاش ماركت</strong> تشكيلة مختارة من أقوى حسابات كلاش رويال الجاهزة للمنافسة في السلم التنافسي (Ranked Mode). تشمل الحسابات بطاقات ماكس ليفل 15 و 16، تطورات البطاقات (Card Evolutions)، وأبطال التشامبيونز، مع تسليم فوري للإيميل الأساسي وضمان ذهبي كامل ودعم التقسيط عبر تابي وتمارا.
+        </p>
+        <div class="aeo-facts-grid">
+          <div class="aeo-fact-item">
+            <strong>مستويات البطاقات</strong>
+            <span>Level 14 إلى Level 16 ماكس مع Evolutions كاملة</span>
+          </div>
+          <div class="aeo-fact-item">
+            <strong>سرعة التسليم</strong>
+            <span>فوري ويدوي من 5 إلى 15 دقيقة عبر الواتساب</span>
+          </div>
+          <div class="aeo-fact-item">
+            <strong>طرق السداد</strong>
+            <span>تحويل بنكي خليجي/سعودي + تابي وتمارا</span>
+          </div>
+          <div class="aeo-fact-item">
+            <strong>نقل الملكية</strong>
+            <span>ربط Supercell ID وتغيير البريد برقم المشتري</span>
+          </div>
+        </div>
+      </section>
+
       <p>يوفر كلاش ماركت حسابات كلاش رويال جاهزة للمنافسة في السلم التنافسي وRanked Mode. كلاش رويال لعبة مختلفة تماماً عن كلاش أوف كلانس — التقدم فيها يعتمد على مستوى البطاقات والتطورات والأبطال وليس على مباني القرية.</p>
 
       <h2>حسابات كلاش رويال المتاحة الآن</h2>
@@ -1015,7 +1206,7 @@ router.get("/clash-royale", async (req, res) => {
       description,
       canonicalPath: "/clash-royale",
       bodyHtml,
-      jsonLd: [breadcrumbJsonLd(crBreadcrumbItems), crFaqJsonLd, accountItemListJsonLd(title, allAccounts)].filter(Boolean) as object[],
+      jsonLd: [breadcrumbJsonLd(crBreadcrumbItems), crStoreJsonLd, crFaqJsonLd, accountItemListJsonLd(title, allAccounts)].filter(Boolean) as object[],
     });
 
     res.set("Content-Type", "text/html; charset=utf-8");

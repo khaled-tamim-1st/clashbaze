@@ -406,6 +406,103 @@ export function pageShell(opts: {
     }
     .footer-links a { color: #94a3b8; }
     .footer-links a:hover { color: #f59e0b; }
+
+    /* AEO & GEO Responsive Components */
+    .trust-ribbon {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      gap: 12px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin: 20px 0 28px;
+    }
+    .trust-badge-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .aeo-summary-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+      border: 1px solid #ca8a04;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin: 24px 0 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .aeo-summary-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #facc15;
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+    .aeo-summary-text {
+      color: #f1f5f9;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+    .aeo-facts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+    }
+    .aeo-fact-item {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+    }
+    .aeo-fact-item strong {
+      color: #fbbf24;
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+    }
+    .geo-table-wrap {
+      overflow-x: auto;
+      margin: 24px 0 32px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: #1e293b;
+    }
+    .geo-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 0.95rem;
+    }
+    .geo-table th {
+      background: #0f172a;
+      color: #fbbf24;
+      font-weight: 800;
+      padding: 14px 16px;
+      border-bottom: 2px solid #334155;
+      white-space: nowrap;
+    }
+    .geo-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #334155;
+      color: #cbd5e1;
+      vertical-align: middle;
+    }
+    .geo-table tr:last-child td {
+      border-bottom: none;
+    }
+    .geo-table tr:hover td {
+      background: rgba(51, 65, 85, 0.4);
+    }
   </style>
 </head>
 
