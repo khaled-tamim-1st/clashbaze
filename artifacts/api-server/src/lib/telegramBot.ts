@@ -93,14 +93,14 @@ function resetSession(chatId: number) {
 }
 
 // Helper to send Telegram requests
-async function tgApi(method: string, body: Record<string, any>) {
+async function tgApi(method: string, body: Record<string, any>): Promise<any> {
   try {
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${method}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    return await res.json();
+    return (await res.json()) as any;
   } catch (err) {
     logger.error({ err, method }, "Telegram API call failed");
     return { ok: false, error: err };
@@ -129,7 +129,7 @@ async function sendMainMenu(chatId: number, message = "اختر ما ترغب ب
 // Upload buffer to Cloudinary
 export async function uploadImageToCloudinary(imageBuffer: Uint8Array, filename = "telegram_photo.jpg"): Promise<string | null> {
   try {
-    const blob = new Blob([imageBuffer], { type: "image/jpeg" });
+    const blob = new Blob([Buffer.from(imageBuffer)], { type: "image/jpeg" });
     const formData = new FormData();
     formData.append("file", blob, filename);
     formData.append("upload_preset", UPLOAD_PRESET);
