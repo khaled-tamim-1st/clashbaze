@@ -33,4 +33,15 @@ app.listen(port, (err) => {
   }
 
   logger.info({ port }, "Server listening");
+
+  // Start Telegram Bot polling service
+  import("./lib/telegramBot")
+    .then(({ startTelegramBot }) => {
+      startTelegramBot().catch((err) => {
+        logger.warn({ err }, "Telegram bot failed to start");
+      });
+    })
+    .catch((err) => {
+      logger.warn({ err }, "Could not load Telegram bot module");
+    });
 });
