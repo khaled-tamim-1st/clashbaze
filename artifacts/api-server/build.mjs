@@ -27,6 +27,7 @@ async function buildAll() {
       path.resolve(artifactDir, "src/format-saudi-clean.ts"),
       path.resolve(artifactDir, "src/submit-indexnow.ts"),
       path.resolve(artifactDir, "src/run-sql.ts"),
+      path.resolve(artifactDir, "src/test-bot-flow.ts"),
     ],
     platform: "node",
     bundle: true,
