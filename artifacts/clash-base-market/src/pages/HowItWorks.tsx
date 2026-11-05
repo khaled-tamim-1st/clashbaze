@@ -6,7 +6,7 @@ import { MessageCircle, ShieldCheck, CreditCard, KeyRound } from "lucide-react";
 import { TrackedWhatsAppLink } from "@/components/TrackedWhatsAppLink";
 
 export default function HowItWorks() {
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "966576742294";
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "966575389682";
 
   return (
     <>

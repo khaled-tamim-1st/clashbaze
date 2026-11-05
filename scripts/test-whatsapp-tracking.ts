@@ -6,7 +6,7 @@
  */
 
 process.env.DATABASE_URL = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/test_clashbaze";
-process.env.WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "966576742294";
+process.env.WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "966575389682";
 process.env.ADMIN_EMAIL = process.env.ADMIN_EMAIL || "owner@clashbaze.com";
 process.env.TRACKING_HASH_SECRET = process.env.TRACKING_HASH_SECRET || "test-salt-secret-2026";
 
@@ -123,12 +123,12 @@ test("Privacy: IP Hashing (No raw IP stored)", () => {
 });
 
 test("Security: Whitelist Destination & Open Redirect Prevention", () => {
-  const validUrl1 = buildSafeWhatsAppDestination("966576742294", "مرحبا أريد شراء حساب");
-  const validUrl2 = buildSafeWhatsAppDestination("+966 57 674 2294", null);
+  const validUrl1 = buildSafeWhatsAppDestination("966575389682", "مرحبا أريد شراء حساب");
+  const validUrl2 = buildSafeWhatsAppDestination("+966 57 538 9682", null);
 
-  assert.ok(validUrl1.startsWith("https://wa.me/966576742294"), "Destination must start with trusted wa.me domain");
+  assert.ok(validUrl1.startsWith("https://wa.me/966575389682"), "Destination must start with trusted wa.me domain");
   assert.ok(validUrl1.includes("text="), "Text parameter must be attached");
-  assert.equal(validUrl2, "https://wa.me/966576742294", "Destination must strip non-digit characters");
+  assert.equal(validUrl2, "https://wa.me/966575389682", "Destination must strip non-digit characters");
 });
 
 test("Security: Rate Limiting Sliding Window", () => {
@@ -342,7 +342,7 @@ test("Security: Unauthorized destination number rejection", async () => {
   // Attacker tries to pass an external number
   const safeUrl = mod.buildSafeWhatsAppDestination("1234567890", "malicious test");
   assert.ok(
-    safeUrl.startsWith("https://wa.me/966576742294"),
+    safeUrl.startsWith("https://wa.me/966575389682"),
     `Unauthorized number must fall back to trusted store number, got: ${safeUrl}`
   );
 });

@@ -64,7 +64,7 @@ const breadcrumbJsonLd = {
 };
 
 export default function About() {
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "966576742294";
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "966575389682";
 
   return (
     <>

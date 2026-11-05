@@ -64,7 +64,7 @@ async function handleTracking(req: Request, res: Response): Promise<void> {
 </html>`);
   } catch (err) {
     logger.error({ err }, "Unhandled error in handleTracking; redirecting to default WhatsApp");
-    const fallbackNumber = (process.env["WHATSAPP_NUMBER"] || "966576742294").replace(/[^\d]/g, "");
+    const fallbackNumber = (process.env["WHATSAPP_NUMBER"] || "966575389682").replace(/[^\d]/g, "");
     const fallbackUrl = `https://wa.me/${fallbackNumber}`;
     res.status(302);
     res.set("Location", fallbackUrl);

@@ -125,17 +125,17 @@ export interface WhatsAppTrackingParams {
 export function isTrustedWhatsAppNumber(num: string): boolean {
   if (!num) return false;
   const digits = num.replace(/[^\d]/g, "");
-  const defaultNumber = (process.env["WHATSAPP_NUMBER"] || "966576742294").replace(/[^\d]/g, "");
+  const defaultNumber = (process.env["WHATSAPP_NUMBER"] || "966575389682").replace(/[^\d]/g, "");
   const extraAllowed = (process.env["ALLOWED_WHATSAPP_NUMBERS"] || "")
     .split(",")
     .map((n) => n.replace(/[^\d]/g, ""))
     .filter(Boolean);
-  const whitelist = new Set([defaultNumber, "966576742294", ...extraAllowed]);
+  const whitelist = new Set([defaultNumber, "966575389682", "966576742294", ...extraAllowed]);
   return whitelist.has(digits);
 }
 
 export function buildSafeWhatsAppDestination(number?: string | null, text?: string | null): string {
-  const defaultNumber = (process.env["WHATSAPP_NUMBER"] || "966576742294").replace(/[^\d]/g, "");
+  const defaultNumber = (process.env["WHATSAPP_NUMBER"] || "966575389682").replace(/[^\d]/g, "");
   const sanitizedNumber = (number || "").replace(/[^\d]/g, "");
   const targetNumber = isTrustedWhatsAppNumber(sanitizedNumber) ? sanitizedNumber : defaultNumber;
   const baseUrl = `https://wa.me/${targetNumber}`;
@@ -155,7 +155,7 @@ export async function trackAndBuildRedirect(
   params: WhatsAppTrackingParams
 ): Promise<{ redirectUrl: string; eventId?: number }> {
   // Always determine verified destination first via strict whitelist
-  const defaultNumber = (process.env["WHATSAPP_NUMBER"] || "966576742294").replace(/[^\d]/g, "");
+  const defaultNumber = (process.env["WHATSAPP_NUMBER"] || "966575389682").replace(/[^\d]/g, "");
   const requestedNumber = (params.number || "").replace(/[^\d]/g, "");
   const targetNumber = isTrustedWhatsAppNumber(requestedNumber) ? requestedNumber : defaultNumber;
   let messageText = params.text || null;
