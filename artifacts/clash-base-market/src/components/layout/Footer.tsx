@@ -59,7 +59,7 @@ export function Footer() {
           <a
             href="https://webinoo.online"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             className="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#6d28d9] hover:bg-[#7c3aed] text-white font-bold text-xs sm:text-sm tracking-wide shadow-sm hover:shadow-[0_0_15px_rgba(124,58,237,0.5)] hover:scale-105 transition-all duration-200"
             style={{ fontFamily: "'Manrope', sans-serif" }}
           >

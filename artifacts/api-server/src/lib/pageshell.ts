@@ -547,7 +547,7 @@ export function pageShell(opts: {
   <div style="background: #090d16; border-top: 1px solid rgba(51, 65, 85, 0.4); padding: 12px 16px; text-align: center;">
     <div style="display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif; font-size: 0.85rem; color: #cbd5e1;">
       <span>صُنع بإتقان وشغف بواسطة</span>
-      <a href="https://webinoo.online" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 4px 14px; border-radius: 9999px; background: #6d28d9; color: #ffffff; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.85rem; text-decoration: none; box-shadow: 0 2px 8px rgba(109, 40, 217, 0.4);">
+      <a href="https://webinoo.online" target="_blank" rel="nofollow noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; padding: 4px 14px; border-radius: 9999px; background: #6d28d9; color: #ffffff; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.85rem; text-decoration: none; box-shadow: 0 2px 8px rgba(109, 40, 217, 0.4);">
         WebinOO
       </a>
       <span style="color: #94a3b8;">• حلول الويب وتصدر Google</span>
