@@ -15,7 +15,7 @@ END ASC`;
 const WHATSAPP_NUMBER = process.env["WHATSAPP_NUMBER"] || "";
 
 const GAME_LABEL: Record<string, string> = {
-  "clash-of-clans": "كلاش اوف كلانس",
+  "clash-of-clans": "متجر كلاش أوف كلانس",
   "clash-royale": "كلاش رويال",
 };
 
@@ -211,6 +211,9 @@ router.get("/account/:slug", async (req, res) => {
       ? `<section style="margin-top:48px; padding-top:32px; border-top:1px solid #334155;">
           <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:16px;">حسابات ${escapeHtml(gameLabel)} مشابهة قد تهمك</h2>
           <div class="grid-list">${relatedFiltered.map(accountCardHtml).join("\n")}</div>
+          <div style="text-align:center; margin-top:24px;">
+            <a class="cta" href="/${account.game === "clash-of-clans" ? "clash-of-clans" : "clash-royale"}" style="font-weight:700;">استعراض كافة الحسابات في ${escapeHtml(gameLabel)} ←</a>
+          </div>
         </section>`
       : "";
 

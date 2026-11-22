@@ -8,6 +8,8 @@ const CLOUD_NAME = process.env.VITE_CLOUDINARY_CLOUD_NAME || "doorrysnw";
 const UPLOAD_PRESET = process.env.VITE_CLOUDINARY_UPLOAD_PRESET || "clash_base_upload";
 const ADMIN_SECRET = process.env.TELEGRAM_ADMIN_SECRET || "clash2026admin";
 const SITE_URL = process.env.SITE_URL || "https://www.clashmarket.online";
+const CLASH_MARKET_URL = process.env.CLASH_MARKET_URL || SITE_URL;
+const MATJAR_COC_URL = process.env.MATJAR_COC_URL || "https://matjarclashofclans.online";
 
 // Format Cloudinary URLs to modern web standards (f_auto, q_auto)
 export function formatCloudinaryUrl(url: string | undefined | null): string {
@@ -35,10 +37,14 @@ if (process.env.TELEGRAM_ADMIN_IDS) {
   }
 }
 
+// Target store types
+export type TargetStore = "clashmarket" | "matjarclashofclans" | "both";
+
 // Wizard state types
 export type WizardStep =
   | "IDLE"
   | "AWAITING_PASSWORD"
+  | "AWAITING_STORE"
   | "AWAITING_GAME"
   | "AWAITING_TOWN_HALL"
   | "AWAITING_STATUS_TYPE"
@@ -50,6 +56,7 @@ export type WizardStep =
   | "CONFIRMATION";
 
 export interface AccountDraft {
+  targetStore?: TargetStore;
   game?: "clash-of-clans" | "clash-royale";
   townHall?: number;
   arena?: string;
@@ -120,9 +127,56 @@ const MAIN_KEYBOARD = {
 async function sendMainMenu(chatId: number, message = "اختر ما ترغب بالقيام به من القائمة أدناه:") {
   await tgApi("sendMessage", {
     chat_id: chatId,
-    text: `👑 <b>لوحة تحكم كلاش ماركت</b> 🛡️\n\n${message}`,
+    text: `👑 <b>لوحة تحكم كلاش ماركت & متجر كلاش اوف كلانس</b> 🛡️\n\n${message}`,
     parse_mode: "HTML",
     reply_markup: MAIN_KEYBOARD,
+  });
+}
+
+// Store labels helper
+export function getStoreLabel(targetStore?: TargetStore): string {
+  switch (targetStore) {
+    case "clashmarket":
+      return "⚔️ كلاش ماركت (clashmarket.online)";
+    case "matjarclashofclans":
+      return "👑 متجر كلاش اوف كلانس (matjarclashofclans.online)";
+    case "both":
+      return "🌐 كلاهما معاً (كلاش ماركت + متجر كلاش اوف كلانس)";
+    default:
+      return "⚔️ كلاش ماركت";
+  }
+}
+
+export function getStoreShortBadge(store?: string | null): string {
+  if (store === "matjarclashofclans") return "🏰 متجر كلاش";
+  if (store === "clashmarket") return "⚔️ كلاش ماركت";
+  return "🌐 مشترك";
+}
+
+// Prompt Town Hall helper
+async function promptTownHall(chatId: number, storeName: string) {
+  await tgApi("sendMessage", {
+    chat_id: chatId,
+    text:
+      `🏰 <b>الخطوة 2: مستوى التاون هول (Town Hall)</b>\n\n` +
+      `المتجر المحدد: <b>${storeName}</b>\n\n` +
+      `اختر من الأزرار أو اكتب الرقم مباشرة (مثال: 16):`,
+    parse_mode: "HTML",
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: "TH 18 ⚡", callback_data: "th_18" },
+          { text: "TH 17 🌟", callback_data: "th_17" },
+          { text: "TH 16 🏰", callback_data: "th_16" },
+        ],
+        [
+          { text: "TH 15 ⚔️", callback_data: "th_15" },
+          { text: "TH 14 🛡️", callback_data: "th_14" },
+          { text: "TH 13 أو أقل", callback_data: "th_13" },
+        ],
+        [{ text: "❌ إلغاء", callback_data: "cancel_wizard" }],
+      ],
+    },
   });
 }
 
@@ -178,21 +232,29 @@ export function generateSlug(game: string, townHall?: number, title?: string): s
   return `${prefix}-${level}-${random}-${time}`;
 }
 
-// Start Add Account Wizard
+// Start Add Account Wizard (Step 1: Choose Store)
 async function startAddAccount(chatId: number) {
   const session = getSession(chatId);
-  session.step = "AWAITING_GAME";
+  session.step = "AWAITING_STORE";
   session.data = { images: [] };
 
   await tgApi("sendMessage", {
     chat_id: chatId,
-    text: "🎮 <b>الخطوة 1 من 7: اختر اللعبة</b>\n\nحدد اللعبة التي ينتمي إليها الحساب:",
+    text:
+      "🏪 <b>الخطوة 1: حدد المتجر المستهدف</b>\n\n" +
+      "اختر إلى أي متجر ترغب بإضافة ونشر هذا الحساب:\n\n" +
+      "1️⃣ <b>كلاش ماركت</b> (المتجر الرئيسي - كلاش أوف كلانس & كلاش رويال)\n" +
+      "2️⃣ <b>متجر كلاش اوف كلانس</b> (المتجر المتخصص - كلاش أوف كلانس فقط)\n" +
+      "3️⃣ <b>كلاهما معاً</b> (نشر الحساب في كلا المتجرين بضغطة واحدة)",
     parse_mode: "HTML",
     reply_markup: {
       inline_keyboard: [
         [
-          { text: "⚔️ كلاش أوف كلانس", callback_data: "game_coc" },
-          { text: "👑 كلاش رويال", callback_data: "game_cr" },
+          { text: "⚔️ كلاش ماركت", callback_data: "store_clashmarket" },
+          { text: "👑 متجر كلاش اوف كلانس", callback_data: "store_matjar" },
+        ],
+        [
+          { text: "🌐 كلاهما معاً (النشر في المتجرين)", callback_data: "store_both" },
         ],
         [{ text: "❌ إلغاء", callback_data: "cancel_wizard" }],
       ],
@@ -233,6 +295,52 @@ export async function handleTelegramUpdate(update: any) {
           text: "❌ تم إلغاء العملية.",
           reply_markup: MAIN_KEYBOARD,
         });
+        return;
+      }
+
+      // Step: Select Target Store
+      if (data === "store_clashmarket") {
+        session.data.targetStore = "clashmarket";
+        session.step = "AWAITING_GAME";
+
+        await tgApi("sendMessage", {
+          chat_id: chatId,
+          text:
+            "🎮 <b>الخطوة 2 من 8: اختر اللعبة</b>\n\n" +
+            "المتجر المحدد: ⚔️ <b>كلاش ماركت</b>\n\n" +
+            "حدد اللعبة التي ينتمي إليها الحساب:",
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                { text: "⚔️ كلاش أوف كلانس", callback_data: "game_coc" },
+                { text: "👑 كلاش رويال", callback_data: "game_cr" },
+              ],
+              [{ text: "❌ إلغاء", callback_data: "cancel_wizard" }],
+            ],
+          },
+        });
+        return;
+      }
+
+      if (data === "store_matjar") {
+        session.data.targetStore = "matjarclashofclans";
+        session.data.game = "clash-of-clans";
+        session.step = "AWAITING_TOWN_HALL";
+        await promptTownHall(chatId, "👑 متجر كلاش اوف كلانس");
+        return;
+      }
+
+      if (data === "store_both") {
+        session.data.targetStore = "both";
+        session.data.game = "clash-of-clans";
+        session.step = "AWAITING_TOWN_HALL";
+        await promptTownHall(chatId, "🌐 كلاهما معاً (كلاش ماركت + متجر كلاش)");
+        return;
+      }
+
+      if (data === "add_another") {
+        await startAddAccount(chatId);
         return;
       }
 
@@ -348,32 +456,7 @@ export async function handleTelegramUpdate(update: any) {
         }
 
         session.step = "CONFIRMATION";
-        const gameLabel = session.data.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
-        const levelLabel = session.data.townHall ? `تاون هول ${session.data.townHall}` : (session.data.arena || "عام");
-
-        const previewText =
-          `📋 <b>مراجعة بيانات الحساب قبل النشر:</b>\n` +
-          `──────────────────\n` +
-          `🎮 <b>اللعبة:</b> ${gameLabel}\n` +
-          `🏰 <b>المستوى:</b> ${levelLabel}\n` +
-          `🏷️ <b>العنوان:</b> ${session.data.title}\n` +
-          `💰 <b>السعر:</b> ${session.data.price} ر.س ${session.data.oldPrice ? `<i>(السابق: ${session.data.oldPrice} ر.س)</i>` : ""}\n` +
-          `📸 <b>عدد الصور المرفوعة:</b> ${session.data.images.length} صور على Cloudinary\n` +
-          `📝 <b>الوصف:</b> ${session.data.description?.slice(0, 100)}...\n` +
-          `──────────────────\n` +
-          `اضغط <b>نشر الآن</b> لعرض الحساب فوراً على الموقع الحي 🚀`;
-
-        await tgApi("sendMessage", {
-          chat_id: chatId,
-          text: previewText,
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "🚀 نشر الحساب في الموقع الآن", callback_data: "publish_now" }],
-              [{ text: "❌ إلغاء", callback_data: "cancel_wizard" }],
-            ],
-          },
-        });
+        await promptPhotosDone(chatId, session);
         return;
       }
 
@@ -787,12 +870,14 @@ async function handleIncomingPhoto(chatId: number, session: UserSession, fileId:
 
 // Prompt Photos Done / Preview
 async function promptPhotosDone(chatId: number, session: UserSession) {
+  const storeLabel = getStoreLabel(session.data.targetStore);
   const gameLabel = session.data.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
   const levelLabel = session.data.townHall ? `تاون هول ${session.data.townHall}` : (session.data.arena || "عام");
 
   const previewText =
     `📋 <b>مراجعة بيانات الحساب قبل النشر:</b>\n` +
     `──────────────────\n` +
+    `🏪 <b>المتجر المستهدف:</b> ${storeLabel}\n` +
     `🎮 <b>اللعبة:</b> ${gameLabel}\n` +
     `🏰 <b>المستوى:</b> ${levelLabel}\n` +
     `🏷️ <b>العنوان:</b> ${session.data.title}\n` +
@@ -819,6 +904,8 @@ async function promptPhotosDone(chatId: number, session: UserSession) {
 async function publishAccount(chatId: number, session: UserSession) {
   try {
     const slug = generateSlug(session.data.game || "clash-of-clans", session.data.townHall, session.data.title);
+    const targetStore = session.data.targetStore || "clashmarket";
+    const storeDbVal = targetStore === "both" ? "all" : targetStore;
 
     const [account] = await db
       .insert(accountsTable)
@@ -835,30 +922,77 @@ async function publishAccount(chatId: number, session: UserSession) {
         status: "available",
         featured: false,
         whatsappMessage: session.data.title || null,
+        store: storeDbVal,
       })
       .returning();
 
-    const accountUrl = `${SITE_URL}/account/${account.slug}`;
+    const clashMarketUrl = `${CLASH_MARKET_URL}/account/${account.slug}`;
+    const matjarUrl = `${MATJAR_COC_URL}/account/${account.slug}`;
 
-    const successMsg =
-      `🎉 <b>ألف مبروك! تم نشر الحساب بنجاح في المتجر</b> 🚀\n\n` +
-      `🆔 <b>رقم الحساب:</b> #${account.id}\n` +
-      `🏷️ <b>العنوان:</b> ${account.title}\n` +
-      `💰 <b>السعر:</b> ${account.price} ر.س\n` +
-      `📸 <b>عدد الصور:</b> ${account.images.length} صور\n` +
-      `🟢 <b>الحالة:</b> متاح للبيع فوراً\n\n` +
-      `🌐 <b>رابط الحساب الحي على الموقع:</b>\n` +
-      `<a href="${accountUrl}">${accountUrl}</a>`;
+    let successMsg = "";
+    let inlineKeyboard: Array<Array<{ text: string; url?: string; callback_data?: string }>> = [];
+
+    if (targetStore === "clashmarket") {
+      successMsg =
+        `🎉 <b>ألف مبروك! تم نشر الحساب بنجاح في كلاش ماركت</b> 🚀\n\n` +
+        `🏪 <b>المتجر:</b> كلاش ماركت (clashmarket.online)\n` +
+        `🆔 <b>رقم الحساب:</b> #${account.id}\n` +
+        `🏷️ <b>العنوان:</b> ${account.title}\n` +
+        `💰 <b>السعر:</b> ${account.price} ر.س\n` +
+        `📸 <b>عدد الصور:</b> ${account.images.length} صور\n` +
+        `🟢 <b>الحالة:</b> متاح للبيع فوراً\n\n` +
+        `🌐 <b>رابط الحساب الحي على الموقع:</b>\n` +
+        `<a href="${clashMarketUrl}">${clashMarketUrl}</a>`;
+
+      inlineKeyboard = [
+        [{ text: "👁️ فتح الحساب على كلاش ماركت", url: clashMarketUrl }],
+        [{ text: "➕ إضافة حساب آخر", callback_data: "add_another" }],
+      ];
+    } else if (targetStore === "matjarclashofclans") {
+      successMsg =
+        `🎉 <b>ألف مبروك! تم نشر الحساب بنجاح في متجر كلاش اوف كلانس</b> 👑\n\n` +
+        `🏰 <b>المتجر:</b> متجر كلاش اوف كلانس (matjarclashofclans.online)\n` +
+        `🆔 <b>رقم الحساب:</b> #${account.id}\n` +
+        `🏷️ <b>العنوان:</b> ${account.title}\n` +
+        `💰 <b>السعر:</b> ${account.price} ر.س\n` +
+        `📸 <b>عدد الصور:</b> ${account.images.length} صور\n` +
+        `🟢 <b>الحالة:</b> متاح للبيع فوراً\n\n` +
+        `👑 <b>رابط الحساب الحي على المتجر:</b>\n` +
+        `<a href="${matjarUrl}">${matjarUrl}</a>`;
+
+      inlineKeyboard = [
+        [{ text: "👑 فتح الحساب على متجر كلاش اوف كلانس", url: matjarUrl }],
+        [{ text: "➕ إضافة حساب آخر", callback_data: "add_another" }],
+      ];
+    } else {
+      successMsg =
+        `🎉 <b>ألف مبروك! تم نشر الحساب في كلا المتجرين معاً بنجاح</b> 🚀👑\n\n` +
+        `🌐 <b>المتاجر:</b> كلاش ماركت + متجر كلاش اوف كلانس\n` +
+        `🆔 <b>رقم الحساب:</b> #${account.id}\n` +
+        `🏷️ <b>العنوان:</b> ${account.title}\n` +
+        `💰 <b>السعر:</b> ${account.price} ر.س\n` +
+        `📸 <b>عدد الصور:</b> ${account.images.length} صور\n` +
+        `🟢 <b>الحالة:</b> متاح للبيع فوراً في المتجرين\n\n` +
+        `⚔️ <b>رابط كلاش ماركت:</b>\n` +
+        `<a href="${clashMarketUrl}">${clashMarketUrl}</a>\n\n` +
+        `👑 <b>رابط متجر كلاش اوف كلانس:</b>\n` +
+        `<a href="${matjarUrl}">${matjarUrl}</a>`;
+
+      inlineKeyboard = [
+        [
+          { text: "⚔️ فتح في كلاش ماركت", url: clashMarketUrl },
+          { text: "👑 فتح في متجر كلاش", url: matjarUrl },
+        ],
+        [{ text: "➕ إضافة حساب آخر", callback_data: "add_another" }],
+      ];
+    }
 
     await tgApi("sendMessage", {
       chat_id: chatId,
       text: successMsg,
       parse_mode: "HTML",
       reply_markup: {
-        inline_keyboard: [
-          [{ text: "👁️ فتح الحساب على الموقع", url: accountUrl }],
-          [{ text: "➕ إضافة حساب آخر", callback_data: "game_coc" }],
-        ],
+        inline_keyboard: inlineKeyboard,
       },
     });
 
@@ -879,19 +1013,28 @@ async function showStoreStats(chatId: number) {
   try {
     const all = await db.select().from(accountsTable);
     const total = all.length;
-    const available = all.filter((a) => a.status === "available").length;
-    const sold = all.filter((a) => a.status === "sold").length;
-    const coc = all.filter((a) => a.game === "clash-of-clans").length;
-    const cr = all.filter((a) => a.game === "clash-royale").length;
+    const available = all.filter((a: any) => a.status === "available").length;
+    const sold = all.filter((a: any) => a.status === "sold").length;
+    const coc = all.filter((a: any) => a.game === "clash-of-clans").length;
+    const cr = all.filter((a: any) => a.game === "clash-royale").length;
+
+    const clashMarketCount = all.filter((a: any) => a.store === "clashmarket" || a.store === "all" || !a.store).length;
+    const matjarCount = all.filter((a: any) => a.store === "matjarclashofclans" || a.store === "all").length;
 
     const statsText =
-      `📊 <b>إحصائيات متجر كلاش ماركت:</b>\n` +
+      `📊 <b>إحصائيات المتاجر الموحدة:</b>\n` +
       `──────────────────\n` +
       `📦 <b>إجمالي الحسابات:</b> ${total}\n` +
       `🟢 <b>الحسابات المتاحة:</b> ${available}\n` +
       `🔴 <b>الحسابات المباعة:</b> ${sold}\n` +
-      `⚔️ <b>كلاش أوف كلانس:</b> ${coc}\n` +
-      `👑 <b>كلاش رويال:</b> ${cr}\n` +
+      `──────────────────\n` +
+      `🏪 <b>توزيع الحسابات حسب المتجر:</b>\n` +
+      `⚔️ <b>كلاش ماركت:</b> ${clashMarketCount} حساب\n` +
+      `👑 <b>متجر كلاش اوف كلانس:</b> ${matjarCount} حساب\n` +
+      `──────────────────\n` +
+      `🎮 <b>توزيع الألعاب:</b>\n` +
+      `⚔️ كلاش أوف كلانس: ${coc}\n` +
+      `👑 كلاش رويال: ${cr}\n` +
       `──────────────────`;
 
     await tgApi("sendMessage", {
@@ -914,6 +1057,7 @@ async function showManageAccounts(chatId: number) {
         title: accountsTable.title,
         status: accountsTable.status,
         price: accountsTable.price,
+        store: accountsTable.store,
       })
       .from(accountsTable)
       .orderBy(desc(accountsTable.createdAt))
@@ -928,12 +1072,15 @@ async function showManageAccounts(chatId: number) {
       return;
     }
 
-    const inlineKeyboard = recent.map((acc) => [
-      {
-        text: `#${acc.id} ${acc.title.slice(0, 24)} (${acc.status === "available" ? "🟢 متاح" : "🔴 مباع"})`,
-        callback_data: `manage_acc_${acc.id}`,
-      },
-    ]);
+    const inlineKeyboard = recent.map((acc: any) => {
+      const badge = getStoreShortBadge(acc.store);
+      return [
+        {
+          text: `#${acc.id} ${badge} ${acc.title.slice(0, 18)} (${acc.status === "available" ? "🟢 متاح" : "🔴 مباع"})`,
+          callback_data: `manage_acc_${acc.id}`,
+        },
+      ];
+    });
 
     await tgApi("sendMessage", {
       chat_id: chatId,

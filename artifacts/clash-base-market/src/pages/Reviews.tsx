@@ -655,6 +655,26 @@ export default function Reviews() {
                 <span>أضف تقييمك الآن</span>
               </button>
             </div>
+
+            {/* Direct Link to Clash of Clans Store */}
+            <div className="mt-8 rounded-2xl p-6 bg-card/60 border border-border text-center">
+              <h3 className="text-lg font-bold text-foreground mb-2">جاهز لاقتناء قريتك القادمة؟</h3>
+              <p className="text-sm text-muted-foreground mb-4">تصفح التقييمات أعلاه ثم اختر حسابك المفضل من متجرنا المعتمد مع الضمان الذهبي.</p>
+              <div className="flex justify-center flex-wrap gap-3">
+                <a
+                  href="/clash-of-clans"
+                  className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                  زيارة متجر كلاش أوف كلانس (قريات ماكس) ←
+                </a>
+                <a
+                  href="/clash-royale"
+                  className="px-6 py-2.5 rounded-xl bg-secondary text-secondary-foreground font-semibold text-sm hover:bg-secondary/80 transition-all"
+                >
+                  متجر كلاش رويال ←
+                </a>
+              </div>
+            </div>
           </div>
         )}
       </main>

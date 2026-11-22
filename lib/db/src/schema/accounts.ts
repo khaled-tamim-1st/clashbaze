@@ -24,6 +24,7 @@ export const accountsTable = pgTable("accounts", {
   maxCards: integer("max_cards"),
   whatsappMessage: text("whatsapp_message"),
   featured: boolean("featured").notNull().default(false),
+  store: text("store").default("all"), // "clashmarket" | "matjarclashofclans" | "all"
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

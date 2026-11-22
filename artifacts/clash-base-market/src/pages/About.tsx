@@ -111,7 +111,7 @@ export default function About() {
             <div className="bg-card border border-border rounded-2xl p-6 md:p-8 space-y-4">
               <h2 className="text-2xl font-bold text-foreground">ما الذي يقدمه المتجر؟</h2>
               <ul className="space-y-3 text-muted-foreground text-sm md:text-base">
-                <li className="flex gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" /> <span><strong>حسابات كلاش أوف كلانس</strong> — قريات من تاون هول 14 وحتى 18، بمستويات تطوير مختلفة تناسب ميزانيات متعددة. <Link href="/clash-of-clans" className="text-primary hover:underline">تصفح القريات المتاحة</Link>.</span></li>
+                <li className="flex gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" /> <span><strong>حسابات كلاش أوف كلانس</strong> — قريات من تاون هول 14 وحتى 18، بمستويات تطوير مختلفة تناسب ميزانيات متعددة. <Link href="/clash-of-clans" className="text-primary hover:underline font-bold">زيارة متجر كلاش أوف كلانس</Link>.</span></li>
                 <li className="flex gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" /> <span><strong>حسابات كلاش رويال</strong> — حسابات بكروت متقدمة وتطورات وأبطال. <Link href="/clash-royale" className="text-primary hover:underline">تصفح حسابات كلاش رويال</Link>.</span></li>
                 <li className="flex gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" /> <span><strong>تسليم يدوي مباشر</strong> — كل عملية بيع تتم عبر محادثة واتساب حقيقية وليس عبر نظام آلي.</span></li>
                 <li className="flex gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" /> <span><strong>خيارات الدفع</strong> — تحويل بنكي مباشر، أو ترتيب التقسيط عبر تابي أو تمارا بالتنسيق المباشر.</span></li>
@@ -186,7 +186,7 @@ export default function About() {
               </p>
               <div className="flex flex-wrap justify-center gap-4 pt-2">
                 <Link href="/clash-of-clans" className="px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-xl text-sm transition-colors">
-                  تصفح قريات كلاش أوف كلانس
+                  متجر كلاش أوف كلانس (قريات ماكس) ←
                 </Link>
                 <Link href="/clash-royale" className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm transition-colors">
                   تصفح حسابات كلاش رويال

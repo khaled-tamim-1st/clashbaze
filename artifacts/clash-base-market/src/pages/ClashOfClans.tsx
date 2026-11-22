@@ -120,14 +120,14 @@ export default function ClashOfClans() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       <SEO
-        title="متجر كلاش اوف كلانس | سوق بيع وشراء قريات كلاش ماكس — كلاش ماركت"
-        description="استكشف أكبر متجر وسوق كلاش اوف كلانس في السعودية والخليج. قريات تاون هول 15 إلى 18 ماكس بأسعار منافسة وتسليم فوري مع الضمان الذهبي."
+        title="متجر كلاش اوف كلانس | بيع وشراء قريات كلاش ماكس وضمان ذهبي — كلاش ماركت"
+        description="أفضل متجر كلاش اوف كلانس في السعودية والخليج: تصفح واشترِ قريات تاون 15 إلى 18 ماكس بأسعار تبدأ من 150 ر.س. تسليم فوري بالواتساب، وضمان ذهبي مع تابي وتمارا."
         url="https://www.clashmarket.online/clash-of-clans"
         jsonLd={jsonLdArray}
       />
       <Navbar />
       <main className="flex-1">
-        <h1 className="sr-only">متجر كلاش اوف كلانس | سوق بيع وشراء حسابات كلاش</h1>
+        <h1 className="sr-only">متجر كلاش اوف كلانس | سوق بيع وشراء قريات كلاش ماكس</h1>
 
         {/* Town Hall Banners with Generous Spacing and Uncropped Native Aspect Ratio */}
         <section className="w-full py-8 md:py-14">

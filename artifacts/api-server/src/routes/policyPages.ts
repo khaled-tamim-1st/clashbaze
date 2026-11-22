@@ -135,7 +135,7 @@ router.get("/guarantee", (req, res) => {
       </section>
 
       <div style="text-align: center; margin-top: 36px;">
-        <a class="cta" href="/clash-of-clans" style="margin-left: 12px;">تصفح حسابات كلاش أوف كلانس</a>
+        <a class="cta" href="/clash-of-clans" style="margin-left: 12px; font-weight:700;">متجر كلاش أوف كلانس (قريات ماكس) ←</a>
         <a class="cta" href="/clash-royale" style="background: #2563eb;">تصفح حسابات كلاش رويال</a>
       </div>
     </article>
@@ -222,7 +222,7 @@ router.get("/how-it-works", (req, res) => {
           <div>
             <h2 style="font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin-bottom: 6px;">اختر الحساب المناسب</h2>
             <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">
-              تصفح قسم <a href="/clash-of-clans" style="color:#f59e0b; font-weight:700;">كلاش أوف كلانس</a> أو <a href="/clash-royale" style="color:#f59e0b; font-weight:700;">كلاش رويال</a>، وشاهد صور الحساب وتفاصيل اللفل والأبطال والأسعار المعروضة بكل شفافية.
+              تصفح قسم <a href="/clash-of-clans" style="color:#f59e0b; font-weight:700;">متجر كلاش أوف كلانس</a> أو <a href="/clash-royale" style="color:#f59e0b; font-weight:700;">كلاش رويال</a>، وشاهد صور الحساب وتفاصيل اللفل والأبطال والأسعار المعروضة بكل شفافية.
             </p>
           </div>
         </div>
@@ -393,7 +393,7 @@ router.get("/about", (req, res) => {
       <section style="background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 28px; margin-bottom: 28px;">
         <h2 style="font-size: 1.4rem; font-weight: 700; color: #f8fafc; margin-bottom: 12px;">ما الذي يقدمه المتجر؟</h2>
         <ul style="color: #cbd5e1; line-height: 2; padding-right: 20px;">
-          <li><strong>حسابات كلاش أوف كلانس:</strong> قريات تاون هول 14 إلى 18 بمستويات تطوير وأبطال متنوعة. (<a href="/clash-of-clans" style="color: #f59e0b;">تصفح حسابات كلاش أوف كلانس</a>)</li>
+          <li><strong>حسابات كلاش أوف كلانس:</strong> قريات تاون هول 14 إلى 18 بمستويات تطوير وأبطال متنوعة. (<a href="/clash-of-clans" style="color: #f59e0b; font-weight:700;">زيارة متجر كلاش أوف كلانس</a>)</li>
           <li><strong>حسابات كلاش رويال:</strong> تشكيلات بطاقات Level 16 وتطورات Evolutions وأبطال. (<a href="/clash-royale" style="color: #60a5fa;">تصفح حسابات كلاش رويال</a>)</li>
           <li><strong>تسليم يدوي مباشر:</strong> متابعة شخصية خطوة بخطوة عبر الواتساب لتغيير البريد وتأمين الحساب برقمك.</li>
           <li><strong>طرق دفع مرنة:</strong> تحويل بنكي محلي أو تقسيط ميسر عبر تابي وتمارا بالتنسيق المباشر.</li>
@@ -422,7 +422,7 @@ router.get("/about", (req, res) => {
       </section>
 
       <div style="text-align: center; margin-top: 36px;">
-        <a class="cta" href="/clash-of-clans" style="margin-left: 12px;">قريات كلاش أوف كلانس</a>
+        <a class="cta" href="/clash-of-clans" style="margin-left: 12px; font-weight:700;">متجر كلاش أوف كلانس (قريات ماكس) ←</a>
         <a class="cta" href="/clash-royale" style="background: #2563eb; color: #fff; margin-left: 12px;">حسابات كلاش رويال</a>
         <a class="cta" href="/blog" style="background: #334155; color: #f8fafc;">مدونة كلاش ماركت</a>
       </div>

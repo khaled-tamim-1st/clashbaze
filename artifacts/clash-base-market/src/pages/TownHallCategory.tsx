@@ -150,7 +150,7 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
 
   const breadcrumbItems = [
     { name: "كلاش ماركت", path: "/" },
-    { name: "حسابات كلاش أوف كلانس", path: "/clash-of-clans" },
+    { name: "متجر كلاش أوف كلانس", path: "/clash-of-clans" },
     { name: `تاون هول ${config.level}`, path: `/clash-of-clans/town-hall-${config.level}` },
   ];
 
@@ -309,7 +309,7 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
               href="/clash-of-clans"
               className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
             >
-              جميع قريات كلاش أوف كلانس
+              العودة إلى متجر كلاش أوف كلانس الرئيسي
             </Link>
           </div>
         </section>
@@ -341,7 +341,7 @@ export default function TownHallCategory({ level: propLevel }: TownHallCategoryP
         <div className="mt-12 pt-6 border-t border-border/60">
           <Link href="/clash-of-clans" className="text-primary hover:underline text-sm md:text-base inline-flex items-center gap-2">
             <span>←</span>
-            <span>العودة لقسم كلاش أوف كلانس الرئيسي</span>
+            <span>العودة إلى متجر كلاش أوف كلانس الرئيسي</span>
           </Link>
         </div>
       </div>

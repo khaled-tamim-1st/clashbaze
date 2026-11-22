@@ -31,17 +31,19 @@ async function runBotTest() {
   console.log("✅ Bot Auth passed!");
 
   // 3. Test Wizard Flow: Start Adding Account
-  console.log("\n[TEST 3] Testing Add Account Wizard...");
+  console.log("\n[TEST 3] Testing Add Account Wizard with Store Selection...");
   await handleTelegramUpdate({
     message: { chat: { id: testChatId }, text: "➕ إضافة حساب جديد" },
   });
 
-  // Step: Select Game CoC
+  // Step 1: Select Target Store (متجر كلاش اوف كلانس)
+  console.log("-> Selecting store: متجر كلاش اوف كلانس");
   await handleTelegramUpdate({
-    callback_query: { id: "cb_1", message: { chat: { id: testChatId } }, data: "game_coc" },
+    callback_query: { id: "cb_store", message: { chat: { id: testChatId } }, data: "store_matjar" },
   });
 
-  // Step: Select TH 16
+  // Step 2: Select TH 16 directly (since Matjar CoC automatically picks Clash of Clans)
+  console.log("-> Selecting Town Hall: TH 16");
   await handleTelegramUpdate({
     callback_query: { id: "cb_2", message: { chat: { id: testChatId } }, data: "th_16" },
   });
@@ -89,6 +91,7 @@ async function runBotTest() {
       images: [cdnUrl],
       status: "available",
       description: "وصف تجريبي لفحص النشر والحذف الفوري",
+      store: "matjarclashofclans",
     })
     .returning();
 
@@ -98,8 +101,14 @@ async function runBotTest() {
     slug: created.slug,
     price: created.price,
     townHall: created.townHall,
+    store: created.store,
     images: created.images,
   });
+
+  if (created.store !== "matjarclashofclans") {
+    throw new Error(`Store field mismatch: expected 'matjarclashofclans', got '${created.store}'`);
+  }
+  console.log("✅ Store field verified:", created.store);
 
   if (!created.id || created.price !== "750.00") {
     // Note: numeric precision may return '750.00' or '750'

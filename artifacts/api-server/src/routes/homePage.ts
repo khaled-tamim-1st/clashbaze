@@ -123,7 +123,7 @@ router.get("/", async (req, res) => {
 
     const allAccounts = [...cocAccounts, ...royaleAccounts];
 
-    const title = `متجر كلاش | أكبر سوق لبيع وشراء حسابات كلاش اوف كلانس وكلاش رويال`;
+    const title = `كلاش ماركت | أكبر متجر وسوق بيع وشراء حسابات كلاش (أوف كلانس ورويال)`;
     const description =
       "أفضل متجر وسوق كلاش لبيع وشراء حسابات كلاش اوف كلانس وحسابات كلاش رويال في السعودية والخليج. قريات تاون 14 إلى 18 ماكس، تسليم فوري بالواتساب، وضمان ذهبي مع تقسيط تابي وتمارا.";
 
@@ -278,7 +278,7 @@ router.get("/", async (req, res) => {
 
       <header style="margin-bottom: 32px; background:none; border:none; padding:0;">
         <h1 style="font-size:2.2rem; font-weight:800; color:#f8fafc; margin-bottom:12px; line-height:1.3;">
-          متجر كلاش | أكبر سوق لبيع وشراء حسابات كلاش اوف كلانس وكلاش رويال
+          كلاش ماركت | المنصة الرائدة لبيع وشراء حسابات وقرى كلاش في السعودية والخليج
         </h1>
         <p style="font-size:1.05rem; color:#94a3b8; max-width:850px; line-height:1.8; margin:0;">
           ${description}
@@ -315,10 +315,19 @@ router.get("/", async (req, res) => {
       </section>
 
       <section style="margin: 32px 0;">
-        <h2>حسابات وقريات كلاش اوف كلانس للبيع (سوق كلاش)</h2>
-        <p>تصفح أقوى قريات كلاش تاون هول 15، 16، 17، و18 ماكس ليفل، أبطال ماكس، ودفاعات قوية جاهزة للحروب والدوريات في السعودية والخليج.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:8px;">
+          <h2 style="margin:0;"><a href="/clash-of-clans" style="color:#f8fafc; text-decoration:none;">متجر كلاش أوف كلانس | قريات ماكس للبيع</a></h2>
+          <a href="/clash-of-clans" style="color:#f59e0b; font-weight:700; font-size:0.95rem;">دخول متجر كلاش أوف كلانس ←</a>
+        </div>
+        <p>تصفح أقوى قريات كلاش تاون هول 15، 16، 17، و18 ماكس ليفل، أبطال ماكس، ودفاعات قوية جاهزة للحروب والدوريات في السعودية والخليج مع تسليم فوري وضمان ذهبي.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin: 12px 0 20px;">
+          <a href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; padding:6px 14px; border-radius:8px; font-size:0.85rem; font-weight:600; text-decoration:none;">قريات تاون هول 18 ماكس</a>
+          <a href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; padding:6px 14px; border-radius:8px; font-size:0.85rem; font-weight:600; text-decoration:none;">قريات تاون هول 17</a>
+          <a href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; padding:6px 14px; border-radius:8px; font-size:0.85rem; font-weight:600; text-decoration:none;">قريات تاون هول 16</a>
+          <a href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; padding:6px 14px; border-radius:8px; font-size:0.85rem; font-weight:600; text-decoration:none;">قريات تاون هول 15</a>
+        </div>
         ${cocHtml}
-        <p><a href="/clash-of-clans" class="cta">استعراض كافة حسابات كلاش اوف كلانس في المتجر ←</a></p>
+        <p style="margin-top:20px;"><a href="/clash-of-clans" class="cta">زيارة متجر كلاش أوف كلانس واستعراض كافة القريات المتاحة ←</a></p>
       </section>
 
       <section style="margin: 48px 0;">
@@ -345,7 +354,7 @@ router.get("/", async (req, res) => {
         
         <div style="margin-top: 16px; border-bottom: 1px solid #334155; padding-bottom: 16px;">
           <h3 style="font-size: 1.15rem; color: #f59e0b; margin-bottom: 8px;">س: كيف تتم عملية شراء ونقل حساب كلاش أوف كلانس أو كلاش رويال؟</h3>
-          <p style="color: #cbd5e1; margin: 0;">بعد اختيار الحساب المناسب، تضغط على زر شراء عبر الواتساب، نتواصل معك مباشرة من إدارة المتجر ويتم نقل ملكية السوبر سيل آيدي وتغيير البريد الإلكتروني وتفعيل الحماية برقمك فوراً وبأمان 100%.</p>
+          <p style="color: #cbd5e1; margin: 0;">بعد اختيار الحساب المناسب من <a href="/clash-of-clans" style="color:#60a5fa; font-weight:700;">متجر كلاش أوف كلانس</a> أو متجر كلاش رويال، تضغط على زر شراء عبر الواتساب، نتواصل معك مباشرة من إدارة المتجر ويتم نقل ملكية السوبر سيل آيدي وتغيير البريد الإلكتروني وتفعيل الحماية برقمك فوراً وبأمان 100%.</p>
         </div>
 
         <div style="margin-top: 16px; border-bottom: 1px solid #334155; padding-bottom: 16px;">

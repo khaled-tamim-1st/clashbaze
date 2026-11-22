@@ -61,7 +61,7 @@ export default function AccountDetail() {
   const priceFormatted = formatPrice(account.price);
   const message = `أريد شراء حساب ${account.whatsappMessage || account.title} (${priceFormatted})`;
 
-  const gameLabel = account.game === "clash-of-clans" ? "كلاش أوف كلانس" : "كلاش رويال";
+  const gameLabel = account.game === "clash-of-clans" ? "متجر كلاش أوف كلانس" : "كلاش رويال";
   const isCoc = account.game === "clash-of-clans";
   const seoDescription = isCoc
     ? (account.description

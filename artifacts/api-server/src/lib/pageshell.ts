@@ -521,7 +521,7 @@ export function pageShell(opts: {
     <div class="header-inner">
       <a class="brand" href="/">${escapeHtml(SITE_NAME)}</a>
       <nav class="main-nav">
-        <a href="/clash-of-clans">كلاش أوف كلانس</a>
+        <a href="/clash-of-clans" title="متجر كلاش أوف كلانس">متجر كلاش أوف كلانس</a>
         <a href="/clash-royale">كلاش رويال</a>
         <a href="/blog">المدونة</a>
         <a href="/reviews">آراء العملاء</a>
@@ -533,7 +533,7 @@ export function pageShell(opts: {
   </main>
   <footer>
     <div class="footer-links" style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:16px;">
-      <a href="/clash-of-clans">حسابات كلاش أوف كلانس</a>
+      <a href="/clash-of-clans" title="متجر كلاش أوف كلانس - بيع وشراء قريات كلاش ماكس">متجر كلاش أوف كلانس</a>
       <a href="/clash-royale">حسابات كلاش رويال</a>
       <a href="/blog">المدونة</a>
       <a href="/reviews">آراء العملاء</a>
@@ -541,6 +541,13 @@ export function pageShell(opts: {
       <span style="color:#334155;">|</span>
       <a href="/guarantee">سياسة الضمان</a>
       <a href="/how-it-works">طريقة الشراء</a>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:16px; font-size:0.85rem;">
+      <span style="color:#64748b;">أقسام متجر كلاش أوف كلانس:</span>
+      <a href="/clash-of-clans/town-hall-18" style="color:#94a3b8;">قريات تاون هول 18 ماكس</a>
+      <a href="/clash-of-clans/town-hall-17" style="color:#94a3b8;">قريات تاون هول 17</a>
+      <a href="/clash-of-clans/town-hall-16" style="color:#94a3b8;">قريات تاون هول 16</a>
+      <a href="/clash-of-clans/town-hall-15" style="color:#94a3b8;">قريات تاون هول 15</a>
     </div>
     <div>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — متجر حسابات كلاش أوف كلانس وكلاش رويال في السعودية والخليج العربي</div>
   </footer>

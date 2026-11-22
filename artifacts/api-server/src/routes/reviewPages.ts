@@ -288,6 +288,16 @@ router.get("/reviews", async (req, res) => {
             </details>
           </div>
         </section>
+
+        <!-- بانر التوجيه المباشر لمتجر كلاش أوف كلانس لتعزيز السيو -->
+        <section style="margin-top: 36px; text-align: center; background: #1e293b; border: 1px solid #334155; border-radius: 20px; padding: 32px 24px;">
+          <h3 style="color:#f8fafc; font-size:1.35rem; font-weight:800; margin:0 0 10px;">جاهز لاقتناء قريتك القادمة بأمان؟</h3>
+          <p style="color:#94a3b8; font-size:0.95rem; margin:0 0 20px;">تصفح تشكيلة القريات الموثقة والمفحوصة يدوياً مع الضمان الذهبي ضد السحب مدى الحياة.</p>
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <a class="cta" href="/clash-of-clans" style="font-weight:700;">زيارة متجر كلاش أوف كلانس (قريات ماكس) ←</a>
+            <a class="cta" href="/clash-royale" style="background:#2563eb; color:#fff;">متجر كلاش رويال ←</a>
+          </div>
+        </section>
       </div>
     `;
 
