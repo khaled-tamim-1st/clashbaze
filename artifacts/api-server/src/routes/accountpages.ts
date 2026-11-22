@@ -15,7 +15,7 @@ END ASC`;
 const WHATSAPP_NUMBER = process.env["WHATSAPP_NUMBER"] || "";
 
 const GAME_LABEL: Record<string, string> = {
-  "clash-of-clans": "متجر كلاش أوف كلانس",
+  "clash-of-clans": "متجر كلاش اوف كلانس",
   "clash-royale": "كلاش رويال",
 };
 

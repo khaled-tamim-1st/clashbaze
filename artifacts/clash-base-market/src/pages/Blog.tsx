@@ -21,7 +21,7 @@ export default function Blog() {
         <p className="text-muted-foreground mb-8 max-w-3xl leading-relaxed">
           دليلك الأفضل لاحتراف كلاش أوف كلانس وكلاش رويال، أحدث التحديثات، وأفضل النصائح لاختيار وتأمين حسابك بأمان. تصفح المقالات أدناه أو تفضل بزيارة{" "}
           <Link href="/clash-of-clans" className="text-primary font-bold hover:underline">
-            متجر كلاش أوف كلانس
+            متجر كلاش اوف كلانس
           </Link>{" "}
           لاستعراض أقوى القريات الجاهزة والمفحوصة.
         </p>

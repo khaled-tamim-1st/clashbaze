@@ -665,7 +665,7 @@ export default function Reviews() {
                   href="/clash-of-clans"
                   className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-all"
                 >
-                  زيارة متجر كلاش أوف كلانس (قريات ماكس) ←
+                  زيارة متجر كلاش اوف كلانس (قريات ماكس) ←
                 </a>
                 <a
                   href="/clash-royale"

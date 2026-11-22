@@ -44,7 +44,7 @@ router.get("/blog", async (req, res) => {
       bodyHtml: `
         ${breadcrumbHtml(breadcrumbItems)}
         <h1>مدونة ${escapeHtml(SITE_NAME)}</h1>
-        <p style="margin-bottom: 24px; color: #cbd5e1; line-height: 1.8;">${description} تصفح الشروحات الحصرية أدناه، أو انتقل مباشرة إلى <strong><a href="/clash-of-clans" style="color: #f59e0b; font-weight: 700;">متجر كلاش أوف كلانس</a></strong> لاستعراض أقوى قريات تاون هول 15 إلى 18 ماكس مع تسليم فوري وضمان ذهبي.</p>
+        <p style="margin-bottom: 24px; color: #cbd5e1; line-height: 1.8;">${description} تصفح الشروحات الحصرية أدناه، أو انتقل مباشرة إلى <strong><a href="/clash-of-clans" style="color: #f59e0b; font-weight: 700;">متجر كلاش اوف كلانس</a></strong> لاستعراض أقوى قريات تاون هول 15 إلى 18 ماكس مع تسليم فوري وضمان ذهبي.</p>
         <ul class="post-list">${listHtml}</ul>
       `,
       jsonLd: [breadcrumbJsonLd(breadcrumbItems)],
@@ -143,17 +143,17 @@ router.get("/blog/:slug", async (req, res) => {
         نُشر بتاريخ: ${new Date(post.createdAt).toLocaleDateString("ar-SA", { year: 'numeric', month: 'long', day: 'numeric' })} | بواسطة فريق ${escapeHtml(SITE_NAME)}
       </div>
 
-      <!-- تنويه واستدعاء سيو داخلي يربط المقالات بمتجر كلاش أوف كلانس مباشرة -->
+      <!-- تنويه واستدعاء سيو داخلي يربط المقالات بمتجر كلاش اوف كلانس مباشرة -->
       <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid #3b82f6; border-radius: 12px; padding: 18px 20px; margin: 24px 0;">
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
           <span style="font-size:1.4rem;">🏰</span>
           <strong style="color:#f8fafc; font-size:1.05rem;">تنويه من متجر كلاش ماركت:</strong>
         </div>
         <p style="color:#cbd5e1; font-size:0.95rem; margin:0 0 12px; line-height:1.7;">
-          هل تبحث عن قرية كلاش جاهزة بمواصفات ماكس دون عناء سنوات التطوير؟ تفضل بزيارة <strong><a href="/clash-of-clans" style="color:#60a5fa; text-decoration:underline; font-weight:700;">متجر كلاش أوف كلانس</a></strong> لاقتناء أقوى حسابات تاون هول 15 إلى 18 ماكس مع تسليم فوري بالواتساب وضمان ذهبي شامل مدى الحياة.
+          هل تبحث عن قرية كلاش جاهزة بمواصفات ماكس دون عناء سنوات التطوير؟ تفضل بزيارة <strong><a href="/clash-of-clans" style="color:#60a5fa; text-decoration:underline; font-weight:700;">متجر كلاش اوف كلانس</a></strong> لاقتناء أقوى حسابات تاون هول 15 إلى 18 ماكس مع تسليم فوري بالواتساب وضمان ذهبي شامل مدى الحياة.
         </p>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a href="/clash-of-clans" class="cta" style="font-size:0.85rem; padding:6px 14px;">دخول متجر كلاش أوف كلانس ←</a>
+          <a href="/clash-of-clans" class="cta" style="font-size:0.85rem; padding:6px 14px;">دخول متجر كلاش اوف كلانس ←</a>
           <a href="/clash-of-clans/town-hall-18" style="color:#94a3b8; font-size:0.85rem; text-decoration:underline; align-self:center;">قريات تاون 18 ماكس</a>
           <a href="/clash-of-clans/town-hall-17" style="color:#94a3b8; font-size:0.85rem; text-decoration:underline; align-self:center;">قريات تاون 17</a>
         </div>
@@ -166,7 +166,7 @@ router.get("/blog/:slug", async (req, res) => {
       <div style="margin-top: 48px; padding: 24px; background: #1e293b; border-radius: 12px; border: 1px solid #334155; text-align: center;">
         <h3 style="color: #f8fafc; margin-bottom: 8px; font-size: 1.25rem;">تسوّق الآن بأمان من متجر كلاش ماركت</h3>
         <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 16px;">قريات كلاش أوف كلانس وحسابات كلاش رويال مفحوصة ومضمونة مع تسليم يدوي فوري بالواتساب.</p>
-        <a class="cta" href="/clash-of-clans" style="margin-left: 12px; font-weight:700;">زيارة متجر كلاش أوف كلانس (قريات ماكس) ←</a>
+        <a class="cta" href="/clash-of-clans" style="margin-left: 12px; font-weight:700;">زيارة متجر كلاش اوف كلانس (قريات ماكس) ←</a>
         <a class="cta" href="/clash-royale" style="background: #2563eb; color: #fff;">متجر كلاش رويال ←</a>
       </div>
       <p><a class="back-link" href="/blog">← العودة إلى قائمة مقالات المدونة</a></p>

@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navLinks = [
   { href: "/", label: "الرئيسية" },
-  { href: "/clash-of-clans", label: "متجر كلاش أوف كلانس" },
+  { href: "/clash-of-clans", label: "متجر كلاش اوف كلانس" },
   { href: "/clash-royale", label: "كلاش رويال" },
   { href: "/blog", label: "المدونة" },
   { href: "/reviews", label: "آراء العملاء" },

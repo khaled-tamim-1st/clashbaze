@@ -43,7 +43,7 @@ export default function HowItWorks() {
                   اختر الحساب المناسب
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  تصفح قسم <Link href="/clash-of-clans" className="text-primary font-bold hover:underline">متجر كلاش أوف كلانس</Link> أو <Link href="/clash-royale" className="text-primary font-bold hover:underline">كلاش رويال</Link>، وشاهد صور الحساب وتفاصيل اللفل والأبطال والأسعار المعروضة بكل شفافية.
+                  تصفح قسم <Link href="/clash-of-clans" className="text-primary font-bold hover:underline">متجر كلاش اوف كلانس</Link> أو <Link href="/clash-royale" className="text-primary font-bold hover:underline">كلاش رويال</Link>، وشاهد صور الحساب وتفاصيل اللفل والأبطال والأسعار المعروضة بكل شفافية.
                 </p>
               </div>
             </div>

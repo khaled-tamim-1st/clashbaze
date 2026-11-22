@@ -137,7 +137,7 @@ router.get("/clash-of-clans/town-hall-18", async (req, res) => {
 
     const breadcrumbItems = [
       { name: SITE_NAME, path: "/" },
-      { name: "متجر كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "متجر كلاش اوف كلانس", path: "/clash-of-clans" },
       { name: "تاون هول 18", path: "/clash-of-clans/town-hall-18" },
     ];
 
@@ -186,7 +186,7 @@ router.get("/clash-of-clans/town-hall-18", async (req, res) => {
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
         <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 15</a>
-        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش أوف كلانس الرئيسي ←</a>
+        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش اوف كلانس الرئيسي ←</a>
       </div>
 
       <h2>أسئلة شائعة حول حسابات تاون هول 18</h2>
@@ -235,7 +235,7 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
 
     const breadcrumbItems = [
       { name: SITE_NAME, path: "/" },
-      { name: "متجر كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "متجر كلاش اوف كلانس", path: "/clash-of-clans" },
       { name: "تاون هول 17", path: "/clash-of-clans/town-hall-17" },
     ];
 
@@ -284,7 +284,7 @@ router.get("/clash-of-clans/town-hall-17", async (req, res) => {
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
         <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 15</a>
-        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش أوف كلانس الرئيسي ←</a>
+        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش اوف كلانس الرئيسي ←</a>
       </div>
 
       <h2>أسئلة شائعة حول حسابات تاون هول 17</h2>
@@ -333,7 +333,7 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
 
     const breadcrumbItems = [
       { name: SITE_NAME, path: "/" },
-      { name: "متجر كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "متجر كلاش اوف كلانس", path: "/clash-of-clans" },
       { name: "تاون هول 16", path: "/clash-of-clans/town-hall-16" },
     ];
 
@@ -382,7 +382,7 @@ router.get("/clash-of-clans/town-hall-16", async (req, res) => {
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
         <a class="cta" href="/clash-of-clans/town-hall-15" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 15</a>
-        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش أوف كلانس الرئيسي ←</a>
+        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش اوف كلانس الرئيسي ←</a>
       </div>
 
       <h2>أسئلة شائعة حول حسابات تاون هول 16</h2>
@@ -431,7 +431,7 @@ router.get("/clash-of-clans/town-hall-15", async (req, res) => {
 
     const breadcrumbItems = [
       { name: SITE_NAME, path: "/" },
-      { name: "متجر كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "متجر كلاش اوف كلانس", path: "/clash-of-clans" },
       { name: "تاون هول 15", path: "/clash-of-clans/town-hall-15" },
     ];
 
@@ -480,7 +480,7 @@ router.get("/clash-of-clans/town-hall-15", async (req, res) => {
         <a class="cta" href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 18</a>
         <a class="cta" href="/clash-of-clans/town-hall-17" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 17</a>
         <a class="cta" href="/clash-of-clans/town-hall-16" style="background:#1e293b; color:#f8fafc; border:1px solid #334155; font-size:0.95rem; padding:10px 20px;">حسابات تاون هول 16</a>
-        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش أوف كلانس الرئيسي ←</a>
+        <a class="cta" href="/clash-of-clans" style="background:#2563eb; color:#fff; font-size:0.95rem; padding:10px 20px;">العودة إلى متجر كلاش اوف كلانس الرئيسي ←</a>
       </div>
 
       <h2>أسئلة شائعة حول حسابات تاون هول 15</h2>
@@ -563,7 +563,7 @@ router.get("/clash-of-clans", async (req, res) => {
 
     const breadcrumbItems = [
       { name: "الرئيسية", path: "/" },
-      { name: "متجر كلاش أوف كلانس", path: "/clash-of-clans" },
+      { name: "متجر كلاش اوف كلانس", path: "/clash-of-clans" },
     ];
 
     const faqItems = [
@@ -697,11 +697,11 @@ router.get("/clash-of-clans", async (req, res) => {
         متجر كلاش اوف كلانس | سوق بيع وشراء قريات كلاش ماكس
       </h1>
 
-      <!-- فلتر وتصفح أقسام التاون هول في متجر كلاش أوف كلانس -->
+      <!-- فلتر وتصفح أقسام التاون هول في متجر كلاش اوف كلانس -->
       <div style="margin: 16px 0 24px; padding: 16px 20px; background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; border-radius: 14px;">
         <div style="font-weight:700; color:#f59e0b; font-size:0.95rem; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
           <span>🏰</span>
-          <span>تصفح حسب مستوى التاون هول في متجر كلاش أوف كلانس:</span>
+          <span>تصفح حسب مستوى التاون هول في متجر كلاش اوف كلانس:</span>
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:10px;">
           <a href="/clash-of-clans/town-hall-18" style="background:#1e293b; color:#f8fafc; border:1px solid #475569; padding:8px 16px; border-radius:10px; font-size:0.9rem; font-weight:600; text-decoration:none;">قريات تاون هول 18 ماكس (TH18)</a>

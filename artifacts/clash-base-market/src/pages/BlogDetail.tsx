@@ -101,7 +101,7 @@ export default function BlogDetail() {
           <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
             هل تبحث عن قرية كلاش جاهزة بمواصفات ماكس وتوفير سنوات من التطوير؟ تفضل بزيارة{" "}
             <Link href="/clash-of-clans" className="text-primary font-bold underline">
-              متجر كلاش أوف كلانس
+              متجر كلاش اوف كلانس
             </Link>{" "}
             واستعرض أقوى قريات تاون هول 15 إلى 18 ماكس مع تسليم فوري بالواتساب وضمان ذهبي شامل.
           </p>
@@ -110,7 +110,7 @@ export default function BlogDetail() {
               href="/clash-of-clans"
               className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold text-xs md:text-sm hover:bg-primary/90 transition-colors"
             >
-              دخول متجر كلاش أوف كلانس ←
+              دخول متجر كلاش اوف كلانس ←
             </Link>
             <Link href="/clash-of-clans/town-hall-18" className="text-xs text-muted-foreground hover:text-primary underline">
               قريات تاون 18 ماكس
@@ -134,7 +134,7 @@ export default function BlogDetail() {
               href="/clash-of-clans"
               className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors"
             >
-              زيارة متجر كلاش أوف كلانس (قريات ماكس) ←
+              زيارة متجر كلاش اوف كلانس (قريات ماكس) ←
             </Link>
             <Link
               href="/clash-royale"

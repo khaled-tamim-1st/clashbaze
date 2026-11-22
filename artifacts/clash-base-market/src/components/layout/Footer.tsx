@@ -15,7 +15,7 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4 text-foreground">روابط سريعة</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/clash-of-clans" className="hover:text-primary font-medium">متجر كلاش أوف كلانس (قريات ماكس)</Link></li>
+              <li><Link href="/clash-of-clans" className="hover:text-primary font-medium">متجر كلاش اوف كلانس (قريات ماكس)</Link></li>
               <li className="pr-2 flex flex-wrap gap-2 text-xs text-muted-foreground/80">
                 <Link href="/clash-of-clans/town-hall-18" className="hover:text-primary">تاون 18</Link>
                 <span>•</span>
